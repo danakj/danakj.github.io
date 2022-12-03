@@ -2,5 +2,5 @@
    Midnight theme: https://github.com/pages-themes/midnight/blob/master/_layouts/default.html
 */
 #header nav {
-  display: none;
+  display: none !important;
 }
