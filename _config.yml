@@ -19,8 +19,8 @@ github_username: "danakj"
 #########################################################################################
 ######### Nothing below needs to be changed (unless you know what you're doing) #########
 #########################################################################################
-theme: "minima"
-#remote_theme: pages-themes/midnight@v0.2.0
+#theme: "minima"
+remote_theme: pages-themes/midnight@v0.2.0
 
 rss: rss
 
