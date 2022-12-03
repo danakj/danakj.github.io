@@ -16,18 +16,25 @@ layout: default
       {%- endif -%}</p>
   </header>
 
+  <div class="post-content e-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+  
+  <!-- No thanks?
   <div class="share-links">
     {% include sharelinks.html %}
   </div>
+  -->
 
-  <div class="post-content e-content" itemprop="articleBody">
-    {{ content }}
+  <div>
     {% include navlinks.html %}
   </div>
 
+  <!-- TODO? 
   <div class="comments">
     {% include comments.html %}
   <div>
+  -->
   
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
