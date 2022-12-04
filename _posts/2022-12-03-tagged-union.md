@@ -1,4 +1,4 @@
-## Writing a Tagged Union type in C++/Subspace
+## Designing a Tagged Union type in C++/Subspace
 
 First blog post! The hardest part of writing blog posts about Subspace has been setting something
 up, and starting. So let's just dive in. I will write an introduction to
