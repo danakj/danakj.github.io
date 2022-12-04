@@ -136,10 +136,12 @@ only 1 byte:
 ```cpp
 struct variant {
     u8 tag;    // 1 byte.
-               // 7 bytes of padding for the `struct` with `u64`-alignment to be aligned correctly.
+               // 7 bytes of padding for the `struct` with `u64`-alignment to
+               //   be aligned correctly.
     struct {
         i8 field1;   // 1 byte.
-                     // 7 bytes of padding for the `u64` to be aligned correctly.
+                     // 7 bytes of padding for the `u64` to be aligned
+                     //   correctly.
         u64 field2;  // 8 bytes.
     };
 };  // Total: 24 bytes.
@@ -158,7 +160,8 @@ struct variant {
     struct {
         u8 tag;     // 1 byte.
         i8 field1;  // 1 byte.
-                    // 6 bytes of padding for the `u64` to be aligned correctly.
+                    // 6 bytes of padding for the `u64` to be aligned
+                    //   correctly.
         u64 field2; // 8 bytes.
     };
 };   // Total: 16 bytes.
@@ -178,14 +181,17 @@ union Union {
     struct {
         u8 tag;     // 1 byte.
         i8 field1;  // 1 byte.
-                    // 2 bytes of padding for the `u32` to be aligned correctly.
+                    // 2 bytes of padding for the `u32` to be aligned
+                    //   correctly.
         u32 field2; // 4 bytes.
-                    // 8 bytes of padding to have the same size as the struct below.
+                    // 8 bytes of padding to have the same size as the struct
+                    //   below.
     }
     struct {
         u8 tag;     // 1 byte.
         i8 field1;  // 1 byte.
-                    // 6 bytes of padding for the `u64` to be aligned correctly.
+                    // 6 bytes of padding for the `u64` to be aligned
+                    //   correctly.
         u64 field2; // 8 bytes.
     };
 };  // Total: 16 bytes.
@@ -333,8 +339,8 @@ Having the user of the Union type declare the structs themselves isn't an option
 need to put a tag inside them. At best, we could use a macro to define a structure with a tag,
 then pass that type to the Union.
 ```cpp
-// A struct with generated internals. Still leaves room for error if something is added to the
-// struct above the macro.
+// A struct with generated internals. Still leaves room for error if something
+// is added to the struct above the macro.
 struct S {
     sus_union_types(i8, u32);
 };
