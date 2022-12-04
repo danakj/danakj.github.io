@@ -5,12 +5,7 @@ code {
 }
 
 /* The title of the blog links to the top level page but doesn't look like a link. */
-#title h1 a:link {
+#title h1 a {
     text-decoration: none;
-}
-#title h1 a:visited {
-    text-decoration: none;
-}
-#title h1 a:hover {
-    text-decoration: none;
+    color: inherit;
 }
