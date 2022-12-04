@@ -2,20 +2,32 @@
     border-radius: 4px;
     color: #e8e8e8;
     display: inline-block;
-    font-size: 0.75rem;
-    padding: 3px 9px 3px 9px;
+    /* font-size: 0.75rem; */
+    padding: 3px 6px 3px 6px;
     text-align: center;
     text-decoration: none;
+}
+.btn:hover {
+    color: inherit;
 }
 
 .btn.btn-email {
     background-color: #7a184e;
 }
+.btn.btn-email:hover {
+    background-color: #350b22;
+}
 
 .btn.btn-github {
     background-color: #a16f12;
 }
+.btn.btn-github:hover {
+    background-color: #503708;
+}
 
 .btn.btn-rss {
     background-color: #0c521b;
+}
+.btn.btn-rss:hover {
+    background-color: #04200a;
 }
