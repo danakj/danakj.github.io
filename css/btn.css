@@ -1,5 +1,5 @@
 .btn {
-    border-radius: var(--border-radius);
+    border-radius: 4px;
     color: #e8e8e8;
     display: inline-block;
     font-size: 0.75rem;
