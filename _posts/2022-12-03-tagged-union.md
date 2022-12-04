@@ -418,7 +418,8 @@ stored within, or in the case of multiple types, a Tuple of all of them.
 auto u = Union<sus_type_pairs((Smurfs::Papa, i8, u32), (Smurfs::Mama, u64))>();
 
 u.get_ref<0>();  // Returns a `Tuple<const i8&, const u32&>`.
-                 // Which means you can use structured bindings:
+
+// Which means you can use structured bindings:
 const auto& [a, b] = u.get_ref<Smurfs::Papa>();
 // `a` is `const i8&`.
 // `b` is `const u32&`.
@@ -432,3 +433,7 @@ exist only when they are valid to be used.
 
 This Union type's implementation is now happening in [Subspace PR #99](
 https://github.com/chromium/subspace/pull/99).
+
+```html
+<html>a</html>
+```
