@@ -24,10 +24,6 @@ remote_theme: pages-themes/midnight@v0.2.0
 
 rss: rss
 
-kramdown:
-  syntax_highlighter_opts:
-    disable: true
-    
 plugins:
   - jekyll-feed
   - jekyll-sitemap
