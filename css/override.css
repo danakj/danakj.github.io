@@ -5,6 +5,8 @@ code {
 }
 
 #title {
+    /* The theme defaults to 50x but it's a lot - especially with my email etc buttons on the right
+       side which are a bit taller than just text. */
     margin: 0 0 30px 0;
 }
 
