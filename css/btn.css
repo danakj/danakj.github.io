@@ -1,0 +1,21 @@
+.btn .btn-email {
+    background-color: #24292e;
+}
+
+.btn .btn-github {
+    background-color: #24292e;
+}
+
+.btn .btn-rss {
+    background-color: #24292e;
+}
+
+.btn {
+    border-radius: var(--border-radius);
+    color: white;
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 3px 9px 3px 9px;
+    text-align: center;
+    text-decoration: none;
+}
