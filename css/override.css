@@ -15,3 +15,10 @@ code {
     text-decoration: none;
     color: inherit;
 }
+
+section #title .credits {
+    /* On small screens, the right credits wrap below the bottom, and they need space between
+       them. */
+    margin-bottom: 10px;
+    line-height: inherit;
+}
