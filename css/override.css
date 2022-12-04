@@ -4,6 +4,10 @@ code {
     font-family: monospace;
 }
 
+#title {
+    margin: 0 0 30px 0;
+}
+
 /* The title of the blog links to the top level page but doesn't look like a link. */
 #title h1 a {
     text-decoration: none;
