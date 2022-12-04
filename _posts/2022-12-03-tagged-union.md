@@ -1,3 +1,10 @@
+---
+tags:
+- Subspace
+- Union
+- Undefined Behaviour
+---
+
 ## Designing a Tagged Union type in C++/Subspace
 
 First blog post! The hardest part of writing blog posts about Subspace has been setting something
