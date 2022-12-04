@@ -433,7 +433,3 @@ exist only when they are valid to be used.
 
 This Union type's implementation is now happening in [Subspace PR #99](
 https://github.com/chromium/subspace/pull/99).
-
-```html
-<html>a</html>
-```
