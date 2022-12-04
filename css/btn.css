@@ -8,26 +8,26 @@
     text-decoration: none;
 }
 .btn:hover {
-    color: inherit;
+    color: #e8e8e8;
 }
 
 .btn.btn-email {
     background-color: #7a184e;
 }
 .btn.btn-email:hover {
-    background-color: #350b22;
+    background-color: #4d1031;
 }
 
 .btn.btn-github {
     background-color: #a16f12;
 }
 .btn.btn-github:hover {
-    background-color: #503708;
+    background-color: #69490c;
 }
 
 .btn.btn-rss {
     background-color: #0c521b;
 }
 .btn.btn-rss:hover {
-    background-color: #04200a;
+    background-color: #05290d;
 }
