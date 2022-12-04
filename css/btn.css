@@ -1,3 +1,13 @@
+.btn {
+    border-radius: var(--border-radius);
+    color: #e8e8e8;
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 3px 9px 3px 9px;
+    text-align: center;
+    text-decoration: none;
+}
+
 .btn.btn-email {
     background-color: #7a184e;
 }
@@ -8,14 +18,4 @@
 
 .btn.btn-rss {
     background-color: #0c521b;
-}
-
-.btn {
-    border-radius: var(--border-radius);
-    color: white;
-    display: inline-block;
-    font-size: 0.75rem;
-    padding: 3px 9px 3px 9px;
-    text-align: center;
-    text-decoration: none;
 }
