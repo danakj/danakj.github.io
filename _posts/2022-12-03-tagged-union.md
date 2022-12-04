@@ -235,7 +235,13 @@ think about a lot in day-to-day C++ work, but it turns out that it is critical t
 you can use a C++ union. The property can be checked by the [`std::is_standard_layout`](
 https://en.cppreference.com/w/cpp/types/is_standard_layout) type trait, and indeed integers (and our
 `i8` and friends) are standard layout. So this would actually work well for the types given here!
-*We can have a minimally-sized tagged union in C++.*
+
+In fact, we used this same clause in Subspace's Option type to [hide the boolean state](
+https://github.com/chromium/subspace/blob/09631e7a4ea7c5c3b5510fb11ea9ad95ad85f8d4/option/option.h#L83-L100)
+for `Option<T>` inside the type `T`, inspired [by Rust](
+https://doc.rust-lang.org/std/option/index.html#representation).
+
+So it seems like *we can have a minimally-sized tagged union in C++*. At least for some types?
 
 ### Troubles with Standard-Layout
 
