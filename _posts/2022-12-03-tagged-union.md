@@ -423,3 +423,6 @@ u.get_ref<Smurfs::Papa>();  // Returns a `const u64&`.
 This tagged union type will eliminate programming errors and Undefined Behaviour, and I hope will
 lead to better API designs in C++ programs, by making it easier and more natural to have types
 exist only when they are valid to be used.
+
+This Union type's implementation is now happening in [Subspace PR #99](
+https://github.com/chromium/subspace/pull/99).
