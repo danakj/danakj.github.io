@@ -56,7 +56,7 @@ code.
 
 #### C++17 and std::variant
 
-C++17 introduces std::variant, which provides a tagged union, except
+C++17 introduces `std::variant`, which provides a tagged union, except
 [over a `size_t`](https://en.cppreference.com/w/cpp/utility/variant/get) instead of over an enum. If
 you have a mapping from an enum to size_t then you can essentially use it as a tagged enum.
 A variant can be read or written into by selecting based on the type of the member, but this
@@ -117,7 +117,7 @@ This thoroughly nerd-sniped me. Could I do the same in C++?
 
 ### Into the alignment rabbit hole
 
-First, what does std::variant do? It does the naive thing, putting the tag outside the structures,
+First, what does `std::variant` do? It does the naive thing, putting the tag outside the structures,
 which makes sense given that it has no control over the storage types within. In this case, each
 storage type is a tuple, and variant can't just randomly stick a `tag` field into them.
 
@@ -138,7 +138,7 @@ struct {
 };
 ```
 
-This takes up 16 bytes so far. Then the std::variant needs to add a tag in front. Let's say it is
+This takes up 16 bytes so far. Then the `std::variant` needs to add a tag in front. Let's say it is
 only 1 byte:
 ```cpp
 struct variant {
@@ -177,7 +177,7 @@ struct variant {
 ### Stashing the tag in each Union member
 
 Subspace is all about rethinking assumptions about how a C++ library should be written. Above we
-said std::variant has no control over the inner types, so it has to put the tag outside them. So
+said `std::variant` has no control over the inner types, so it has to put the tag outside them. So
 what happens if we throw that assumption away?
 
 Here's a possible `sus::Union` with the same data as from the `std::variant` example. But notably
@@ -282,8 +282,8 @@ times?).
 #### Composition > Inheritance?
 
 There is actually another way. As the Google C++ Style Guide says: "Composition is often more
-appropriate than inheritance." And in fact std::variant is not constructed through inheritance since
-unions [can not inherit](https://godbolt.org/z/j71rfcv4G). And C++20 does provide a way for
+appropriate than inheritance." And in fact `std::variant` is not constructed through inheritance
+since unions [can not inherit](https://godbolt.org/z/j71rfcv4G). And C++20 does provide a way for
 composition to be more space efficient in ways that only inheritance could do before. When
 inheriting from a base class, the derived class can be given the tail padding of the base class to
 place its fields. This has historically been commonly used for the [empty base optimization](
@@ -329,7 +329,7 @@ union Union {
 
 Since `tuple<tag, T>` is not a Standard-Layout type, our Union type can not access the tag as we
 hoped for without incurring Undefined Behaviour. This means the tag has to be pulled out of `a` and
-`b`, just as in std::variant.
+`b`, just as in `std::variant`.
 
 ### Can we avoid tuples?
 
@@ -429,7 +429,7 @@ struct U {
 auto u = Union<U, Smurfs::Papa, Smurfs::Mama>();
 ```
 
-This API is kinda what you'd expect if you took a std::variant and put enums into it. Instead of
+This API is kinda what you'd expect if you took a `std::variant` and put enums into it. Instead of
 receiving a list of types, it receives a tuple of a list of types. Then an enum value for each
 type listed in the tuple. It fails our goals in that it's easy to get things wrong. Once you get to
 15 enum values and types, it gets very hard to tell which type is for which enum value. While you'd
