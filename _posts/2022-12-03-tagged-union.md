@@ -311,7 +311,7 @@ struct S {
 
 However, the padding is only [able to be used](https://godbolt.org/z/W3YxMvEa1) in this way if the
 type *is not a standard-layout type*. And MSVC doesn't appear to perform this type of optimization
-at all except with empty classes. Therefore, using composition with [[no_unique_address]] does not
+at all except with empty classes. Therefore, using composition with `[[no_unique_address]]` does not
 afford us anything better than inheritance does for implementing our tuple. In order to get the
 space usage that we see from Tuple as it is written, we are relying on the fact that the Tuple is
 not standard-layout.
@@ -485,5 +485,5 @@ exist only when they are valid to be used.
 This Union type's implementation is now happening in [Subspace PR #99](
 https://github.com/chromium/subspace/pull/99).
 
-*Edit: Added the section on compostion with [[no_unique_address]] which I forgot to mention
+*Edit: Added the section on compostion with `[[no_unique_address]]` which I forgot to mention
 originally.*
