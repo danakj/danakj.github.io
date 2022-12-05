@@ -299,25 +299,27 @@ in its tail padding.
 struct TailPadding {
     u64 first;   // 8 bytes.
     u32 second;  // 4 bytes.
-                 // 4 bytes of tail padding to make the size of TailPadding a multiple of its
-                 // alignment.
+                 // 4 bytes of tail padding to make the size of TailPadding
+                 // a multiple of its alignment.
 };  // 16 bytes.
 
 struct S {
-    [[no_unique_address]] TailPadding p;  // 16 bytes, with 4 bytes of tail padding.
-    u32 i;                                // 4 bytes, placed inside TailPadding.
+    [[no_unique_address]] TailPadding p; // 16 bytes, with 4 bytes of tail
+                                         // padding.
+    u32 i;                               // 4 bytes, placed inside TailPadding.
 };  // 16 bytes.
 ```
 
 However, the padding is only [able to be used](https://godbolt.org/z/W3YxMvEa1) in this way if the
-type *is not a standard-layout type*. And MSVC doesn't appear to perform this type of optimization
-at all except with empty classes. Therefore, using composition with `[[no_unique_address]]` does not
-afford us anything better than inheritance does for implementing our tuple. In order to get the
-space usage that we see from Tuple as it is written, we are relying on the fact that the Tuple is
-not standard-layout.
+`TailPadding` type *is not a standard-layout type*. And MSVC doesn't appear to perform this type of
+optimization at all except with empty classes. Therefore, using composition with
+`[[no_unique_address]]` does not afford us anything better than inheritance does for implementing
+our tuple. In order to get the space usage that we see from Tuple as it is written, we are relying
+on the fact that the Tuple is not standard-layout.
 
-If our tagged union wants to build a type that includes a `tag` and some user-defined types, it is
-going to have to do it with a tuple, and one with at least 2 members:
+So, we are resigned to tuples being non-standard layout in order to use space at all efficiently.
+And if our tagged union wants to build a type that includes a `tag` and some user-defined types, it
+is going to have to do it with a tuple of at least 2 members:
 ```cpp
 union Union {
     tuple<tag, T1> a;
