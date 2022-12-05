@@ -276,7 +276,45 @@ members. So tuple can not be standard layout (at least not with more than 1 valu
 Another way to implement this would be to have tuple subclass a series of base classes, each one
 holding one type. This is the [initial implementation](
 https://github.com/chromium/subspace/blob/e3964bc4788c466509a0f6dd37e3a0ca8795c5ab/tuple/__private/storage.h#L82-L90)
-of `sus::Tuple`, though the libc++ implementation makes me wonder if it performs better (for compile times?).
+of `sus::Tuple`, though the libc++ implementation makes me wonder if it performs better (for compile
+times?).
+
+#### Composition > Inheritance?
+
+There is actually another way. As the Google C++ Style Guide says: "Composition is often more
+appropriate than inheritance." And in fact std::variant is not constructed through inheritance since
+unions [can not inherit](https://godbolt.org/z/j71rfcv4G). And C++20 does provide a way for
+composition to be more space efficient in ways that only inheritance could do before. When
+inheriting from a base class, the derived class can be given the tail padding of the base class to
+place its fields. This has historically been commonly used for the [empty base optimization](
+https://en.cppreference.com/w/cpp/language/ebo), in which the derived class uses the single byte of
+padding in an empty subclass.
+
+C++20 brings the [`[[no_unique_address]]`](
+https://en.cppreference.com/w/cpp/language/attributes/no_unique_address) attribute, which performs a
+similar function for fields. A field marked with the attribute allows fields below it to be placed
+in its tail padding.
+
+```cpp
+struct TailPadding {
+    u64 first;   // 8 bytes.
+    u32 second;  // 4 bytes.
+                 // 4 bytes of tail padding to make the size of TailPadding a multiple of its
+                 // alignment.
+};  // 16 bytes.
+
+struct S {
+    [[no_unique_address]] TailPadding p;  // 16 bytes, with 4 bytes of tail padding.
+    u32 i;                                // 4 bytes, placed inside TailPadding.
+};  // 16 bytes.
+```
+
+However, the padding is only [able to be used](https://godbolt.org/z/W3YxMvEa1) in this way if the
+type *is not a standard-layout type*. And MSVC doesn't appear to perform this type of optimization
+at all except with empty classes. Therefore, using composition with [[no_unique_address]] does not
+afford us anything better than inheritance does for implementing our tuple. In order to get the
+space usage that we see from Tuple as it is written, we are relying on the fact that the Tuple is
+not standard-layout.
 
 If our tagged union wants to build a type that includes a `tag` and some user-defined types, it is
 going to have to do it with a tuple, and one with at least 2 members:
@@ -446,3 +484,6 @@ exist only when they are valid to be used.
 
 This Union type's implementation is now happening in [Subspace PR #99](
 https://github.com/chromium/subspace/pull/99).
+
+*Edit: Added the section on compostion with [[no_unique_address]] which I forgot to mention
+originally.*
