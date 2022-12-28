@@ -217,7 +217,7 @@ memory safety problems, unless you're working in a _different_ C++.
 
 
 
-
+# Resources
 
 
 https://www.swift.org/blog/swift-5-exclusivity/
