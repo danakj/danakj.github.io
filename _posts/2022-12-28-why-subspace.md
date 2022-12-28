@@ -202,16 +202,69 @@ disturb existing code, but must still provide some tangible guarantees and benef
 >
 > <cite>-- Herb Sutter on cpp2: https://www.youtube.com/watch?v=ELeZAKCN4tY</cite>
 
-
 ## New code is worth addressing
-- I like to think that most vulnerabilities in C++ have already been written. New code is more likely to abide by modern practices and use language and library facilities that make it easier to write correct code. Maybe. I am trying to be optimistic. Safety by good practices and convention certainly is no guarantee of anything but it does help, to a point.
 
+Changing how new code is written is meaningful. While most C++ code can be generally
+assumed to have memory safety bugs waiting to be found, new C++ code continues to be
+the largest observable source memory safety bugs in Chromium.
 
+> I like to think that most vulnerabilities in C++ have already been written. New
+> code is more likely to abide by modern practices and use language and library
+> facilities that make it easier to write correct code. Maybe. I am trying to be
+> optimistic. Safety by good practices and convention certainly is no guarantee of
+> anything but it does help, to a point.
+>
+> <cite>-- cor3ntin: https://cor3ntin.github.io/posts/safety/#a-cakewalk-and-eating-it-too</cite>
 
+The reason memory bugs in new C++ code dominate is probably because fuzzers and researchers
+have already spent a lot of time on the existing code, making it unlikely for them to turn
+up new things there, even though they exist. But nonetheless this means relying on the current
+facilities of "modern C++" to help prevent memory safety bugs is not working as a strategy. We
+continue to write memory safety bugs as a software engineering industry at an incredible pace.
 
-But the really big and really obvious takeaway here is: The easiest way to interop
+## Interop with C++
+
+The really big and really obvious takeaway here is: The easiest way to interop
 with existing C++ code is to stay in C++. Of course, then you have all the C++
 memory safety problems, unless you're working in a _different_ C++.
+
+> TODO: cor3ntin had a bunch of quotes around different C++ from the perspective
+of a different language from the committee.
+
+# Starting Subspace
+
+With those principles established in my mind, I asked what it would look like to have
+a C++ standard library based on the Rust standard library, and making use of the latest
+C++ features. There's a few strong benefits that I saw in that potential:
+
+1. Coherent library building on itself and new C++ things like concepts should make APIs that are
+easier to hold right, and harder to hold wrong.
+1. Defaults matter, and the chance to reset on what the defaults are toward safer options. Defaults
+like no null pointers. Or, given a lack of standard nullability restrictions, references instead
+of pointers?
+1. The C++ standard library exposes UB through many of its APIs, but the Rust standard library
+has no UB if you don't drop down to `unsafe`. If we could expose a similar demarcation in a
+C++ library, then users would not be exposed to UB unless they asked for it, and their reviewers
+would be able to see where it was happening too.
+1. Vobaculary types that are composable and powerful, safe, rich APIs. In particular, safe and
+ergonomic arithmetic as a foundation to build the entire library. Repeat for other foundational
+ideas like Option and Result.
+
+And being the excited library implementer that I am, I noted that the Rust standard library
+does some [very nice things](https://doc.rust-lang.org/std/option/index.html#representation)
+that a C++ implementation may be able to do as well.
+
+Much like Herb Sutter with cpp2, I desire to remove complexity from the language. Without a
+new language to lean on, I can do so by:
+- Changing norms for how to write C++, by demonstrating them in a standard library. For example
+everything is noexcept, no (public) overloads, static methods for construction.
+- Providing concepts that generalize or simplify things from type_traits, such as `sus::Copy`
+and `sus::Move`.
+
+But the other way to remove things from the language is through tooling....
+
+
+
 
 
 
