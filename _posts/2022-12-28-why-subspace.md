@@ -507,7 +507,7 @@ v.push(sus::some(1));
 v.push(sus::some(2));
 
 Option<CollectSum> o = sus::move(v).into_iter().collect<Option<CollectSum>>();
-// If `v` contained am empty option, `o` will be an empty option.
+// If `v` contained an empty option, `o` will be an empty option.
 // Otherwise, `v` contains CollectSum, which is a `FromIterator` type and
 // has itself collected all the values in the vector.
 
