@@ -113,7 +113,7 @@ and aliasing rules. I had the fear of unsafe Rust instilled in me through my wor
 side-project with [@quisquous](https://github.com/quisquous/cactbot), developing a
 [Rust wrapper around a C API](https://docs.rs/craydate/latest/craydate/) for
 [Playdate](https://play.date/). It was far easier to introduce UB than I had imagined, and
-more imporantly, far harder to find all the places that did so. Miri was no help for a
+more importantly, far harder to find all the places that did so. Miri was no help for a
 project with language interop.
 
 But worse (for Chromium) than introducing UB through unsafe Rust, we noticed that
