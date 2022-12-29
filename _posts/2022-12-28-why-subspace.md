@@ -2,7 +2,7 @@ Today I want to talk about why I am doing the [Subspace](https://github.chromium
 experiment and where I see it going. The ultimate goal is memory safety in C++, which has
 become quite the hot topic in the last few months.
 
-This is a bit of a walk through cor3ntin's fantastic
+This post ended up referring quite a lot to cor3ntin's fantastic
 [recent post on C++ safety](https://cor3ntin.github.io/posts/safety/#a-cakewalk-and-eating-it-too).
 I agree with a lot of it, and disagree with some of it, and I recommend reading
 that first if you haven't!
@@ -34,7 +34,10 @@ was being iterated on, and it was both unclear if it would make it to production
 and clear it was not a complete answer to all memory safety problems or use-after-frees in C++.
 - Chrome Security was enumerating Undefined Behaviour in C++ and documenting what
 was being done so far. It told the story of a thousand plugs trying to stop a ship from
-sinking. But there was no coherent story, and the ship keeps sinking.
+sinking. But there was no coherent overarching story behind it all, and many issues
+had no clear way to resolve them. This
+[continues today](https://github.com/llvm/llvm-project/issues/59525) on a one-by-one
+basis.
 
 So at the start of 2021, I was given the small task of "figure out memory safety
 for Chromium", and off I went.
@@ -56,7 +59,7 @@ back to C++. Could C++ have a borrow checker? Another colleague,
 [@adetaylor](https://github.com/adetaylor/), had considered
 [a runtime borrow checker](https://github.com/adetaylor/cpp-borrow-checker) briefly.
 Runtime-only safety checks push the feedback cycle on bugs really far from the
-development process, sometimes right out into the stable channel. This makes sense for
+development process, sometimes right out into the shipped release. This makes sense for
 defense in depth, but it does not resonate for me as a strategy for developers to rely
 on. I explored if we could do
 [borrow checking in the C++ type system](https://docs.google.com/document/u/1/d/e/2PACX-1vSt2VB1zQAJ6JDMaIA9PlmEgBxz2K5Tx6w2JqJNeYCy0gU4aoubdTxlENSKNSrQ2TXqPWcuwtXe6PlO/pub),
@@ -71,7 +74,7 @@ working with primitive C++ types has presented itself
 has [safe integer types](https://source.chromium.org/chromium/chromium/src/+/main:base/numerics/;drc=cb4e529012c9dd5e3f5abbfa471f27728d978cc8) and casts, which was a great
 innovation by [@jschuh](https://github.com/jschuh). Rusts integer types take
 this idea and make it extremely ergonomic. A colleague in Chrome Security,
-(@palmer)[github.com/noncombatant], was exploring the idea of a standard-library-like
+[@noncombatant](github.com/noncombatant), was exploring the idea of a standard-library-like
 project, which we called libboring after Boring Pointers. This encoded the idea to
 provide safe arithmetic in a library for projects like Chromium to consume,
 while giving some space to rethink the API. However it didn't gain a lot of traction
