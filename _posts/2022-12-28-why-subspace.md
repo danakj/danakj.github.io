@@ -653,7 +653,10 @@ introduced at CppCon22. Herb presented this graph of CVE root causes:
 ![CVE root causes by year](../resources/2022-12-28-why-subspace/cve_cause_by_year_2022-11-12.png)
 - Lifetime safety is ~50% of CVEs.
 - Bounds safety is ~40% of CVEs.
-  - However, Herb mixed in all integer overflow with bounds safety with the claim that it only matters if it causes an out of bounds issue. Nonetheless, signed integer overflow is UB which produces security bugs with or without bounds overflow, so some part of this number should be counted separately as integer overflow in my opinion.
+  - However, I believe Herb mixed in all integer overflow with bounds safety based on his claim
+    that it only matters if it causes an out of bounds issue. Nonetheless, signed integer overflow
+    is UB which produces security bugs with or without bounds overflow, so some part of this number
+    should be counted separately as integer overflow in my opinion.
 - Initialization safety is ~5% of CVEs.
 - Type safety is ~3% of CVEs.
 
