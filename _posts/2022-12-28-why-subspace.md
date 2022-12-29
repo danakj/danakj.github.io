@@ -639,8 +639,24 @@ A recent brainstormy conversation with my colleague [@veluca93](https://github.c
 made me believe that a MIR for C++ is also possible. So my path to writing a borrow checker
 is going to start with producing a MIR for C++, denoted CIR. Some quick iteration with
 @veluca93 has produced
-[a simple syntax](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/cir/syntax.md)
-that will need to grow to support some parts of the language, like async. But it's a
+[a simple syntax](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/cir/syntax.md),
+which is still in flux, but is something like this for constructing and destructing a class `S`.
+
+```
+fn f@0() -> void {
+    let _1: S
+    let _2: *S
+
+    bb0: {
+        _2 = &_1;
+        call S::S(_2)
+        call S::~S(_2)
+        return
+    }
+}
+```
+
+It will need to grow to support some parts of the language, like async. But it's a
 clear simplification over [the clang AST](https://clang.llvm.org/docs/IntroductionToTheClangAST.html)
 and, as Rust has shown, along with [lifetime annotations](https://github.com/google/crubit/blob/0182c5c085e2c179c73695a996902a5f8b7ed537/docs/lifetime_annotations_cpp.md), it can have everything we need to write
 a borrow checker.
