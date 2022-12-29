@@ -1,3 +1,5 @@
+# Why Subspace
+
 Today I want to talk about why I am doing the [Subspace](https://github.chromium/subspace)
 experiment and where I see it going. The ultimate goal is memory safety in C++, which has
 become quite the hot topic in the last few months.
@@ -143,12 +145,12 @@ and elsewhere.
 >
 > -- <cite>cor3ntin: https://cor3ntin.github.io/posts/safety/#a-cakewalk-and-eating-it-too</cite>
 
-# Starting principles
+## Starting principles
 
 From this whole journey through C++ to Rust and back, I have acquired a few beliefs from
 which to work. And I see many of these same things being echoed around in recent days.
 
-## Rust did things right
+### Rust did things right
 
 A key belief that I have landed on, and have yet to be dissuaded of, is that Rust
 did things right. They had the benefit of hindsight over 40 years of devlopment
@@ -164,7 +166,7 @@ library which regularly gains new features (e.g.
 but then fails to use those in its own design, presumably due to the committee's
 commitment to backward compatibility with a library designed for C++98.
 
-## Work outside the establishment
+### Work outside the establishment
 
 If we're going to find memory safety in C++, we need to look for ways outside the
 committee, and outside the compiler and standard library.
@@ -189,7 +191,7 @@ rolled out this year from current and former WG21 members, including
 > 
 > <cite>-- cor3ntin: https://cor3ntin.github.io/posts/safety/#but-we-care-about-safety-right</cite>
 
-## Make things better, but not worse too
+### Make things better, but not worse too
 
 Whatever solutions we consider can't make things worse some of the time, even if it
 makes things better other times. This means not introducing new ways to have UB.
@@ -199,7 +201,7 @@ This is what makes Rust as a strategy to replace all C++ development in an exist
 project feel like a particularly risky endeavour. However, an endeavour that
 [Crubit](https://github.com/google/crubit) may enable in the future.
 
-## Incremental application is required
+### Incremental application is required
 
 Any proposal for C++ memory safety must be able to be applied in an incremental
 manner across an arbitrarily complicated and interconnected codebase. This means
@@ -211,7 +213,7 @@ to be applied to existing code in an incremental way.
 >
 > <cite>-- Herb Sutter on cpp2: https://www.youtube.com/watch?v=ELeZAKCN4tY</cite>
 
-## Leaving safety should be obvious
+### Leaving safety should be obvious
 
 The default paths should be safe; developers should have to opt into unsafety
 whenever possible. And doing so should be through a consistent and clear syntax
@@ -231,7 +233,7 @@ ability to add keywords to the language, there must be another way.
 >
 > -- cor3ntin: https://cor3ntin.github.io/posts/safety/#borrowing-the-borrow-checker
 
-## Global knowledge is harmful
+### Global knowledge is harmful
 
 The Rust static analysis that produces memory safety is able to do so through
 local analysis of a single function at a time. This is the only approach that
@@ -241,7 +243,7 @@ to make mistakes if they have to understand state or requirements far from the
 code they are changing. New developers to a codebase will have know that such
 things even exist to look out for.
 
-## New code is worth addressing
+### New code is worth addressing
 
 Changing how new code is written is meaningful. While most C++ code can be generally
 assumed to have memory safety bugs waiting to be found, new C++ code continues to be
@@ -261,7 +263,7 @@ up new things there, even though they exist. But nonetheless this means relying 
 facilities of modern C++ to prevent memory safety bugs is not working as a strategy. We
 continue to write memory safety bugs as a software engineering industry at an incredible pace.
 
-## Interop with C++
+### Interop with C++
 
 The really big and really obvious takeaway here is: The easiest way to interop
 with existing C++ code is to stay in C++. Of course, then you have all the C++
@@ -318,7 +320,7 @@ worse than they were before, there's no _new_ UB to be found by doing the wrong 
 boundary. And other "safe" code would not be able to introduce memory bugs in your code. That
 would be something new to C++.
 
-# How to change C++
+## How to change C++
 
 To primary way to change C++ without changing the language or the compiler is to write a
 library. The standard library exposes UB to the developer through many of its public APIs,
@@ -415,7 +417,7 @@ And being the excited library implementer that I am, I noted that the Rust stand
 does some [very nice things](https://doc.rust-lang.org/std/option/index.html#representation)
 with type layout.
 
-# Starting Subspace
+## Starting Subspace
 
 Subspace began from asking what it would look like to port the Rust standard library into
 C++20, for all the reasons elaborated above.
@@ -578,7 +580,7 @@ subspace library, and can be done so by user code as well by checking `relocate_
 This is possible only because `sus::Option<NotRelocatableType>` can be differentiated and
 will not be treated as trivially relocatable.
 
-# Where does Subspace go next
+## Where does Subspace go next
 
 There's a lot more to do in the library, but it's reached a point where
 - The core pieces are there from which to build the rest, and they work.
@@ -634,7 +636,7 @@ clear simplification over [the clang AST](https://clang.llvm.org/docs/Introducti
 and, as Rust has shown, along with [lifetime annotations](https://github.com/google/crubit/blob/0182c5c085e2c179c73695a996902a5f8b7ed537/docs/lifetime_annotations_cpp.md), it can have everything we need to write
 a borrow checker.
 
-# The future
+## The future
 
 This is a wild experiment, but if successful it would give us a world where we can write
 C++ with memory safety, by running a borrow checker against it.
@@ -646,9 +648,9 @@ simply do or do not choose to borrow check your code.
 And it will provide the basic building blocks in a standard library to write new safe
 C++, and incrementally move existing C++ into a safe world.
 
-# Other recent work
+## Other recent work
 
-## Cpp2
+### Cpp2
 
 I see this work as being very complimentary to [Cpp2](https://www.youtube.com/watch?v=ELeZAKCN4tY),
 introduced at CppCon22. Herb presented this graph of CVE root causes:
@@ -684,7 +686,7 @@ UB does lead to security vulnerabilities, these bugs must be getting grouped int
 categories, like type safety with unions, or being omitted. Nonetheless, Subspace will address
 the unlimited access to UB that is present in the C++ standard library.
 
-## C++ Buffer Hardening
+### C++ Buffer Hardening
 
 Clang recently began development on a "C++ Safe Buffers" proposal that would allow
 for banning pointer arithmetic outside of clear opt-in scenarios, and allows for
@@ -708,7 +710,7 @@ limitations of C++:
   blocks of code other than functions in order to remove the requirement of #pragmas for
   static analysis.
 
-## Swift exclusivity
+### Swift exclusivity
 
 Swift recently announced that they will begin
 [enforcing exclusive mutability](https://www.swift.org/blog/swift-5-exclusivity/)
