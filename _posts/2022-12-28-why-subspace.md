@@ -425,7 +425,7 @@ principles charter. Performance matters too, but slightly more important than ju
 performance is _predictable_ performance. For example, the
 [small-string optimization](https://stackoverflow.com/questions/21694302/what-are-the-mechanics-of-short-string-optimization-in-libc)
 makes `std::string` faster in many cases, but it introduces a huge performance cliff that
-is not exposed to the user.
+is not visible to the user.
 
 Then I moved on to implementation; the proof is in the pudding, as they say.
 
