@@ -103,7 +103,7 @@ stack, if it was going to solve the memory safety problems in C++.
 My team was successful in finding good answers to a number of problems:
 - Deterministic [debug builds](https://github.com/rust-lang/compiler-team/issues/450).
 - Writing tests in Rust that [integrate into our C++ Gtest
-framwork](https://source.chromium.org/chromium/chromium/src/+/main:testing/rust_gtest_interop/README.md;drc=52eef31fd75d970c1470ab1131ad07cfa8f88cfb). Though it did require some trips through Rust
+framework](https://source.chromium.org/chromium/chromium/src/+/main:testing/rust_gtest_interop/README.md;drc=52eef31fd75d970c1470ab1131ad07cfa8f88cfb). Though it did require some trips through Rust
 [compiler bugs with static initializers](https://github.com/rust-lang/rust/issues/47384), and
 exploring but ultimately rejecting a proposed RFC for [custom test frameworks](https://github.com/rust-lang/rust/issues/50297#issuecomment-1043753671).
 - Considering how to [integrate async Rust into Chromium's async Callback system](https://chromium-review.googlesource.com/c/chromium/src/+/3405501).
@@ -162,7 +162,7 @@ which to work. And I see many of these same things being echoed around in recent
 #### Rust did things right
 
 A key belief that I have landed on, and have yet to be dissuaded of, is that Rust
-did things right. They had the benefit of hindsight over 40 years of devlopment
+did things right. They had the benefit of hindsight over 40 years of development
 with C++, not to mention all the language research over that time. This led to
 the starting from the right principles, putting safety first and working from
 there.
@@ -336,7 +336,7 @@ library. The standard library exposes UB to the developer through many of its pu
 and the committee will not remove those APIs.
 
 The approach being taken in [libc++ safe mode](https://libcxx.llvm.org/UsingLibcxx.html#enabling-the-safe-libc-mode)
-is to introduce asserts, and crash when UB would have occured.
+is to introduce asserts, and crash when UB would have occurred.
 
 > The idea is simple: instead of foaming at the mouth and shouting about memory safety, we
 > should look at all checkable UB and precondition violations and assert on them. This is
@@ -348,7 +348,7 @@ is to introduce asserts, and crash when UB would have occured.
 This provides defense in depth, it protects users against existing code, and is a good idea.
 But to be a safety strategy for C++ developers, we need to shift left. Instead of crashing on
 UB, I would like a future world where C++ developers have a different choice. A development
-environment which does not present a footgun at every turn. Define the UB out of existance.
+environment which does not present a footgun at every turn. Define the UB out of existence.
 
 > We also need better tools to prevent UB from happening. In its arsenal, Rust offers saturating
 > arithmetic, checked arithmetics (returning Optional), and wrapping arithmetics. I hope some of
@@ -361,7 +361,7 @@ environment which does not present a footgun at every turn. Define the UB out of
 > -- cor3ntin: https://cor3ntin.github.io/posts/safety/#correct-by-confusion
 
 Safe C++ code should not crash, it should be safe by construction. It should prevent the bugs
-from existing, not just try prevent the bugs from being a backdoor onto your device. But
+from existing, not just try to prevent the bugs from being a backdoor onto your device. But
 that means safe C++ code can not depend on the standard library.
 
 This presents a chicken-and-egg type of problem. Without safe C++, there's no means to write
@@ -466,7 +466,8 @@ When I got to `checked_sub()` I needed an `Option` type, so I moved on to that. 
 has `Option<T>` which supports:
 - Holding a reference type, as `Option<T&>`. No nullable pointer required.
 - The [null pointer optimization](https://doc.rust-lang.org/stable/std/option/index.html#representation)
-  in a more general form, as the the `sus::NeverValueField` concept.
+  in a more general form, as the
+  [`sus::NeverValueField` concept](https://github.com/chromium/subspace/blob/main/subspace/mem/never_value.h).
 - Safe defaults. Terminates if `unwrap()` is called when there's nothing inside. If moved-from, the
   Option contains nothing, instead of containing an object in a moved-from state.
 - Can be used in a `switch` statement, and should C++ gain `inspect` it will work there too.
@@ -545,7 +546,7 @@ for (const i32& i: v) {
 
 The use of `sus::move()` above doesn't stand out, but even it provides safer
 defaults to `std::move()` by rejecting a const input. With `std::move()`
-you just get a copy instead with no visible indication that it occured. And along
+you just get a copy instead with no visible indication that it occurred. And along
 with the principle of building on its own types, I've used `sus::move()` throughout
 the library implementation, showing it was not a problem for template code.
 
@@ -571,7 +572,7 @@ years, which has recently been extended to apply to a new `__is_trivially_reloca
 [builtin](https://clang.llvm.org/docs/LanguageExtensions.html). This allows libc++ to
 perform trivial relocation for annotated types. However the attribute can not be used
 on template classes where the template parameters would affect the trivial-relocatability
-of the type, such as if any type paramaters define a value inside the class.
+of the type, such as if any type parameters define a value inside the class.
 
 The subspace library provides the concepts
 [relocate_one_by_memcpy](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/mem/relocate.h#L115-L117)
