@@ -467,7 +467,7 @@ has `Option<T>` which supports:
 - Holding a reference type, as `Option<T&>`. No nullable pointer required.
 - The [null pointer optimization](https://doc.rust-lang.org/stable/std/option/index.html#representation)
   in a more general form, as the
-  [`sus::NeverValueField` concept](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/mem/never_value.h).
+  [`sus::NeverValueField` concept](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/mem/never_value.h#L137-L144).
 - Safe defaults. Terminates if `unwrap()` is called when there's nothing inside. If moved-from, the
   Option contains nothing, instead of containing an object in a moved-from state.
 - Can be used in a `switch` statement, and should C++ gain `inspect` it will work there too.
