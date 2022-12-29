@@ -74,7 +74,7 @@ working with primitive C++ types has presented itself
 has [safe integer types](https://source.chromium.org/chromium/chromium/src/+/main:base/numerics/;drc=cb4e529012c9dd5e3f5abbfa471f27728d978cc8) and casts, which was a great
 innovation by [@jschuh](https://github.com/jschuh). Rusts integer types take
 this idea and make it extremely ergonomic. A colleague in Chrome Security,
-[@noncombatant](github.com/noncombatant), was exploring the idea of a standard-library-like
+[@noncombatant](https://github.com/noncombatant), was exploring the idea of a standard-library-like
 project, which we called libboring after Boring Pointers. This encoded the idea to
 provide safe arithmetic in a library for projects like Chromium to consume,
 while giving some space to rethink the API. However it didn't gain a lot of traction
