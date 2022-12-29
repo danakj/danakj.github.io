@@ -431,7 +431,7 @@ with type layout.
 Subspace began from asking what it would look like to port the Rust standard library into
 C++20, for all the reasons elaborated above.
 
-I began with [PRINCIPLES.md](https://github.com/chromium/subspace/blob/main/PRINCIPLES.md)
+I began with [PRINCIPLES.md](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/PRINCIPLES.md)
 where I wrote my aspirations for the library. Much like Herb Sutter
 [with cpp2](https://www.youtube.com/watch?v=ELeZAKCN4tY),
 I desire to remove complexity from the language. And that hope is encoded in the
@@ -467,7 +467,7 @@ has `Option<T>` which supports:
 - Holding a reference type, as `Option<T&>`. No nullable pointer required.
 - The [null pointer optimization](https://doc.rust-lang.org/stable/std/option/index.html#representation)
   in a more general form, as the
-  [`sus::NeverValueField` concept](https://github.com/chromium/subspace/blob/main/subspace/mem/never_value.h).
+  [`sus::NeverValueField` concept](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/mem/never_value.h).
 - Safe defaults. Terminates if `unwrap()` is called when there's nothing inside. If moved-from, the
   Option contains nothing, instead of containing an object in a moved-from state.
 - Can be used in a `switch` statement, and should C++ gain `inspect` it will work there too.
@@ -499,7 +499,7 @@ about the NeverValueField optimization and the limitations here.
 
 The Option type plays along with Result in all the same ways as in Rust, and
 they each
-[play along with Iterators](https://github.com/chromium/subspace/blob/main/subspace/option/option_unittest.cc#L1963-L1992)
+[play along with Iterators](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/option/option_unittest.cc#L1963-L1992)
 in the same way too.
 
 ```cpp
