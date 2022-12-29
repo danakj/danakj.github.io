@@ -99,7 +99,7 @@ exploring but ultimately rejecting a proposed RFC for [custom test frameworks](h
 
 But the Rust train hit a bit of a brick wall when we started looking carefully at unsafe Rust
 and aliasing rules. I had the fear of unsafe Rust instilled in me through my work on a
-side-project with [@quisquous](https://github.com/quisquous/cactbot) by developing a
+side-project with [@quisquous](https://github.com/quisquous/cactbot), developing a
 [Rust wrapper around a C API](https://docs.rs/craydate/latest/craydate/) for
 [Playdate](https://play.date/). It was far easier to introduce UB than I had imagined, and
 more imporantly, far harder to find all the places that did so. Miri was no help for a
