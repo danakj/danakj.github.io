@@ -11,11 +11,11 @@ This is a long post, so here's a table of contents if you'd like to jump around.
 To understand Subspace where is going, I believe it's helpful to also understand how it
 began, and what else was tried first. So let's start there.
 
-* TOC
-{:toc}
-
 (Disclaimer: This post is full of opinions, 100% of which are mine and do not represent
 my employer, my colleagues or possibly anyone else.)
+
+* TOC
+{:toc}
 
 ## The land before space-time
 
