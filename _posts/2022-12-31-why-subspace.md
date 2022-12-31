@@ -704,9 +704,10 @@ basically the "c++ safe mode" without your standard library opting in, and witho
 choice to crash or return an Option. Together, these address some part of the bounds safety CVEs,
 though it's not clear how much.
 
-If successful, Subspace would address bounds safety on containers a richer way, but the further
-interventions to deal with pointer arithmetic would be required. Unlike Cpp2, so far at least,
-Subspace will address lifetime safety which is the root cause of the other ~50% of CVEs.
+If successful, Subspace would address bounds safety on containers a richer way, but would also rely
+on a compiler like `cpp2` or C++ Buffer Hardening to deal with pointer arithmetic.
+
+Subspace will also address lifetime safety which is the root cause of the other ~50% of CVEs.
 
 Not mentioned at all in the analysis presented at CppCon22 is Undefined Behaviour. Since
 UB does lead to security vulnerabilities, these bugs must be getting grouped into other
