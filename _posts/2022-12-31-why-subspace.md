@@ -580,7 +580,7 @@ The subspace library provides the concepts
 and
 [relocate_array_by_memcpy](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/mem/relocate.h#L111-L113)
 which determine if a type is trivially relocatable. The determination is made based
-on clang's __is_trivially_relocatable if possible. But it also allows a template
+on clang's `__is_trivially_relocatable` if possible. But it also allows a template
 class to opt into being trivially relocatable based on its template parameters,
 through
 [sus_class_maybe_trivially_relocatable_types()](https://github.com/chromium/subspace/blob/1593f7fbe36b029571c7d4b10459d7c30d04b432/subspace/mem/relocate.h#L139-L185)
