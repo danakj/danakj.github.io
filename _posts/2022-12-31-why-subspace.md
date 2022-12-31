@@ -747,3 +747,5 @@ This is a terrific step and further demonstrates the importance of exclusive
 mutability. It also gives further evidence, alongside Rust, that a production systems
 programming language can require it, and can check for it at compile time. This does
 look like the future of systems development.
+
+4bae52616d8070a7c137d53861002ad822787e8a
