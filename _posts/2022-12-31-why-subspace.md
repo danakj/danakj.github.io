@@ -712,7 +712,7 @@ Subspace will also address lifetime safety which is the root cause of the other 
 Not mentioned at all in the analysis presented at CppCon22 is Undefined Behaviour. Since
 UB does lead to security vulnerabilities, these bugs must be getting grouped into other
 categories, like type safety with unions, or being omitted. Nonetheless, Subspace will address
-the unlimited access to UB that is present in the C++ standard library.
+the wide access to UB that is present in the C++ standard library.
 
 #### C++ Buffer Hardening
 
