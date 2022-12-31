@@ -9,7 +9,8 @@ tags:
 
 ## Why Subspace
 
-Today I want to talk about why I am doing the [Subspace](https://github.chromium/subspace)
+To close out this year, I want to talk about why I am doing the
+[Subspace](https://github.chromium/subspace)
 experiment and where I see it going. The ultimate goal is memory safety in C++, which has
 become quite the hot topic in the last few months.
 
@@ -681,7 +682,7 @@ C++, and incrementally move existing C++ into a safe world.
 I see this work as being very complimentary to [Cpp2](https://www.youtube.com/watch?v=ELeZAKCN4tY),
 introduced at CppCon22. Herb presented this graph of CVE root causes:
 
-![CVE root causes by year](../resources/2022-12-28-why-subspace/cve_cause_by_year_2022-11-12.png)
+![CVE root causes by year](../resources/2022-12-31-why-subspace/cve_cause_by_year_2022-11-12.png)
 - Lifetime safety is ~50% of CVEs.
 - Bounds safety is ~40% of CVEs.
   - However, I believe Herb mixed in all integer overflow with bounds safety based on his claim
@@ -723,7 +724,7 @@ still under review at this time, though implementation has already begun.
 
 I gave a talk about this at a Chrome-hosted memory safety summit in November, from which
 you can see the
-[slides and speaker notes](../resources/2022-12-28-why-subspace/cpp_safe_buffers_2022-11-30.pdf).
+[slides and speaker notes](../resources/2022-12-31-why-subspace/cpp_safe_buffers_2022-11-30.pdf).
 
 This work, like Cpp2, is very complimentary to Subspace. Functions that perform unchecked
 pointer arithmetic today would use the Subspace `unsafe_fn` marker type as a function parameter
