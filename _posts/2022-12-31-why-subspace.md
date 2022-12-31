@@ -705,7 +705,7 @@ choice to crash or return an Option. Together, these address some part of the bo
 though it's not clear how much.
 
 If successful, Subspace would address bounds safety on containers a richer way, but would also rely
-on a compiler like `cpp2` or C++ Buffer Hardening to deal with pointer arithmetic.
+on a compiler like Cpp2 or C++ Buffer Hardening to deal with pointer arithmetic.
 
 Subspace will also address lifetime safety which is the root cause of the other ~50% of CVEs.
 
