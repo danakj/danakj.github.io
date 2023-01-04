@@ -247,10 +247,10 @@ ability to add keywords to the language, there must be another way.
 
 The Rust static analysis that produces memory safety is able to do so through
 local analysis of a single function at a time. This is the only approach that
-scales and can fit in developers heads. Any by requiring functions to depend
+scales and can fit in developers heads. And by requiring functions to depend
 only on local knowledge, this also benefits developers. Humans are more likely
 to make mistakes if they have to understand state or requirements far from the
-code they are changing. New developers to a codebase will have know that such
+code they are changing. New developers to a codebase will have to know that such
 things even exist to look out for.
 
 #### New code is worth addressing
