@@ -216,7 +216,7 @@ We'll try and probably fail to describe it here simply. C++ has a concept of the
 which is returned by `sizeof()`.
 
 Note that while references have the size of a pointer, the `sizeof()` operation will
-return the size of the referrant instead of the reference. For this reason subspace [introduces
+return the size of the referent instead of the reference. For this reason subspace [introduces
 `sus::mem::size_of<T>()`](
 https://github.com/chromium/subspace/blob/21a55214fdd968ba01118697721b708b83540521/subspace/mem/size_of.h#L22-L33)
 which may not be called for a reference type, ensuring that the caller disambiguates what they want.
@@ -308,8 +308,8 @@ The [Clang](https://godbolt.org/z/oejGWP694) and [GCC](https://godbolt.org/z/jjx
 make use of the tail padding in any base class that is not a [Standard-Layout](
 https://en.cppreference.com/w/cpp/language/classes#Standard-layout_class) type.
 
-Recall our earlier example of with tail padding. We mark the `b` member as `private` in order to
-make the type not [Standard-Layout](
+Recall our earlier example of a struct with tail padding. We mark the `b` member as `private` in
+order to make the type not [Standard-Layout](
 https://en.cppreference.com/w/cpp/language/classes#Standard-layout_class).
 
 ```cpp
@@ -375,7 +375,7 @@ https://devblogs.microsoft.com/cppblog/msvc-cpp20-and-the-std-cpp20-switch/) ins
 ##### Sorry but memcpy() with sizeof(T) is dangerous
 
 The outcome of the above is that `memcpy(dest, src, sizeof(T))` is dangerous in generic code, and
-even moreso in C++20. The more correct thing to do is
+even more so in C++20. The more correct thing to do is
 `memcpy(dest, src, sus::mem::data_size_of<T>())`.
 
 #### The Limits of Data size in a Library
@@ -527,13 +527,13 @@ struct sus_if_clang([[clang::trivial_abi]]) S {
 The format of the macro is just like `sus_class_assert_trivial_relocatable_types()` but if any
 type given to the macro is not trivially relocatable, the containing type will also not be.
 
-Specicially, this allows a type to opt into being trivially relocatable if all of its members are
+Specifically, this allows a type to opt into being trivially relocatable if all of its members are
 trivially relocatable, including template parameter types.
 
 This macro is probably only worth using in a template, as otherwise the types are either known to
 be trivially relocatable or to not, and the `sus_class_assert_trivial_relocatable_types()` macro
 could be used in the former case. And since the condition can evaluate to false, the use of
-`[[clang::trivial_abi]]` on such as class type would be a bug.
+`[[clang::trivial_abi]]` on such a class type would be a bug.
 
 ```cpp
 template <class T>
@@ -561,7 +561,7 @@ are themselves trivially relocatable, but the caller can make use of
 
 This macro is probably only worth using in a template, as otherwise the condition should be able to
 be determined by the author. And since the condition can evaluate to false, the use of
-`[[clang::trivial_abi]]` on such as class type would be a bug.
+`[[clang::trivial_abi]]` on such a class type would be a bug.
 
 ```cpp
 template <class T>
