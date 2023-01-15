@@ -233,9 +233,9 @@ sus::mem::data_size_of<T>()
 The "data size" of a type is an idea introduced by [@ssbr](https://github.com/ssbr) and described
 [in the documentation](
 https://github.com/chromium/subspace/blob/f14db213b24067762f2cc8f2a9c4717d42b8229a/subspace/mem/size_of.h#L47-L93)
-for `sus::mem::data_size_of<T>()`. The same concept was then used in his [Rust RFC](
-https://internals.rust-lang.org/t/pre-rfc-allow-array-stride-size/17933) meant to describe this same
-concept to Rust in order to allow Rust to relocate C++ objects soundly.
+for `sus::mem::data_size_of<T>()`. It was then used in his [Rust RFC](
+https://internals.rust-lang.org/t/pre-rfc-allow-array-stride-size/17933) to describe this same
+concept to Rust, in order to allow Rust to relocate C++ objects soundly.
 
 We'll try to describe it here simply. C++ has a concept of the size of an object, which is returned
 by `sizeof()`. The size of an object may include padding, and of particular interest here is the
