@@ -117,7 +117,7 @@ https://quuxplusone.github.io/blog/2018/07/18/announcing-trivially-relocatable/)
 Then in 2021, [@ssbr](https://github.com/ssbr) [re-proposed the `__is_trivially_relocatable(T)`
 builtin](https://reviews.llvm.org/D114732), by making it refer to types that are annotated by the
 Clang attribute `[[clang::trivial_abi]]`. This meant that `__is_trivially_relocatable(T)` would be
-true for that type. Since `std::unique_ptr` is [marked ``[[clang::trivial_abi]]`](
+true for that type. Since `std::unique_ptr` is [marked `[[clang::trivial_abi]]`](
 https://github.com/llvm/llvm-project/blob/c68926d7e68aa56b452ae806709fb16b7c204e68/libcxx/include/__memory/unique_ptr.h#L307),
 this also makes it considered as trivially-relocatable. This more narrow implementation of
 `__is_trivially_relocatable(T)` was ultimately merged in early 2022.
