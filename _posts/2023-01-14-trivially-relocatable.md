@@ -606,6 +606,12 @@ over the execution of the destructor. As such, Subspace provides or does the fol
 
 #### swap(a, b)
 
+```cpp
+template <class T>
+  requires(sus::mem::Move<T>)
+constexpr void swap(T& lhs, T& rhs) noexcept;
+```
+
 The `sus::mem::swap(a, b)` function will swap the contents of `a` and `b` by using `memcpy()` if the
 objects' type is `sus::mem::relocate_by_memcpy()`. This is mentioned in [P1144R6](
 https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1144r6.html#benefit-swap) to show
@@ -614,12 +620,6 @@ implemented with swap, and we can
 [see the same improvements](https://p1144.godbolt.org/z/essMnWq8h) from Subspace's
 `sus::mem::swap()`. Of course, this function will only copy `sus::mem::data_size_of<T>()` many
 bytes to avoid clobbering unrelated types in the process.
-
-```cpp
-template <class T>
-  requires(sus::mem::Move<T>)
-constexpr void swap(T& lhs, T& rhs) noexcept;
-```
 
 #### sus::Vec
 
