@@ -445,14 +445,17 @@ struct S : InheritMyMoveOperation<T>, InheritMyDestructor<T> {
 };
 ```
 
-Here neither the `InheritMyMoveOperator` nor `InheritMyDestructor` have enough information to
+Here neither `InheritMyMoveOperator` nor `InheritMyDestructor` have enough information to
 determine if the type `S` should be trivially relocatable. The member of type `T` can only be present
-in one of the two, and that would dictate the behaviour for `S`. But the property must be determined
-based on the interaction of the move operation and destructor. The same follows for helper
-structures that may not define their own move operations or destructors, such as unions.
+in one of the two, and that would dictate the behaviour for `S` if its simply inferred. The
+ability for `S` to be trivially relocated must be determined based on the interaction of the move
+operation and destructor, of which only the author of `S` has the full picture. The same follows for
+members that provide implementation details and which may not define their own move operations or
+destructors, such as unions.
 
 In this example `S` is trivially relocatable, since the destructor is a no-op after being moved
-from. But we can't tell from its members.
+from. But we can't tell from its members directly. The author needs to vouch for this by opting
+the type `S` into being trivially relocatable:
 
 ```cpp
 template <class T>
@@ -483,7 +486,7 @@ implementation:
 
 ```cpp
 template <class T>
-struct [[trivially_relocatable(sus::relocate_by_memcpy<T>)]] S {
+struct [[trivially_relocatable(sus::mem::relocate_by_memcpy<T>)]] S {
     ...
 };
 ```
