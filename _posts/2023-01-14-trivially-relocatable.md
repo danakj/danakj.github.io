@@ -82,7 +82,7 @@ int main() {
 
 We can see the implied `NoCopy&` in the error produced by GCC, which tries to call `NoCopy(x)` where
 `x` is a `NoCopy&`. The overload resolution promotes the `NoCopy&` to a `const NoCopy&` in order to
-match the copy constructor. There's no similar fallback promotion from `NoCopy&` to `NoCopy&&` to
+match the copy constructor. There's no similar promotion from `NoCopy&` to `NoCopy&&` which would
 match the move constructor, so overload resolution fails to find something callable.
 ```
 <source>:15:17: error: use of deleted function 'constexpr NoCopy::NoCopy(const NoCopy&)'
