@@ -236,18 +236,18 @@ of a type must produce another pointer that is properly aligned for that type. A
 it is that the position of each object in an array must be aligned, so the size must be a multiple
 of its alignment.
 
-In this case the alignment of `S` is going to match the alignment of its most-restricted member,
-which is the `int32_t`. The size and alignment of `int32_t` is 4, so the alignment of `S` is 4.
-Then we know the size of `S` must be a multiple of 4 (it's alignment), that is greater than or
-equal to 5 (the size taken by its fields). The result is that the size of `S` is 8,
-with 3 bytes of tail padding.
-
 ```cpp
 S arr[] = { S(1, 1), S(2, 2), S(3, 3) };
 
 S* p = &arr[0];  // A well-aligned pointer.
 p += 1; // Increments the pointer by the size of `S`. Must be well-aligned again.
 ```
+
+In this case the alignment of `S` is going to match the alignment of its most-restricted member,
+which is the `int32_t`. The size and alignment of `int32_t` is 4, so the alignment of `S` is 4.
+Then we know the size of `S` must be a multiple of 4 (it's alignment), that is greater than or
+equal to 5 (the size taken by its members). The result is that the size of `S` is 8,
+with 3 bytes of tail padding.
 
 Given that we understand the size of a type, the "data size" is the actual size of the data
 inside the type _excluding tail padding_. So the data size of `S` above would be `5`, which is
