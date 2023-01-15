@@ -218,14 +218,8 @@ for `sus::mem::data_size_of<T>()`. The same concept was then used in his [Rust R
 https://internals.rust-lang.org/t/pre-rfc-allow-array-stride-size/17933) meant to describe this same
 concept to Rust in order to allow Rust to relocate C++ objects soundly.
 
-We'll try and probably fail to describe it here simply. C++ has a concept of the size of an object,
-which is returned by `sizeof()`.
-
-Note that while references have the size of a pointer, the `sizeof()` operation will
-return the size of the referent instead of the reference. For this reason subspace [introduces
-`sus::mem::size_of<T>()`](
-https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/size_of.h#L22-L33)
-which may not be called for a reference type, ensuring that the caller disambiguates what they want.
+We'll try to describe it here simply. C++ has a concept of the size of an object, which is returned
+by `sizeof()`.
 
 The size of an object may include padding, and of particular interest here is the tail padding.
 
@@ -237,7 +231,7 @@ struct S {
 };
 ```
 
-For the above type, `sus::mem::size_of<S>()` is `8`. Why is there tail padding making the size 8
+For the above type, `sizeof(S)` is `8`. Why is there tail padding making the size 8
 instead of 5? The answer is alignment and arrays. In particular, incrementing a pointer by the size
 of a type must produce another pointer that is properly aligned for that type. Another way to put
 it is that the position of each object in an array is at a multiple of its size, so the size must
