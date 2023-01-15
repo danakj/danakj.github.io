@@ -283,7 +283,7 @@ static_assert(sizeof(S) == 1);
 ```
 
 But the language relaxes this specifically for a base class. Here the size of `T` is still 1, even
-thought the size of `S` is also 1:
+though the size of `S` is also 1:
 
 ```cpp
 struct S {};
