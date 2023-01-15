@@ -233,8 +233,8 @@ struct S {
 For the above type, `sizeof(S)` is `8`. Why is there tail padding making the size 8
 instead of 5? The answer is alignment and arrays. In particular, incrementing a pointer by the size
 of a type must produce another pointer that is properly aligned for that type. Another way to put
-it is that the position of each object in an array is at a multiple of its size, so the size must
-produce a well-aligned value.
+it is that the position of each object in an array must be aligned, so the size must be a multiple
+of its alignment.
 
 In this case the alignment of `S` is going to match the alignment of its most-restricted member,
 which is the `int32_t`. The size and alignment of `int32_t` is 4, so the alignment of `S` is 4. So
