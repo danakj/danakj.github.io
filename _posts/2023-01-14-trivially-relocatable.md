@@ -130,9 +130,9 @@ later now, for reasons that are not clear to me.
 
 ### Subspace
 
-In subspace we have a library-only implementation of a concept equivalient to the proposed internal
-[`__libcpp_is_trivially_relocatable`](https://reviews.llvm.org/D119385). We call that concept
-[`sus::mem::relocate_by_memcpy<T>`](
+In subspace we have a public library-only implementation of a concept similar to the proposed
+[`__libcpp_is_trivially_relocatable`](https://reviews.llvm.org/D119385) for libc++. We call that
+concept [`sus::mem::relocate_by_memcpy<T>`](
 https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/relocate.h#L86-L87)
 at this time, though names are subject to change until explicitly stabilized.
 
@@ -639,13 +639,9 @@ again in structures like a flat hash map, in sorting, or inserting into a vector
 
 I really want to thank [@Quuxplusone](https://github.com/Quuxplusone) for his work on
 [P1144R6](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1144r6.html) as I was able to
-generate both a
-[fix](https://github.com/chromium/subspace/pull/194/commits/c51547e96720af9744d0cf9062fea40e54a7cb12)
-and
-[improvement](https://github.com/chromium/subspace/pull/195/commits/0cb6cd0de50fdf4323bec7a61347dad1b2ae90de)
-to the Subspace library while writing this blog post and considering his proposal work. I hope that
-it will make its way into the language in a way that's maximally useful (with the boolean argument
-in `[[trivially_relocatable]]`).
+generate both fixes and improvements to the Subspace library while writing this blog post and
+considering his proposal work. I hope that it will make its way into the language in a way
+that's maximally useful (with the boolean argument in `[[trivially_relocatable]]`).
 
 I also want to thank [@ssbr](https://github.com/ssbr) for his keen insights on "data size" which
 have provided for a sound implementation of trivial relocation in `sus::mem::swap()`.
