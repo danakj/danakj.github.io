@@ -576,9 +576,8 @@ or not. This is useful when the condition is more complex than just whether the 
 are themselves trivially relocatable, but the caller can make use of
 `sus::mem::relocate_by_memcpy<T>` to check members as well.
 
-This macro is probably only worth using in a template, as otherwise the condition should be able to
-be determined by the author. And since the condition can evaluate to false, the use of
-`[[clang::trivial_abi]]` on such a class type would be a bug.
+Since the condition can evaluate to false, the use of `[[clang::trivial_abi]]` on such a class type
+would be a bug.
 
 ```cpp
 template <class T>
