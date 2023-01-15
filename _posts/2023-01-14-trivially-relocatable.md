@@ -216,7 +216,7 @@ The "data size" of a type is an idea introduced by [@ssbr](https://github.com/ss
 https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/size_of.h#L47-L93)
 for `sus::mem::data_size_of<T>()`. The same concept was then used in his [Rust RFC](
 https://internals.rust-lang.org/t/pre-rfc-allow-array-stride-size/17933) meant to describe this same
-concept to Rust in order to allow Rust to relocate C++ objects.
+concept to Rust in order to allow Rust to relocate C++ objects soundly.
 
 We'll try and probably fail to describe it here simply. C++ has a concept of the size of an object,
 which is returned by `sizeof()`.
