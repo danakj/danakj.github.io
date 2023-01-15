@@ -91,7 +91,7 @@ match the move constructor, so overload resolution fails to find something calla
 ```
 
 Note that a type that is trivially copyable, or more precisely
-[trivially-moveable and trivially-destructible](
+[trivially-movable and trivially-destructible](
 https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/relocate.h#L72-L74),
 then it is already trivially relocatable. That handles things like primitives and structs of
 primitives, but we'd like to handle more cases.
