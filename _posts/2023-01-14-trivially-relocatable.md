@@ -219,9 +219,8 @@ https://internals.rust-lang.org/t/pre-rfc-allow-array-stride-size/17933) meant t
 concept to Rust in order to allow Rust to relocate C++ objects soundly.
 
 We'll try to describe it here simply. C++ has a concept of the size of an object, which is returned
-by `sizeof()`.
-
-The size of an object may include padding, and of particular interest here is the tail padding.
+by `sizeof()`. The size of an object may include padding, and of particular interest here is the
+tail padding.
 
 ```cpp
 struct S {
