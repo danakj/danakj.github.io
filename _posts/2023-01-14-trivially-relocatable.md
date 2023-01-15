@@ -302,8 +302,7 @@ static_assert(sizeof(T) == 4);
 
 This presents the first case where the data size of an object matters. If we were to
 `memcpy(&s, &from, sizeof(S))` into an `S*` but it so happens that the object is a `T`, we would
-overwrite one byte of `T::a` with garbage! However if we
-`memcpy(&s, &from, sus::mem::data_size_of<S>())`, then we copy nothing, which is the right thing.
+overwrite one byte of `T::a` with garbage!
 
 The [Clang](https://godbolt.org/z/oejGWP694) and [GCC](https://godbolt.org/z/jjxcMYd3n) (but not
 [MSVC 19](https://godbolt.org/z/7fczM93Gn)) compilers have taken this further, and will generally
