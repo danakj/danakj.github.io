@@ -249,7 +249,7 @@ struct S {
 };
 ```
 
-For the above type, `sizeof(S)` is `8`. Why is there tail padding making the size 8
+For the above type, `sizeof(S)` is 8. Why is there tail padding making the size 8
 instead of 5? The answer is alignment and arrays. In particular, incrementing a pointer by the size
 of a type must produce another pointer that is properly aligned for that type. Another way to put
 it is that the position of each object in an array must be aligned, so the size must be a multiple
