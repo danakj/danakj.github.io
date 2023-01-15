@@ -128,7 +128,7 @@ and avoiding the associated dereferences inside the callee.
 review for 2 years 🤯, and not accepted. He wrote a [blog post about it](
 https://quuxplusone.github.io/blog/2018/07/18/announcing-trivially-relocatable/) also.
 
-Then in 2021, [@ssbr](https://github.com/ssbr) [re-proposed the `__is_trivially_relocatable(T)`
+Then in 2021, [@ssbr](https://github.com/ssbr) re-proposed [the `__is_trivially_relocatable(T)`
 builtin](https://reviews.llvm.org/D114732), by making it refer to types that are annotated by the
 Clang attribute `[[clang::trivial_abi]]`. This meant that `__is_trivially_relocatable(T)` would be
 true for that type. Since `std::unique_ptr` is [marked `[[clang::trivial_abi]]`](
