@@ -49,8 +49,8 @@ C++ makes the story of moving and relocation more tricky in a few ways:
 1. When an object `A` is moved from (ie. another object `B` accesses the object `A` as an rvalue
 reference), the `A` object can enter any possible state as defined by `B`. The only hard requirement
 is that it's valid to run `A`'s destructor, and its `operator=()` if it has one. This makes it very
-difficult to understand what moving any type does. As it's all defined by the receiving type, it can
-mean different things in different places even.
+difficult to understand what moving any object does. As it's all defined by the receiver, it can
+even mean different things with the same types but in different places.
 1. Because of the above, a moved-from object still has to be destroyed, so if it was an lvalue, C++
 has to keep it around and you can keep referring to it, possibly erroniously, after it was moved
 from. This makes relocating impossible in the general case without significantly changing the
@@ -58,8 +58,8 @@ well-established concepts of rvalue references and destructors.
 1. Using an lvalue generates an "lvalue reference" to it. When needed, C++ will automatically copy
 from an lvalue reference for types that support copying. But C++ is unable to promote an "lvalue
 reference" into an "rvalue reference" which is how the language expresses something that can be
-moved from. Thus constructing from an lvalue that can't be copied will simply fail to compile
-instead of moving from the lvalue.
+moved from. Thus constructing or assigning from an lvalue that can't be copied will simply fail to
+compile instead of moving from the lvalue.
 
 ```cpp
 struct Copy {
