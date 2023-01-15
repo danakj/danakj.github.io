@@ -677,3 +677,6 @@ that's maximally useful (with the boolean argument in `[[trivially_relocatable]]
 
 I also want to thank [@ssbr](https://github.com/ssbr) for his keen insights on "data size" which
 have provided for a sound implementation of trivial relocation in `sus::mem::swap()`.
+
+And thanks to [@zetafunction](https://github.com/zetafunction) for his suggestions and review of
+this post.
