@@ -3,6 +3,7 @@ tags:
 - Subspace
 - Union
 - Undefined Behaviour
+- C++
 ---
 
 ## Designing a Tagged Union type in C++/Subspace
@@ -491,3 +492,6 @@ https://github.com/chromium/subspace/pull/99).
 originally.*
 
 *Edit: Fixes in the last example, thanks @nigeltao.*
+
+*Note: The Union type has since been
+[renamed to Choice](https://github.com/chromium/subspace/issues/127).*
