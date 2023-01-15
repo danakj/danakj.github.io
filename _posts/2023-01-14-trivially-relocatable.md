@@ -4,7 +4,7 @@ tags:
 - C++
 ---
 
-## Relocating in C++
+## Trivially Relocatable Types in C++/Subspace
 
 * TOC
 {:toc}
@@ -13,7 +13,8 @@ I read a [blog post](https://quuxplusone.github.io/blog/2023/01/13/embed-and-ini
 about `#embed` and initializer lists today, and was pleasantly surprised to find a reference to
 [P1144R6 Object relocation in terms of move plus destroy](
 https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1144r6.html) which I was previously
-unaware of.
+unaware of. The Subspace library makes use of trivially relocating objects when possible, and it's
+nice to see some work on bringing this idea into the core language.
 
 Relocatable objects is a key property of Rust types and allows for efficient code generation. When
 an object is relocatable, it means that the combination of "move construction" and "destruction"
