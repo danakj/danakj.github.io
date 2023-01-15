@@ -6,9 +6,6 @@ tags:
 
 ## Trivially Relocatable Types in C++/Subspace
 
-* TOC
-{:toc}
-
 I read a [blog post](https://quuxplusone.github.io/blog/2023/01/13/embed-and-initializer-lists/)
 about `#embed` and initializer lists today, and was pleasantly surprised to find a reference to
 [P1144R6 Object relocation in terms of move plus destroy](
@@ -77,7 +74,7 @@ int main() {
     NoCopy n;
 
     Copy c2 = c;  // Automatically copies from the implied `Copy&` reference.
-    NoCopy n2 = n;  // Can not copy from `NoCopy&` and will not choose to move it.
+    NoCopy n2 = n;  // Cannot copy from `NoCopy&` and will not choose to move it.
 }
 ```
 
@@ -87,8 +84,8 @@ match the copy constructor. There's no similar promotion from `NoCopy&` to `NoCo
 match the move constructor, so overload resolution fails to find something callable.
 ```
 <source>:15:17: error: use of deleted function 'constexpr NoCopy::NoCopy(const NoCopy&)'
-   15 |     NoCopy n2 = n;  // Can not copy from `NoCopy&` and will not choose to move it.
-      |                 ^
+   15 | NoCopy n2 = n;  // Cannot copy from `NoCopy&` and will not choose to move it.
+      |             ^
 ```
 
 The [auto_ptr](https://en.cppreference.com/w/cpp/memory/auto_ptr) type attempted to play with moving
