@@ -250,7 +250,7 @@ equal to 5 (the size taken by its members). The result is that the size of `S` i
 with 3 bytes of tail padding.
 
 Given that we understand the size of a type, the "data size" is the actual size of the data
-inside the type _excluding tail padding_. So the data size of `S` above would be `5`, which is
+inside the type _excluding tail padding_. So the data size of `S` above would be 5, which is
 the number of bytes occupied by its members `int32_t a` and `int8_t b`.
 
 When the "data size" of a type differs from its "size", it becomes a [potentially overlapping type](
