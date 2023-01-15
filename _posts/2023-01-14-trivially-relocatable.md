@@ -253,10 +253,12 @@ Given that we understand the size of a type, the "data size" is the actual size 
 inside the type _excluding tail padding_. So the data size of `S` above would be 5, which is
 the number of bytes occupied by its members `int32_t a` and `int8_t b`.
 
-When the "data size" of a type differs from its "size", it becomes a [potentially overlapping type](
-https://quuxplusone.github.io/blog/2018/07/13/trivially-copyable-corner-cases/).
-
 #### Why do we care about data size?
+
+We care about "data size" because
+when the "data size" of a type differs from its "size", it becomes a
+[potentially overlapping type](
+https://quuxplusone.github.io/blog/2018/07/13/trivially-copyable-corner-cases/).
 
 It's very common to write code that will `memcpy()` a type based on its size. Something like:
 
