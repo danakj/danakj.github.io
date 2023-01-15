@@ -98,9 +98,9 @@ primitives, but we'd like to handle more cases.
 
 ### Trivially Relocatable for Libraries
 
-While we can't expect that `a = b` does a relocation, as the author of a library like (Subspace)[
-https://github.com/chromium/subspace], we can still perform relocation instead of move + destroy
-inside our library types.
+While we can't expect that `a = b` could do a relocation in C++, as the author of a library like
+(Subspace)[https://github.com/chromium/subspace], we can still perform relocation instead of
+move + destroy inside our library types.
 
 ### Clang and libc++
 
