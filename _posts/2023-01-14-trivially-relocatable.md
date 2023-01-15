@@ -311,7 +311,7 @@ https://en.cppreference.com/w/cpp/language/classes#Standard-layout_class) type.
 
 Recall our earlier example of a struct with tail padding. We mark the `b` member as `private` in
 order to make the type not [Standard-Layout](
-https://en.cppreference.com/w/cpp/language/classes#Standard-layout_class).
+https://en.cppreference.com/w/cpp/language/classes#Standard-layout_class):
 
 ```cpp
 struct S {
@@ -323,14 +323,15 @@ struct S {
 static_assert(sizeof(S) == 8);
 ```
 
-When we make a subclass of `S`, the compiler is entitled to place members into the tail padding of
-`S`.
+Then if we make a subclass of `S`, the compiler is entitled to place members into the tail padding
+of `S`, as we see in `T` below:
 
 ```cpp
 struct T : S {
     int8_t c;
     // 2 bytes of tail padding.
 };
+static_assert(sizeof(S) == 8);
 static_assert(sizeof(T) == 8);
 ```
 
@@ -343,13 +344,14 @@ padding.
 
 ##### The `[[no_unique_address]]` attribute
 
-C++20 introduces the `[[no_unique_address]]` attribute which can appear on a class type's member
-declaration. It tells the compiler to allow the member's tail padding to be used by the following
+C++20 introduces the `[[no_unique_address]]` attribute which can appear on a class member
+declaration. It tells the compiler to allow the member's tail padding to be used by later
 members.
 
-This new attribute allows us to compose a new type with a member `S` that makes use of its tail
-padding. Here we use the same non-Standard-Layout type `S` from the previous section. We add another
-member below `S` but the size of `T` [is no larger](https://godbolt.org/z/GhbvTaecM) because the
+This new attribute allows us to compose a new type with a member `S` and which makes use of the tail
+padding in `S`. Here we use the same non-Standard-Layout type `S` from the previous section.
+We add another member below `S` but the size of `T`
+[is again no larger than S](https://godbolt.org/z/GhbvTaecM) because the
 member `T::c` has been located in the tail padding of `S`.
 
 ```cpp
@@ -358,6 +360,7 @@ struct T {
     int8_t c;
     // 2 bytes of tail padding.
 };
+static_assert(sizeof(S) == 8);
 static_assert(sizeof(T) == 8);
 ```
 
@@ -367,9 +370,11 @@ we will copy the tail padding of `from` into `T::c`, clobbering its value with g
 if we `memcpy(&s, &from, sus::mem::data_size_of<S>())` then we copy only 5 bytes (the `int32_t a`
 and `int8_t b`) into `s` and avoid clobbering anything in its tail padding.
 
-However, as in the [base class example](#base-classes), MSVC 19
+Since this behaviour is all implementation defined, we have unfortunate differences between
+compilers however, which can make testing for behaviour tricky. As in the
+[base class example](#base-classes), MSVC 19
 [does not](https://godbolt.org/z/TxoP4h9jY) make use of the tail padding in `S`
-and the size of `T` will be 12. This [also holds](https://godbolt.org/z/x6szhYPxo) when
+and the size of `T` will be 12 as a result. This [also holds](https://godbolt.org/z/x6szhYPxo) when
 using the compiler-specific [`[[msvc::no_unique_address]]` attribute](
 https://devblogs.microsoft.com/cppblog/msvc-cpp20-and-the-std-cpp20-switch/) instead.
 
