@@ -103,7 +103,7 @@ The one case where a type is trivially relocatable in the language today is when
 copyable, as this is defined to allow the type to be copied with `memcpy()`. From that we derive
 that a type can be, more precisely, trivially relocatable if it is
 [trivially-movable and trivially-destructible](
-https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/relocate.h#L72-L74).
+https://github.com/chromium/subspace/blob/f14db213b24067762f2cc8f2a9c4717d42b8229a/subspace/mem/relocate.h#L72-L74).
 Trivial destructors are a no-op, and trivially moving depends only on trivial operations, which
 perform the same function as a trivial copy. This handles things like primitives and structs of
 primitives, but we'd like to handle more cases.
@@ -145,7 +145,7 @@ later now, for reasons that are not clear to me.
 In subspace we have a public library-only implementation of a concept similar to the proposed
 [`__libcpp_is_trivially_relocatable`](https://reviews.llvm.org/D119385) for libc++. We call that
 concept [`sus::mem::relocate_by_memcpy<T>`](
-https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/relocate.h#L86-L87)
+https://github.com/chromium/subspace/blob/f14db213b24067762f2cc8f2a9c4717d42b8229a/subspace/mem/relocate.h#L86-L87)
 at this time, though names are subject to change until explicitly stabilized.
 
 The implementation of the concept looks like the following:
@@ -230,7 +230,7 @@ sus::mem::data_size_of<T>()
 
 The "data size" of a type is an idea introduced by [@ssbr](https://github.com/ssbr) and described
 [in the documentation](
-https://github.com/chromium/subspace/blob/082a4b5ff09860d818f6f9cf10603b3056849c13/subspace/mem/size_of.h#L47-L93)
+https://github.com/chromium/subspace/blob/f14db213b24067762f2cc8f2a9c4717d42b8229a/subspace/mem/size_of.h#L47-L93)
 for `sus::mem::data_size_of<T>()`. The same concept was then used in his [Rust RFC](
 https://internals.rust-lang.org/t/pre-rfc-allow-array-stride-size/17933) meant to describe this same
 concept to Rust in order to allow Rust to relocate C++ objects soundly.
@@ -411,7 +411,7 @@ maximum data size of all its members, but that is beyond the scope of what a lib
 unfortunately.
 
 For that reason, the implementation of `sus::mem::data_size_of<T>()` on a union type
-[returns 0](https://github.com/chromium/subspace/blob/21a55214fdd968ba01118697721b708b83540521/subspace/mem/__private/data_size_finder.h#L61-L65).
+[returns 0](https://github.com/chromium/subspace/blob/f14db213b24067762f2cc8f2a9c4717d42b8229a/subspace/mem/__private/data_size_finder.h#L61-L65).
 And since a data size of 0 is returned for an unknown data size, `sus::mem::relocate_by_memcpy`
 requires a non-zero data size.
 
@@ -517,12 +517,15 @@ The Subspace library provides a mechanism to do so, but at the library level ins
 compiler.
 We provide 4 macros that can opt a class type into being trivially relocatable.
 
-#### sus_class_assert_trivial_relocatable_types(unsafe_fn, types...)
+#### sus_class_trivially_relocatable(unsafe_fn, types...)
 
-By using the `sus_class_assert_trivial_relocatable_types()` macro in a
-class definition, the class is marked unconditionally as trivially relocatable. This is similar
-to the `[[clang::trivial_abi]]` attribute, and whenever it appears it would be ideal to also mark
-the class `[[clang::trivial_abi]]`. By specifying both, the type will:
+By using the `sus_class_trivially_relocatable()` macro in a
+class definition, the class is marked unconditionally as trivially relocatable. It receives as
+arguments a list of types, which should typically be the types of all data members in the class in
+order to assert that they are all trivially relocatable as well.
+
+This is similar to the `[[clang::trivial_abi]]` attribute, and whenever it appears it would be ideal
+to also mark the class `[[clang::trivial_abi]]`. By specifying both, the type will:
 * Be trivial for the purpose of passing under Clang.
 * Be opted into trivial relocation in the Subspace library across all compilers.
 
@@ -540,17 +543,17 @@ macro.
 struct sus_if_clang([[clang::trivial_abi]]) S {
     Thing<int> thing;
     int i;
-    sus_class_assert_trivial_relocatable_types(
+    sus_class_trivially_relocatable(
         unsafe_fn,
         decltype(thing),
         decltype(i));
 };
 ```
 
-#### sus_class_trivial_relocatable(unsafe_fn)
+#### sus_class_trivially_relocatable_unchecked(unsafe_fn)
 
-The simplest but most risky macro is `sus_class_trivial_relocatable()`. This macro is like
-`sus_class_assert_trivial_relocatable_types()` but without the additional help of the assertion
+The simplest but most risky macro is `sus_class_trivially_relocatable_unchecked()`. This macro is like
+`sus_class_trivially_relocatable()` but without the additional help of the assertion
 against the member types. When using this macro, the type should also be annotated with the
 `[[clang::trivial_abi]]` attribute.
 
@@ -558,20 +561,22 @@ against the member types. When using this macro, the type should also be annotat
 struct sus_if_clang([[clang::trivial_abi]]) S {
     Thing<int> thing;
     int i;
-    sus_class_trivial_relocatable(unsafe_fn);
+    sus_class_trivially_relocatable_unchecked(unsafe_fn);
 };
 ```
 
-#### sus_class_maybe_trivial_relocatable_types(unsafe_fn, types...)
+#### sus_class_trivially_relocatable_if_types(unsafe_fn, types...)
 
-The format of the macro is just like `sus_class_assert_trivial_relocatable_types()` but if any
-type given to the macro is not trivially relocatable, the containing type will also not be.
+The format of the `sus_class_trivially_relocatable_if_types()` macro is just like
+`sus_class_trivially_relocatable()` but if any type given to the macro is not trivially relocatable,
+the containing class will also not be.
 
 Specifically, this allows a type to opt into being trivially relocatable if all of its members are
-trivially relocatable, including template parameter types.
+trivially relocatable, including template parameter types, and to avoid incorrectly being marked
+trivially relocatable if any member is not.
 
 This macro is probably only worth using in a template, as otherwise the types are either known to
-be trivially relocatable or to not, and the `sus_class_assert_trivial_relocatable_types()` macro
+be trivially relocatable or to not, and the `sus_class_trivially_relocatable()` macro
 could be used in the former case. And since the condition can evaluate to false, the use of
 `[[clang::trivial_abi]]` on such a class type would be a bug.
 
@@ -580,20 +585,20 @@ template <class T>
 struct S {
     Thing<T> thing;
     T t;
-    sus_class_maybe_trivial_relocatable_types(
+    sus_class_trivially_relocatable_if_types(
         unsafe_fn,
         decltype(thing),
         decltype(t));
 };
 ```
 
-The behaviour of `sus_class_maybe_trivial_relocatable_types()` is much like the extensions to
+The behaviour of `sus_class_trivially_relocatable_if_types()` is much like the extensions to
 the compiler proposed in
 [P1144R6](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1144r6.html). 
 
-#### sus_class_trivial_relocatable_value(unsafe_fn, bool)
+#### sus_class_trivially_relocatable_if(unsafe_fn, bool)
 
-The `sus_class_trivial_relocatable_value()` macro receives a boolean argument that will be
+The `sus_class_trivially_relocatable_if()` macro receives a boolean argument that will be
 constant evaluated and used to determine if the type is ultimately marked as trivially relocatable
 or not. This is useful when the condition is more complex than just whether the members of the type
 are themselves trivially relocatable, but the caller can make use of
@@ -607,7 +612,7 @@ template <class T>
 struct S {
     Thing<T> thing;
     T t;
-    sus_class_trivial_relocatable_value(
+    sus_class_trivially_relocatable_if(
         unsafe_fn,
         StuffAbout<T> &&
         sus::mem::relocate_by_memcpy<decltype(thing)> &&
@@ -615,7 +620,7 @@ struct S {
 };
 ```
 
-The `sus_class_trivial_relocatable_value()` macro is most similar to the proposed
+The `sus_class_trivially_relocatable_if()` macro is most similar to the proposed
 `[[trivially_relocatable(bool)]]` attribute in
 [P1144R6](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1144r6.html).
 
