@@ -237,9 +237,10 @@ it is that the position of each object in an array must be aligned, so the size 
 of its alignment.
 
 In this case the alignment of `S` is going to match the alignment of its most-restricted member,
-which is the `int32_t`. The size and alignment of `int32_t` is 4, so the alignment of `S` is 4. So
-its size is a multiple of 4, that is greater than or equal to 5, making its size 8 with 3 bytes of
-tail padding.
+which is the `int32_t`. The size and alignment of `int32_t` is 4, so the alignment of `S` is 4.
+Then we know the size of `S` must be a multiple of 4 (it's alignment), that is greater than or
+equal to 5 (the size taken by its fields). The result is that the size of `S` is 8,
+with 3 bytes of tail padding.
 
 ```cpp
 S arr[] = { S(1, 1), S(2, 2), S(3, 3) };
