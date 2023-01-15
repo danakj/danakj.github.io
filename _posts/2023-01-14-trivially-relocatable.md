@@ -88,9 +88,6 @@ match the move constructor, so overload resolution fails to find something calla
 <source>:15:17: error: use of deleted function 'constexpr NoCopy::NoCopy(const NoCopy&)'
    15 |     NoCopy n2 = n;  // Can not copy from `NoCopy&` and will not choose to move it.
       |                 ^
-<source>:5:8: note: 'constexpr NoCopy::NoCopy(const NoCopy&)' is implicitly declared as deleted because 'NoCopy' declares a move constructor or move assignment operator
-    5 | struct NoCopy {
-      |        ^~~~~~
 ```
 
 Note that a type that is trivially copyable, or more precisely
