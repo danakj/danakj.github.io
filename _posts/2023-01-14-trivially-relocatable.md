@@ -505,8 +505,9 @@ the class `[[clang::trivial_abi]]`. By specifying both, the type will:
 
 The macro must receive the `unsafe_fn` marker type as its first parameter to indicate
 that this requires careful scrutiny. The author declares that move + destroy can be done through
-memcpy() and it is up to them to get that correct. If the move constructor (or assignment) or the
-destructor must run for correctness, this would introduce bugs and possibly Undefined Behaviour.
+`memcpy()` and it is up to them to get that correct. If the move constructor, move assignment, or
+the destructor must be run for correctness, this would introduce bugs and possibly Undefined
+Behaviour.
 
 Since the macro requires that the types are trivially relocatable, it makes sense to use in
 non-template classes. Typically the type of every non-static data member would be passed to the
