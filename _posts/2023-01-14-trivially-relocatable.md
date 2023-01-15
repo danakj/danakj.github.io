@@ -291,8 +291,8 @@ struct T : public S {};
 static_assert(sizeof(T) == 1);
 ```
 
-And to be clear that it's the _base_ class which has a zero size, here the size of `T` is 4, which
-is the size of its member. There is no extra byte for its base class `S`:
+And to be clear that it's the _base_ class which has a zero size, in the following, the size
+of `T` becomes 4, which is the size of its member. There is no extra byte for its base class `S`:
 
 ```cpp
 struct S {};
