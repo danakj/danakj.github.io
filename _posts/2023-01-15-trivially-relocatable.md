@@ -14,6 +14,11 @@ unaware of. The [Subspace library](https://github.com/chromium/subspace) makes u
 trivially relocating objects when possible, and it's nice to see work continuing toward bringing
 this idea into the core language.
 
+Let's take a look at trivially relocatable types in C++.
+
+* TOC
+{:toc}
+
 Relocatable objects are a key property of Rust types and allow for efficient code generation. When
 an object is relocatable, it means that the combination of "move to destination" and
 "destroy source" can be combined into a single `memcpy()`. And LLVM loves to optimize
