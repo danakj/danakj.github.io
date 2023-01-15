@@ -209,6 +209,10 @@ Any single one of the above conditions tells Subspace that `T` may be trivially 
 regardless of which was true, the type `T` must also have a non-zero "data size", which is checked
 by `sus::mem::data_size_of<T>()`.
 
+```cpp
+sus::mem::data_size_of<T>()
+```
+
 #### Data size
 
 The "data size" of a type is an idea introduced by [@ssbr](https://github.com/ssbr) and described
@@ -391,8 +395,8 @@ depending on its active member. If we could enumerate the members of a union, we
 maximum data size of all its members, but that is beyond the scope of what a library can achieve
 unfortunately.
 
-For that reason, the subspace implementation of data_size_of<T> on a union type [will return 0](
-https://github.com/chromium/subspace/blob/21a55214fdd968ba01118697721b708b83540521/subspace/mem/__private/data_size_finder.h#L61-L65).
+For that reason, the implementation of `sus::mem::data_size_of<T>()` on a union type
+[will return 0](https://github.com/chromium/subspace/blob/21a55214fdd968ba01118697721b708b83540521/subspace/mem/__private/data_size_finder.h#L61-L65).
 This means that a data size of 0 should be treated as unknown, and this explains why we require
 a non-zero data size in `sus::mem::relocate_by_memcpy`.
 
@@ -429,8 +433,11 @@ Here the struct `S` is trivially relocatable if `T` is. But marking the type wit
 proposal [P1144R6](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1144r6.html) does
 something important by adding a boolean expression to the `[[trivially_relocatable]]` attribute.
 This makes it possible to conditionally apply the attribute to different template instantiations of
-a template type. The proposal also automatically infers trivially relocatable from its members, so
-we need a more complex example to see when this matters.
+a template type when opting into being trivially relocatable explicitly.
+
+However, the proposal also automatically infers trivially relocatable from its members, so we
+wouldn't need the attribute at all in the above example. We need a more complex example to see when
+this matters:
 
 ```cpp
 template <class T>
