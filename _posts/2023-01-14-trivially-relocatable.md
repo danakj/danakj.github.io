@@ -140,8 +140,7 @@ The implementation of the concept looks like the following:
 
 ```cpp
 template <class... T>
-concept relocate_by_memcpy =
-    __private::relocate_by_memcpy_helper<T...>::value;
+concept relocate_by_memcpy = __private::relocate_by_memcpy_helper<T...>::value;
 ```
 
 With its inner helper implementation:
