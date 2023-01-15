@@ -18,9 +18,9 @@ trivially relocating objects when possible, and it's nice to see work continuing
 this idea into the core language.
 
 Relocatable objects is a key property of Rust types and allows for efficient code generation. When
-an object is relocatable, it means that the combination of "move construction" and "destruction"
-can be combined into a single `memcpy()`. And LLVM loves to optimize `memcpy()`s, so this leads to
-some really good code generation.
+an object is relocatable, it means that the combination of "move to destination" and
+"destroy source" can be combined into a single `memcpy()`. And LLVM loves to optimize
+`memcpy()`s, so this leads to some really good code generation.
 
 In Rust, _all_ moves are relocations. And any use of an lvalue that is not `Copy` will move
 (relocate) the object.
