@@ -371,7 +371,7 @@ auto [s1, s2] = std::tuple<S, S>(S(), S());
 The structured bindings are implemented by calling `std::get<I>()` for the index `I` of each
 element in the tuple. The call to `std::get<I>()` needs to:
 - Move the element out of the tuple.
-- Not mark the tuple itself as moved-from, so that the next element can be accessed to.
+- But not mark the tuple itself as moved-from, so that the next element can be accessed too.
 
 To do so, the call must receive an rvalue reference to the tuple, as in
 `std::get<I>(std::tuple<S, S>&&)`, to be allowed to move each element out of the tuple. But our
