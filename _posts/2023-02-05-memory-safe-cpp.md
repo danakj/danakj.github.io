@@ -377,7 +377,8 @@ To do so, the call must receive an rvalue reference to the tuple, as in
 `std::get<I>(std::tuple<S, S>&&)`, to be allowed to move each element out of the tuple. But our
 rules above then require the tuple to be considered moved-from, and accessing `std::get<1>()`
 after `std::get<0>()` would be considered a use-after-move. In fact it's certainly possible that
-it _is_ a use after move with a different type, it just happens to be correct for `std::tuple`.
+it _is_ a problematic use-after-move creating aliasing references with a different type, it just
+happens to be made correct for `std::tuple`.
  
 With control over the structured bindings call, which would require a change to the core language,
 the call could instead pass the tuple as an lvalue reference. This would avoid the tuple being
