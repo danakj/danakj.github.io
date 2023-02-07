@@ -337,7 +337,7 @@ destroy an object. That is, you can not move a field out of a struct at all. You
 field as a `std::Option` to avoid any possible use-after-move.
 
 There is yet another way that moves can be hidden from local analysis, that is moving from an lvalue
-reference. The caller to the method below would not know that the object they passed to `f()` was
+reference. The caller to the function below would not know that the object they passed to `f()` was
 moved-from, and would freely use-after-move afterward without any protection from the language.
 
 ```cpp
