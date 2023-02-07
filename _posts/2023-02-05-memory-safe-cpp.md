@@ -284,7 +284,7 @@ if a caller performing a use-after-move.
 
 #### Restricting the language
 
-To make finding use-after-move tractable, we need to restrict the language and reject code that
+To make finding all use-after-move tractable, we need to restrict the language and reject code that
 does not conform to a more limited set of behaviours.
 
 1. Moving from a data member is only allowed in a &&-qualified method. This would mean that either:
@@ -293,6 +293,9 @@ does not conform to a more limited set of behaviours.
      `return s_.take();`.
 2. A function receiving an rvalue reference _must_ move from the reference on all possible
    code paths. This allows the analysis at the caller to remain local.
+
+The first makes moves from an object transitive, so that they are visible locally at any call site.
+The second makes moves into a function/object visible at the call site.
 
 But this isn't yet enough, due to the lack of trivial relocations. We still have aliasing
 references used in the example below. Since moves are really copies in C++, we have a destructor
@@ -329,12 +332,86 @@ rvalue methods did set all the fields to `sus::None` along each codepath.
 Even if accepting the extra runtime and cognitive complexity, this would not be a pleasant language
 to work in.
 
-Rust avoids this problem by making all moves trivial, but also by not allowing one to partially
+Rust avoids this problem by making all moves trivial, but also by making it invalid to partially
 destroy an object. That is, you can not move a field out of a struct at all. You would store the
 field as a `std::Option` to avoid any possible use-after-move.
 
+There is yet another way that moves can be hidden from local analysis, that is moving from an lvalue
+reference. The caller to the method below would not know that the object they passed to `f()` was
+moved-from, and would freely use-after-move afterward without any protection from the language.
+
+```cpp
+struct S { Unlucky* p; };
+
+S f(S& s) { return std::move(s); }
+
+S a;
+S b = f(a);  // `a` is now moved-from, but the caller can't tell.
+// Either `a.p` was made null and we create UB by using it, or `a.p`
+// and `b.p` are now aliasing references to the same object.
+a.p->oh_no();
+```
+
+Thus, another restriction to ensure all moves of local objects are locally visible is needed.
+
+4. It is invalid to move from an lvalue reference.
+
+Each of these rules restricts the language from what would otherwise be valid C++ code, with the
+goal of making it locally possible to observe moving from local objects.
+
+#### Breaking the language
+
+However, these rules makes it impossible to implement core behaviour of the C++ language. For
+example, a tuple could no longer be moved into structured bindings.
+
+```cpp
+auto [s1, s2] = std::tuple<S, S>(S(), S());
+```
+
+The structured bindings are implemented by calling `std::get<I>()` for the index `I` of each
+element in the tuple. The call to `std::get<I>()` needs to:
+- Move the element out of the tuple.
+- Not mark the tuple itself as moved-from, so that the next element can be accessed to.
+
+To do so, the call must receive an rvalue reference to the tuple, as in
+`std::get<I>(std::tuple<S, S>&&)`, to be allowed to move each element out of the tuple. But our
+rules above then require the tuple to be considered moved-from, and accessing `std::get<1>()`
+after `std::get<0>()` would be considered a use-after-move. In fact it's certainly possible that
+it _is_ a use after move with a different type, it just happens to be correct for `std::tuple`.
+ 
+With control over the structured bindings call, which would require a change to the core language,
+the call could instead pass the tuple as an lvalue reference. This would avoid the tuple being
+considered moved-from before reading from the second element. However then the elements inside the
+tuple can't be moved from, so the tuple would need to hold each element in a `sus::Option` or
+equivalent, which would grow each element in the Tuple by at least a bool, and up to doubling each
+element's size. But this is out of scope for a library or static analysis as it would require
+changing the function call made by structured bindings, which is [dictated by the spec](
+https://en.cppreference.com/w/cpp/language/structured_binding#Case_2:_binding_a_tuple-like_type).
+
+As such, the language is in conflict with local analysis of use-after-move, and requires types to
+be used after being accessed as an rvalue reference for core language behaviour.
+
+### Aliasing everywhere
+
+Preventing aliasing with a mutable reference to an object in C++ gets beyond the scope of what a
+library or a static analysis (like a compiler that restricts the language) can accomplish without
+breaking core language functionality.
+
+To get there would require:
+- Real moves, via trivial relocations, so that moves do not leave behind a copy.
+- Built-in primitive tuple types and destructuring that avoids intermediate
+  object states during destructuring. The tuple should be consumed by its destructuring into
+  structured bindings.
+
+As long as there are references that alias with a mutable reference to an object, read and write
+safety can be broken, and the language is not safe in this regard. Memory safety bugs will happen,
+and whole program understanding is required to always make correct changes to code that
+interacts with any reference that _may_ alias.
+
+### Const is a lie.
+
+
+
+
 NEXT UP:
-- possible to move out of lvalue references. oh no.
-- but also required. std::get on sus::Tuple.
-- moving out of fields. move(move(a).b()).
 - transitive consttttt ahahaha.
