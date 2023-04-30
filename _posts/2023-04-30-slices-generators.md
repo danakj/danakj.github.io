@@ -270,8 +270,9 @@ TEST(CompatRanges, InputRange) {
 
 # Closures/Callable concepts
 
-`Fn`, `FnMut` and `FnOnce` are now concepts, not concrete types, just as the same are traits in
-Rust. Most notably they manage to take a function signature syntax in their template arguments while
+`Fn`, `FnMut` and `FnOnce` are now concepts, not concrete types, just as the same are [traits in
+Rust](https://doc.rust-lang.org/stable/std/ops/trait.Fn.html).
+Most notably they manage to take a function signature syntax in their template arguments while
 still producing useful errors when given a non-matching type. This was rather non-trivial as C++
 concepts do not allow partial specialization, and referring to structs in a concept stops good error
 propogation.
