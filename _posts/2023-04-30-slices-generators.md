@@ -267,3 +267,50 @@ TEST(CompatRanges, InputRange) {
   EXPECT_EQ(e, 7);
 }
 ```
+
+# Closures/Callable concepts
+
+`Fn`, `FnMut` and `FnOnce` are now concepts, not concrete types, just as the same are traits in
+Rust. Most notably they manage to take a function signature syntax in their template arguments while
+still producing useful errors when given a non-matching type. This was rather non-trivial as C++
+concepts do not allow partial specialization, and referring to structs in a concept stops good error
+propogation.
+
+Also the template arguments allow some simple pattern matching.
+`sus::fn::Fn<sus::fn::Anything(i32)> auto` will match any const-callable thing that takes an `i32`,
+regardless of its return type. And `sus:fn::Fn<sus::fn::NonVoid(i32)> auto` will match any
+const-callable thing that takes an `i32` input and produces some non-void output.
+
+I spent a week on [this rewrite](https://github.com/chromium/subspace/pull/220), which also
+introduced lightwight `FnRef`, `FnMutRef` and `FnOnceRef` that are concrete types satifying the
+above concepts and which refer to a function pointer or callable object like a lambda without
+owning any state. These types are super useful to receive a callable that will be used during a
+function but not stored beyond the lifetime of the function. And they don't require your function
+to become a template, which will help keep down compile times.
+
+Most Subspace methods that receive a callable now use these "Ref" implementation types instead of
+the concepts. Though limitations of type deduction still mean we need to use concept types in some
+cases, where the callable's type signature is templated. For example with `Option::map()` where the
+return type of the callable determines the output of the `map()` function, using `FnRef<R(T&&)>`
+means the compiler can not deduce the `R` type:
+```
+note: 'Option<R> Option<int>::map(sus::fn::FnRef<R(T &&),>) noexcept &&':
+  could not deduce template argument for 'sus::fn::FnRef<R(T &&),>'
+```
+
+The result is some pretty unweildly C++ concept bounds, and there's a ton of space for C++ to
+improve here in the future:
+```cpp
+  template <::sus::fn::FnOnce<::sus::fn::NonVoid(T&&)> MapFn, int&...,
+            class R = std::invoke_result_t<MapFn&&, T&&>>
+  constexpr Option<R> map(MapFn&& m) && noexcept {...}
+```
+
+The old stateful, heap-allocated capturing types have been renamed to `FnBox`, `FnMutBox`, and
+`FnOnceBox` and they still exist for storing a callable past the lifetime of a function. For
+instance, `Iterator::map()` stores its callable as a `FnMutBox` on its output iterator. These
+types exist to try provide guardrails for binding values instead of pointers, but these APIs
+definitely need some love and/or reworking.
+
+Hopefully I will write a longer post about how the implementation of these concepts works, and the
+evolution of all these types.
