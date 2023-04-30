@@ -4,7 +4,7 @@ tags:
 - C++
 ---
 
-# Subspace Update: Slices, Vec, and Generators
+# Subspace Update: Slices and Vec, Generators, More Iterators, Std Ranges, Callable concepts
 
 I've spent a few months mostly working on an enormous branch, so Subspace hasn't seen a lot of
 changes on `main`. Today I merged a lot of stuff, which makes it a good time to mention some of the
