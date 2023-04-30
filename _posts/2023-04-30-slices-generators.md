@@ -313,8 +313,8 @@ concepts can be.
 The old stateful, heap-allocated capturing types have been renamed to `FnBox`, `FnMutBox`, and
 `FnOnceBox` and they still exist for storing a callable past the lifetime of a function. For
 instance, `Iterator::map()` stores its callable as a `FnMutBox` on its output iterator. These
-types exist to try provide guardrails for binding values instead of pointers, but these APIs
-definitely need some love and/or reworking.
+types reason for being is to try provide guardrails for binding values instead of pointers, but
+these APIs definitely need some love and/or reworking.
 
 Hopefully I will write a longer post about how the implementation of these concepts works, and the
 evolution of all these types.
