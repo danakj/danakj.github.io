@@ -18,8 +18,8 @@ Today in Subspace I finished and merged all the methods for [Slice](
 https://danakj.github.io/subspace-docs/sus-containers-Slice.html) and [SliceMut](
 https://danakj.github.io/subspace-docs/sus-containers-SliceMut.html).
 
-`Slice<T>` is a const reference to a contiguous range of `const T*` (like a `std::span<const T>`),
-while `SliceMut<T>` is a mutable reference to a contiguous range of `T*` (like a `std::span<T>`).
+`Slice<T>` is a const reference to a contiguous range of `const T` (like a `std::span<const T>`),
+while `SliceMut<T>` is a mutable reference to a contiguous range of `T` (like a `std::span<T>`).
 Why are these different types? First, this allows the default, shorter wording to be the safer and
 preferred one: const is default. Secondly, it's not possible to `sort()` on a Slice, but if they
 were one type, it would require all methods that require mutable access to the pointed-to range to
