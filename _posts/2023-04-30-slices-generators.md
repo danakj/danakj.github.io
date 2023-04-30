@@ -24,10 +24,10 @@ Why are these different types? First, this allows the default, shorter wording t
 preferred one: const is default. Secondly, it's not possible to `sort()` on a Slice, but if they
 were one type, it would require all methods that require mutable access to the pointed-to range to
 be qualified with `requires (!std::is_const_v<T>)`. The API gets harder to understand and to use as
-a result. This way, the SliceMut has methods that allow mutation, and Slice simply does not.
+a result. This way, the SliceMut type has methods that allow mutation, and Slice simply does not.
 
 There are 95 methods in all! I started working on these two months ago on March 3. The
-Pull Request is here: https://github.com/chromium/subspace/pull/218/.
+Pull Request is here: [https://github.com/chromium/subspace/pull/218/](https://github.com/chromium/subspace/pull/218/).
 
 I'm kinda relieved to finally get through them all. There's lots of useful stuff in there though,
 including:
@@ -42,20 +42,21 @@ including:
 * swapping
 * reordering
 
-These methods all appear on [Vec](https://danakj.github.io/subspace-docs/sus-containers-Vec.html))
-as well, which is an owning Slice. In addition, Vec is usable in all places that a Slice or SliceMut
-(if the Vec is not const) would be usable (except as an rvalue, which would allow references to
-escape from a temporary object). And similarly SliceMut is usuable anywhere a Slice would be.
+These methods all appear on [`Vec`](https://danakj.github.io/subspace-docs/sus-containers-Vec.html)
+as well, which is an owning Slice. In addition, `Vec` is usable in all places that a `Slice` or
+`SliceMut` (if the `Vec` is not const) would be usable (except as an rvalue, which would allow
+references to escape from a temporary object).
+And similarly `SliceMut` is usuable anywhere a `Slice` would be.
 
-There's lots of room for performance tuning, I am sure, and some TODOs left in this regard. As
-always everything comes with unit tests, so making future changes can be done with confidence.
+I am sure There's lots of room for performance tuning, and some TODOs left in this regard. As
+always *everything comes with unit tests*, so making future changes can be done with confidence.
 
 # Range literals
 
 In the C++ standard library, the `std::span` type allows subslicing through the `subspan(offset)`
 and `subspan(offset, count)` overloads (implemented as a default argument). Then,
-`s.subspan(offset)` in C++ is equivalent to `s[offset..]` in Rust and `s.subspan(offset, count)` in
-C++ is equivalent to `s[offset..(offset + count)]` in Rust.
+`s.subspan(offset)` in C++ is equivalent to `&s[offset..]` in Rust and `s.subspan(offset, count)` in
+C++ is equivalent to `&s[offset..(offset + count)]` in Rust.
 
 But Rust is more expressive here. Its [RangeBounds](
 https://doc.rust-lang.org/stable/std/ops/trait.RangeBounds.html) can describe any possible range
@@ -94,7 +95,7 @@ that starts at 5, but ends at `x`: `"5.."_r.end_at(x)`.
 
 Certainly this is nowhere as nice as Rust's `5..x` syntax. Maybe C++ can give us that one day. But I
 want to provide the tools to write literal ranges when code authors would benefit from doing so, and
-the Range type aggregate constructors are always available too.
+the range type aggregate constructors are always available too.
 
 Bringing this back to slices, a Vec can produce a slice for any range using its `operator[]`,
 `get_range()` or `get_range_mut()`:
@@ -124,7 +125,7 @@ methods, but as a single function, instead of having to write a whole type. This
 coroutines, as they allow writing a generator function to modify iteration.
 
 This provides a means to write "control flow" into an iteration, in the spirit of
-https://without.boats/blog/the-registers-of-rust/.
+[https://without.boats/blog/the-registers-of-rust/](https://without.boats/blog/the-registers-of-rust/).
 
 Here's the generator unit tests to demonstrate what I mean.
 
@@ -174,27 +175,24 @@ TEST(IterGenerator, ComposeIntoGenerator) {
 Micro post: [https://sunny.garden/@blinkygal/110223458907555381](https://sunny.garden/@blinkygal/110223458907555381)
 
 I also have added `Iterator::enumerate`. Adding the `sus::iter::Enumerate` type was fairly trivial,
-but in order to iterate backwards, as a `sus::iter::DoubleEndedIterator`, it needs to know the total
-length of the iteration sequence. That is, the iterator needs to also be a
+but in order to iterate backwards as a `sus::iter::DoubleEndedIterator`, it needs to know the total
+length of the iteration sequence. That is, the input iterator needs to also be a
 `sus::iter::ExactSizeIterator`. While these concepts were already present in the library, I had not
 plumbed them through composing iterator types. So that is now done.
 
-This means calling `filter()`, or `map()` on a `DoubleEndedIterator` will produce another
-`DoubleEndedIterator`. And when possible, such as when calling `rev()` on an `ExactSizeIterator`,
-the resulting reversed iterator will also be an `ExactSizeIterator`. And in the case of
-`enumerate()`, if the input iterator was a `DoubleEndedIerator` and `ExactSizeIterator`, the output
-iterator will also be.
+This means, for example, calling `filter()` or `map()` on a `DoubleEndedIterator` will produce
+another `DoubleEndedIterator`. And when possible, such as when calling `rev()` on an
+`ExactSizeIterator`, the resulting reversed iterator will also be an `ExactSizeIterator`.
+And in the case of `enumerate()`, if the input iterator was a `DoubleEndedIerator` and
+`ExactSizeIterator`, the output iterator will also be.
 
-Notably, iterators over an Vec or Array are double-ended and have an exact known size and thus
-satisfy these traits.
+Notably, iterators over a `Vec`, `Array` or slice are double-ended and have an exact known size and
+thus satisfy these traits. The same will be true for most
 
 Here's an example where we have an iterator over `1, 2, 3, 4, 5`. It is double-ended and its exact
 size is known. The iterator is reversed with `rev()`, so it will output `5, 4, 3, 2, 1`. Then it
 is composed with `enumerate()` which means each step includes the position in the iteration
 sequence.
-
-The numerics are casted to primitives to print, as I did not yet decide on a path for [integrating
-with streams](https://github.com/chromium/subspace/issues/235) or to otherwise print things.
 
 ```cpp
 auto chars = Vec<char>::with_values('a', 'b', 'c', 'd', 'e');
@@ -223,10 +221,14 @@ auto chars = Vec<char>::with_values('a', 'b', 'c', 'd', 'e');
 }
 ```
 
+Side note: In this example, the `usize` position is casted to a primitive to print, as I did not yet
+decide on a path for [integrating with streams](https://github.com/chromium/subspace/issues/235) or
+to otherwise print things.
+
 ## Stdlib Ranges
 
-Subspace's first stdlib compatability hook with the C++ standard library was added, with conversions
-from sus::iter::Iterator types to C++ ranges.
+Subspace's first major compatability hook with the C++ standard library was added, with conversions
+from `sus::iter::Iterator` types to C++ ranges.
 
 Calling `.range()` on any iterator will produce a `std::ranges::range` output, which satisfies the
 [`std::ranges::input_range`](https://en.cppreference.com/w/cpp/ranges/input_range) concept.
