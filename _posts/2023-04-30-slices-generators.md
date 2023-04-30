@@ -307,6 +307,9 @@ improve here in the future:
   constexpr Option<R> map(MapFn&& m) && noexcept {...}
 ```
 
+The "Ref" types also can't be used in a constexpr context (they rely on reinterpret_cast), but the
+concepts can be.
+
 The old stateful, heap-allocated capturing types have been renamed to `FnBox`, `FnMutBox`, and
 `FnOnceBox` and they still exist for storing a callable past the lifetime of a function. For
 instance, `Iterator::map()` stores its callable as a `FnMutBox` on its output iterator. These
