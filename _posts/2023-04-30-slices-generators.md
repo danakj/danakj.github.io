@@ -12,7 +12,7 @@ new things.
 
 ## Slices and Vec
 
-Micro post: https://sunny.garden/@blinkygal/110289198753682615
+Micro post: [https://sunny.garden/@blinkygal/110289198753682615](https://sunny.garden/@blinkygal/110289198753682615)
 
 Today in Subspace I finished and merged all the methods for [Slice](
 https://danakj.github.io/subspace-docs/sus-containers-Slice.html) and [SliceMut](
@@ -117,7 +117,7 @@ While I was slogging through the slice methods, I also added some exciting itera
 
 ## Generator functions
 
-Micro post: https://sunny.garden/@blinkygal/110044818048764779
+Micro post: [https://sunny.garden/@blinkygal/110044818048764779](https://sunny.garden/@blinkygal/110044818048764779)
 
 It's now possible to write an Iterator that will compose nicely with all the existing Iterator
 methods, but as a single function, instead of having to write a whole type. This is thanks to C++
@@ -171,7 +171,7 @@ TEST(IterGenerator, ComposeIntoGenerator) {
 
 ## Enumerate
 
-Micro post: https://sunny.garden/@blinkygal/110223458907555381
+Micro post: [https://sunny.garden/@blinkygal/110223458907555381](https://sunny.garden/@blinkygal/110223458907555381)
 
 I also have added `Iterator::enumerate`. Adding the `sus::iter::Enumerate` type was fairly trivial,
 but in order to iterate backwards, as a `sus::iter::DoubleEndedIterator`, it needs to know the total
