@@ -215,7 +215,7 @@ your life (which almost certainly you will not know when or if it happens, unles
 ## Making the conversion free
 
 While walking my puppy today, it occured to me that it
-is possible to have that conversion to `std::vector`from `std::span` be free, to generate the
+is possible to have that conversion to `std::vector`from `std::span` be free; to generate the
 same code when calling `take_span()` as when calling `take_vector()`. Well, no okay it's not
 possible with the standard library. But it is possible [with the Subspace library](
 https://github.com/chromium/subspace/pull/246).
