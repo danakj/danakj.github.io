@@ -39,7 +39,9 @@ system likely [doesn't have this enabled](https://godbolt.org/z/Y4n99dx5j). At l
 (Chrome has since Q1 2023, but I don't know about any other Browser,
 [Chromium-derived or not](https://chromium.googlesource.com/chromium/src/+/master/docs/security/faq.md#how-can-i-know-which-fixes-to-include-in-my-downstream-project)).
 
-The same proposal introduces a warning in Clang which you can enable to ban pointer arithmetic
+The same proposal introduces the [-Wunsafe-buffer-usage](
+https://clang.llvm.org/docs/DiagnosticsReference.html#wunsafe-buffer-usage)
+warning in Clang which you can enable to ban pointer arithmetic and
 which has the intention of converting all those native pointers into view types, which pair a size
 with the pointer through the type system. See, the problem is that even if you enable bounds
 checking in std::span and std::string_view, the majority of C++ code really doesn't use those types,
