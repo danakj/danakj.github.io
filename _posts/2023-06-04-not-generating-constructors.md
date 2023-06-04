@@ -8,9 +8,9 @@ tags:
 
 # Avoiding Death by a Thousand Constructors
 
-tl;dr We are going to see how Subspace types allow a zero-cost transition from native pointers to
+**tl;dr We are going to see how Subspace types allow a zero-cost transition from native pointers to
 bounded view types (which means we can get memory safety) that can't be achieved with the standard
-library types.
+library types.**
 
 Long ago, C and C++ programmers passed around pointers to arrays, hopefully with a size to indicate
 how large the array was in order avoid reading/writing out of bounds, though frequently not. This is
