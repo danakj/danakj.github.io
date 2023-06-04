@@ -79,7 +79,7 @@ These assumptions are easily wrong when working with view types that encode a bo
 array. Calling these functions requires converting that bounded string view into a `std::string`
 which involves generating a constructor, and quite possibly a heap allocation. But
 many callers instead convert their bounded string view into a `const char*` through `.data()`
-instead, which is a bug (h/t [@davidben](github.com/davidben) for noticing this common anti-pattern
+instead, which is a bug (h/t [@davidben](https://github.com/davidben) for noticing this common anti-pattern
 in Chromium and working to fix them).
 
 So it appears at first glance to be a win to change these functions to take a string view type, in
