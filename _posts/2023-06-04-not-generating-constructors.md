@@ -312,19 +312,19 @@ passing the `const sus::Vec&` directly.
 But lastly, we have the call to `take_slice_ref()`, which now differs significantly from the
 equivalent `take_span_ref()` with the standard library types:
 ```asm
- lea    rax,[rbp-0x70]
- mov    rdi,rax
- call   404bf0 <sus::Vec<int>::operator sus::Slice<int>&() &>
- mov    rdi,rax
- call   403fd1 <take_slice_ref(sus::Slice<int> const&)>
- ```
- Now we're down to 5 instructions. We call the conversion operator to `sus::Slice&`, which returns
- _a pointer_ that we store, and then call `take_slice_ref()` with it.
+lea    rax,[rbp-0x70]
+mov    rdi,rax
+call   404bf0 <sus::Vec<int>::operator sus::Slice<int>&() &>
+mov    rdi,rax
+call   403fd1 <take_slice_ref(sus::Slice<int> const&)>
+```
+Now we're down to 5 instructions. We call the conversion operator to `sus::Slice&`, which returns
+_a pointer_ that we store, and then call `take_slice_ref()` with it.
 
- But why is this operator returning _a pointer_, instead of a `sus::Slice` by value? The trick here
- is that `sus::Vec` is implemented by holding a `sus::SliceMut` inside it, which holds a
- `sus::Slice` inside it, which is where the pointer/len pair is finally found. This means that `Vec`
- can convert to a `SliceMut` and `Slice` without any constructor being invoked.
+But why is this operator returning _a pointer_, instead of a `sus::Slice` by value? The trick here
+is that `sus::Vec` is implemented by holding a `sus::SliceMut` inside it, which holds a
+`sus::Slice` inside it, which is where the pointer/len pair is finally found. This means that `Vec`
+can convert to a `SliceMut` and `Slice` without any constructor being invoked.
 
 ### With optimizations
 
