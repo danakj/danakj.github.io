@@ -66,7 +66,9 @@ But there's another type of overhead that comes not from the bounds checks in vi
 `std::span` or `std::string_view`, but from the change to using those types at all.
 
 Here's a commit that converts a bunch of functions to use `base::StringPiece`, the Chromium string
-view type which is much like `std::string_view`: https://chromium-review.googlesource.com/c/chromium/src/+/4575826
+view type which is much like `std::string_view`:
+[https://chromium-review.googlesource.com/c/chromium/src/+/4575826](
+https://chromium-review.googlesource.com/c/chromium/src/+/4575826).
 
 The functions were previously overloaded to take `const std::string&` or `const char*`. The
 `const char*` overload presumes that:
@@ -77,7 +79,8 @@ These assumptions are easily wrong when working with view types that encode a bo
 array. Calling these functions requires converting that bounded string view into a `std::string`
 which involves generating a constructor, and quite possibly a heap allocation. But
 many callers instead convert their bounded string view into a `const char*` through `.data()`
-instead, which is a bug.
+instead, which is a bug (h/t [@davidben](github.com/davidben) for noticing this common anti-pattern
+in Chromium and working to fix them).
 
 So it appears at first glance to be a win to change these functions to take a string view type, in
 this case `base::StringPiece`. For callers with a `std::string`, it will copy the pointer and length
