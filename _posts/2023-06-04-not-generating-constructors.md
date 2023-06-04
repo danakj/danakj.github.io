@@ -182,9 +182,9 @@ function arguments.
 What if we had a pointer and length already, but we wanted to call `take_span()` instead of
 `take_pointer()`, is that any better? Something like this:
 ```cpp
-    auto p = a.data();
-    auto s = a.size();
-    take_span({p, s});
+auto p = a.data();
+auto s = a.size();
+take_span({p, s});
 ```
 That turns into the following when calling `take_span()`:
 ```asm
