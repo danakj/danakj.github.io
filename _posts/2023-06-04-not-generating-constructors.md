@@ -77,7 +77,7 @@ https://chromium-review.googlesource.com/c/chromium/src/+/4575826).
 
 The functions were previously overloaded to take `const std::string&` or `const char*`. The
 `const char*` overload presumes that:
-- the string being passed in is null terminated, and
+- the string being passed in is null-terminated, and
 - the function should be consuming the full string up to the null character.
 
 These assumptions are easily wrong when working with view types that encode a bounded view of an
