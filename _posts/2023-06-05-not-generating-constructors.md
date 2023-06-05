@@ -340,14 +340,14 @@ is that `sus::Vec` is implemented by holding a `sus::SliceMut` inside it, which 
 
 Ok let's turn some optimizations back on and see what we get.
 
-Calling `take_vector(const std::vector&)` grabs the pointer and invokes `call`.
+Calling `take_vector(const std::vector&)` grabs the pointer and invokes `call`:
 ```nasm
 lea    rdi,[rsp+0x10]
 call   4035e6 <take_vector(std::vector<int, std::allocator<int> > const&)>
 ```
 
-Calling `take_span(std::span)` inlined the `std::span` constructor for us, which sets to values and
-then invokes `call`.
+Calling `take_span(std::span)` inlined the `std::span` constructor for us, which sets its two data
+members and then invokes `call`:
 ```nasm
 mov    rdi,rbx
 mov    esi,0x7
@@ -355,7 +355,7 @@ call   403719 <take_span(std::span<int const, 18446744073709551615ul>)>
 ```
 
 Calling `take_span_ref(const std::span&)` is worse, as it constructs a `std::span` inline, then has
-to take its address. No doubt that's where we get the guidance from to pass it by value.
+to take its address. No doubt that's where we get the guidance from to pass it by value:
 ```nasm
 mov    QWORD PTR [rsp+0x30],rbx
 mov    QWORD PTR [rsp+0x38],0x7
@@ -364,21 +364,21 @@ call   4037ab <take_span_ref(std::span<int const, 18446744073709551615ul> const&
 ```
 
 Calling `take_vec(const sus::Vec&)` looks similar to receiving `const std::vector&`, as it grabs
-the pointer and invokes `call`.
+the pointer and invokes `call`:
 ```nasm
 mov    rdi,rsp
 call   403840 <take_vec(sus::Vec<int> const&)>
 ```
 
 Calling `take_slice(sus::Slice)` looks similar to receiving `std::span`, inlining the construction
-of a `sus::Slice`, then passing it by value.
+of a `sus::Slice`, then passing it by value:
 ```nasm
 mov    rdi,QWORD PTR [rsp]
 mov    rsi,QWORD PTR [rsp+0x8]
 call   4038e3 <take_slice(sus::Slice<int>)>
 ```
 
-Calling `take_slice_ref(const sus::Slice&)` is where things differ in a meaningful way.
+Calling `take_slice_ref(const sus::Slice&)` is where things differ in a meaningful way:
 ```nasm
 mov    rdi,rsp
 call   403981 <take_slice_ref(sus::Slice<int> const&)>
