@@ -2,6 +2,7 @@
 tags:
 - Subspace
 - C++
+description: Defining and using trivially relocatable types in C++ and the Subspace library.
 ---
 
 ## Trivially Relocatable Types in C++/Subspace

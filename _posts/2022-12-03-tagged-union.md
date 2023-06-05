@@ -4,6 +4,7 @@ tags:
 - Union
 - Undefined Behaviour
 - C++
+description: A true tagged union is possible in C++, and this is the story behind the design of the Subspace Choice type.
 ---
 
 ## Designing a Tagged Union type in C++/Subspace

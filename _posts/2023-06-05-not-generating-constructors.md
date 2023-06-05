@@ -4,6 +4,9 @@ tags:
 - C++
 - Performance
 - Memory Safety
+description: We are going to see how Subspace types allow a zero-cost transition from native pointers to
+bounded view types, which enable spatial memory safety, and that can't be achieved with the
+standard library types.
 ---
 
 # Bounds Safety: Avoiding Death by a Thousand Constructors

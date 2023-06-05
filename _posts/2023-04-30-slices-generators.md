@@ -2,6 +2,8 @@
 tags:
 - Subspace
 - C++
+description: Today I merged a lot of stuff in Subspace, which makes it a good time to mention some of the
+new things.
 ---
 
 # Subspace Update: Slices and Vec, Generators, More Iterators, Std Ranges, Callable concepts

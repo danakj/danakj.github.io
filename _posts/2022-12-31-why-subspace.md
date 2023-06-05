@@ -5,6 +5,7 @@ tags:
 - C++
 - CIR
 - Chromium
+description: Looking ahead to possible futures for C++.
 ---
 
 ## Why Subspace

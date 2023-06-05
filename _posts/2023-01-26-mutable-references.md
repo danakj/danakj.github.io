@@ -1,6 +1,7 @@
 ---
 tags:
 - C++
+description: Sadness about C++ references.
 ---
 
 # Me versus C++ Mutable References.
