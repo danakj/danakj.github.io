@@ -412,7 +412,7 @@ indexing operation into each slice.
 ![QuickBench results of Clang 15 with -O3](
 /resources/2023-06-05-not-generating-constructors/quickbench-slices-clang.png)
 
-#### Result
+### Benchmarks Result
 
 Across both compilers, we can see that receiving a `const sus::Slice&` parameter from an owning
 vector argument is as efficient as `const sus::Vec&` or `const std::vector&`, while all three are
