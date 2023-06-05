@@ -25,7 +25,7 @@ software industry) have known ways to solve this simple issue for decades now.
 [proposing a bounds-checked structure](https://ecs.syr.edu/faculty/fawcett/Handouts/cse775/presentations/BruceMcKinneyPapers/safeArrays.htm)
 for interacting with
 [OLE](https://learn.microsoft.com/en-us/cpp/mfc/ole-background).
-* Here's a [NIST paper titled "C++ in Safety Critical Systems"](
+* Here's [a NIST paper titled "C++ in Safety Critical Systems"](
 https://upload.wikimedia.org/wikipedia/commons/5/50/C%2B%2B_in_safety_critical_systems_%28IA_cinsafetycritica5769bink%29.pdf)
 from 1995 which states "Class libraries that provide smart (safe) pointers and array bounds
 checking should be used."
