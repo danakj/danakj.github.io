@@ -330,7 +330,7 @@ _a pointer_ that we store, and then call `take_slice_ref()` with it.
 
 But why is this operator returning _a pointer_, instead of a `sus::Slice` by value? The trick here
 is that `sus::Vec` is implemented by holding a `sus::SliceMut` inside it, which holds a
-`sus::Slice` inside it, which is where the pointer/length pair is finally found. This means that
+`sus::Slice` inside it[^1], which is where the pointer/length pair is finally found. This means that
 `Vec` can convert to a `SliceMut` and `Slice` without any constructor being invoked.
 
 ### With optimizations
@@ -414,3 +414,8 @@ A `const sus::Slice<T>` would have been more deceptive.
 Since the standard library differs on both of these, I don't think the same strategy would work as
 well in that environment, even if standard was willing to break backward compatibility to get this
 performance win.
+
+[^1]: For `Vec` to convert to `SliceMut` in this way, it must hold a `SliceMut` inside for `Vec`
+to return a reference to the `SliceMut`. Likewise, `SliceMut` can convert to a `Slice` since
+gaining `const` is a valid operation, though not the inverse. Thus `SliceMut` contains a `Slice`
+and can convert to `Slice` by returning a reference to it.
