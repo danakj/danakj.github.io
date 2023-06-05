@@ -389,6 +389,8 @@ means we are able to use a bounded view type (`sus::Slice`) as a function parame
 a binary size and performance cost at every function call that moves from an owning type to a view
 type*. And that's something that we can't do with the standard library types.
 
+### Benchmarks
+
 Here's all of the options [in Quickbench, compiled with GCC](
 https://quick-bench.com/q/hmMT9RAlKTY4YhHJ9pG8_-lw9wA).
 We call the function once per iteration, and the function does a single indexing operation into
@@ -409,6 +411,8 @@ indexing operation into each slice.
 
 ![QuickBench results of Clang 15 with -O3](
 /resources/2023-06-05-not-generating-constructors/quickbench-slices-clang.png)
+
+#### Result
 
 Across both compilers, we can see that receiving a `const sus::Slice&` parameter from an owning
 vector argument is as efficient as `const sus::Vec&` or `const std::vector&`, while all three are
