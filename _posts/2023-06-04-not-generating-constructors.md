@@ -389,6 +389,12 @@ means we are able to use a bounded view type (`sus::Slice`) as a function parame
 a binary size and performance cost at every function call that moves from an owning type to a view
 type*. And that's something that we can't do with the standard library types.
 
+Here's all of the options in Quickbench, with the called functio doing a single indexing operation
+into each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal with
+`const sus::Vec<T>&` which aligns with what we see in the assembly code above.
+![QuickBench results of GCC 12.2 with -O3](
+/resources/2023-06-04-not-generating-constructors/quickbench-slices-gcc.png)
+
 ## Library choices that got us here
 
 There's a couple differences in Subspace that work together to get us to this point.
