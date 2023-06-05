@@ -72,7 +72,7 @@ But there's another type of overhead that comes not from the bounds checks in vi
 
 Here's a commit that converts a bunch of functions to use `base::StringPiece`, the Chromium string
 view type which is much like `std::string_view`:
-[https://chromium-review.googlesource.com/c/chromium/src/+/4575826](
+[Make histogram functions take base::StringPiece](
 https://chromium-review.googlesource.com/c/chromium/src/+/4575826).
 
 The functions were previously overloaded to take `const std::string&` or `const char*`. The
