@@ -85,7 +85,7 @@ array. Calling these functions requires converting that bounded string view into
 which involves generating a constructor, and quite possibly a heap allocation. But
 many callers instead convert their bounded string view into a `const char*` through `.data()`
 instead, which is a bug. Props to [@davidben](https://github.com/davidben) for noticing this common
-anti-pattern in Chromium and working to fix them.
+anti-pattern in Chromium and working to fix the many places it occurs.
 
 So it appears at first glance to be a win to change these functions to take a string view type, in
 this case `base::StringPiece`. For callers with a `std::string`, it will copy the pointer and length
