@@ -32,9 +32,10 @@ checking should be used."
 
 In 2022, The Clang/Libc++ project accepted the
 [C++ Buffer Hardening](https://discourse.llvm.org/t/rfc-c-buffer-hardening/65734) proposal that
-makes it possible to enable hardening checks inside these standard library types with bounds.
-Though it requires you to build your own standard library. The one that shipped with your operating
-system likely [doesn't have this enabled](https://godbolt.org/z/Y4n99dx5j). At least your
+makes it possible to enable hardening checks inside these standard library types with bounds -
+though it requires you to compile the standard library yourself with the option enabled.
+The compiled copy of library that shipped with your operating system likely
+[doesn't have this enabled](https://godbolt.org/z/Y4n99dx5j). At least your
 [web browser](https://bugs.chromium.org/p/chromium/issues/detail?id=1335422) may have this enabled
 (Chrome has since Q1 2023, but I don't know about any other Browser,
 [Chromium-derived or not](https://chromium.googlesource.com/chromium/src/+/master/docs/security/faq.md#how-can-i-know-which-fixes-to-include-in-my-downstream-project)).
