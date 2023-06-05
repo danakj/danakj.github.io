@@ -390,7 +390,8 @@ a binary size and performance cost at every function call that moves from an own
 type*. And that's something that we can't do with the standard library types.
 
 Here's all of the options [in Quickbench, compiled with GCC](
-). We call the function once per iteration, and the function does a single indexing operation into
+https://quick-bench.com/q/hmMT9RAlKTY4YhHJ9pG8_-lw9wA).
+We call the function once per iteration, and the function does a single indexing operation into
 each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal with
 `const sus::Vec<T>&` which aligns with what we see in the assembly code above.
 
