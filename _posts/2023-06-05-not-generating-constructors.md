@@ -6,7 +6,7 @@ tags:
 - Memory Safety
 ---
 
-# Bounds Safety Without Performance Compromise
+# Bounds Safety: Avoiding Death by a Thousand Constructors
 
 **tl;dr We are going to see how Subspace types allow a zero-cost transition from native pointers to
 bounded view types (which means we can get spatial memory safety) that can't be achieved with the
