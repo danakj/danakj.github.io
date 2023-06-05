@@ -330,8 +330,8 @@ _a pointer_ that we store, and then call `take_slice_ref()` with it.
 
 But why is this operator returning _a pointer_, instead of a `sus::Slice` by value? The trick here
 is that `sus::Vec` is implemented by holding a `sus::SliceMut` inside it, which holds a
-`sus::Slice` inside it, which is where the pointer/len pair is finally found. This means that `Vec`
-can convert to a `SliceMut` and `Slice` without any constructor being invoked.
+`sus::Slice` inside it, which is where the pointer/length pair is finally found. This means that
+`Vec` can convert to a `SliceMut` and `Slice` without any constructor being invoked.
 
 ### With optimizations
 
