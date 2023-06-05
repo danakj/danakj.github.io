@@ -395,12 +395,12 @@ We call the function once per iteration, and the function does a single indexing
 each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal with
 `const sus::Vec<T>&` which aligns with what we see in the assembly code above.
 
+![QuickBench results of GCC 12.2 with -O3](
+/resources/2023-06-04-not-generating-constructors/quickbench-slices-gcc.png)
+
 Note: We don't call the function a bunch of times, like we do with Clang, because GCC ends up
 setting up the stack for the function call once and then just doing `call` successively, which is
 not representative of the whole function call operation.
-
-![QuickBench results of GCC 12.2 with -O3](
-/resources/2023-06-04-not-generating-constructors/quickbench-slices-gcc.png)
 
 And here's the same thing [in Quickbench, but compiled with Clang 15](
 https://quick-bench.com/q/jZe_CSs6yivoWUenVtkFSYAt3AA). We call the function 21 times per iteration
