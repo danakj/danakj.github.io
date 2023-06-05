@@ -412,5 +412,5 @@ it's much simpler to have a `const SliceMut<T>&` still implement a mutable view 
 A `const sus::Slice<T>` would have been more deceptive.
 
 Since the standard library differs on both of these, I don't think the same strategy would work as
-well in that environment, even if standard was willing to break backward compat to get this
+well in that environment, even if standard was willing to break backward compatibility to get this
 performance win.
