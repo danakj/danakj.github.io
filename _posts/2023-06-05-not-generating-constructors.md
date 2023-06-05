@@ -416,7 +416,7 @@ indexing operation into each slice.
 
 Across both compilers, we can see that receiving a `const sus::Slice&` parameter from an owning
 vector argument is as efficient as `const sus::Vec&` or `const std::vector&`, while all three are
-more efficient than as `std::span`.
+more efficient than receiving `std::span`.
 
 ## Library choices that got us here
 
