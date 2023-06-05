@@ -9,15 +9,15 @@ tags:
 # Avoiding Death by a Thousand Constructors
 
 **tl;dr We are going to see how Subspace types allow a zero-cost transition from native pointers to
-bounded view types (which means we can get memory safety) that can't be achieved with the standard
-library types.**
+bounded view types (which means we can get spatial memory safety) that can't be achieved with the
+standard library types.**
 
 Long ago, C and C++ programmers passed around pointers to arrays, hopefully with a size to indicate
 how large the array was in order avoid reading/writing out of bounds, though frequently not. This is
 still a common pattern, though "modern C++" has provided tools to eliminate this class of memory
-safety bug, though the use of "view" types. These are types like std::string_view or std::span in
-the standard library. Unfortunately, these types don't actually check for using memory out of bounds
-in the C++ standard.
+safety bug, though the use of "view" types. These are types like `std::string_view` or `std::span`
+in the standard library. Unfortunately, these types don't actually check for using memory out of
+bounds in the C++ standard.
 
 Much has been written about the memory unsafety of lack of bounds checking, and we (as in the
 software industry) have known ways to solve this simple issue for decades now.
@@ -44,9 +44,9 @@ https://clang.llvm.org/docs/DiagnosticsReference.html#wunsafe-buffer-usage)
 warning in Clang which you can enable to ban pointer arithmetic and
 which has the intention of converting all those native pointers into view types, which pair a size
 with the pointer through the type system. See, the problem is that even if you enable bounds
-checking in std::span and std::string_view, the majority of C++ code really doesn't use those types,
-our industry's code bases are still full of pointers to arrays. So this warning gives a mechanism to
-stard migrating away from pointers, _and then prevent backsliding_.
+checking in `std::span` and `std::string_view`, the majority of C++ code really doesn't use those
+types, our industry's code bases are still full of pointers to arrays. So this warning gives a
+mechanism to stard migrating away from pointers, _and then prevent backsliding_.
 
 ## Performance implications
 
