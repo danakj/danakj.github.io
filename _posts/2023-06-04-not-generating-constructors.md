@@ -63,8 +63,8 @@ better or for worse).
 
 In bounds checking, the compiler can see the values involved in the comparisons, as they come from
 constants or other values related to the array. For instance when iterating through a span, stopping
-before the span's `length`, the compiler can see that every index into the span is less than its
-`length` fairly trivially. This usually means the compiler removes the bounds checks. So no runtime
+before the span's length, the compiler can see that every index into the span is less than its
+length fairly trivially. This usually means the compiler removes the bounds checks. So no runtime
 overhead, yay!
 
 But there's another type of overhead that comes not from the bounds checks in view types like
