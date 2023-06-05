@@ -6,7 +6,7 @@ tags:
 - Memory Safety
 ---
 
-# Avoiding Death by a Thousand Constructors
+# Bounds Safety Without Performance Compromise
 
 **tl;dr We are going to see how Subspace types allow a zero-cost transition from native pointers to
 bounded view types (which means we can get spatial memory safety) that can't be achieved with the
@@ -396,7 +396,7 @@ each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal wi
 `const sus::Vec<T>&` which aligns with what we see in the assembly code above.
 
 ![QuickBench results of GCC 12.2 with -O3](
-/resources/2023-06-04-not-generating-constructors/quickbench-slices-gcc.png)
+/resources/2023-06-05-not-generating-constructors/quickbench-slices-gcc.png)
 
 Note: We don't call the function a bunch of times, like we do with Clang, because GCC ends up
 setting up the stack for the function call once and then just doing `call` successively, which is
@@ -408,7 +408,7 @@ to avoid Clang mostly measuring the benchmark harness itself, and the function a
 indexing operation into each slice.
 
 ![QuickBench results of Clang 15 with -O3](
-/resources/2023-06-04-not-generating-constructors/quickbench-slices-clang.png)
+/resources/2023-06-05-not-generating-constructors/quickbench-slices-clang.png)
 
 Across both compilers, we can see that receiving a `const sus::Slice&` parameter from an owning
 vector argument is as efficient as `const sus::Vec&` or `const std::vector&`, while all three are
