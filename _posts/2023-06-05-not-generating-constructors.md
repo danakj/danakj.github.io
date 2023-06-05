@@ -13,8 +13,8 @@ bounded view types, which enable spatial memory safety, that can't be achieved w
 standard library types.**
 
 Long ago, C and C++ programmers passed around pointers to arrays, hopefully with a size to indicate
-how large the array was in order avoid reading/writing out of bounds, though frequently not. This is
-still a common pattern, though "modern C++" has provided tools to eliminate this class of memory
+how large the array was in order to avoid reading/writing out of bounds, though frequently not. This
+is still a common pattern, though "modern C++" has provided tools to eliminate this class of memory
 safety bug, though the use of "view" types. These are types like `std::string_view` or `std::span`
 in the standard library. Unfortunately, these types don't actually check for using memory out of
 bounds in the C++ standard.
@@ -296,7 +296,7 @@ inlined.
 
 Now let's look at the Subspace types.
 
-First, receiving a `const sus::Vec&` looks the same as `const std::vector&`, which isn't surprusing:
+First, receiving a `const sus::Vec&` looks the same as `const std::vector&`, which isn't surprising:
 ```nasm
 lea    rax,[rbp-0x70]
 mov    rdi,rax
@@ -445,7 +445,7 @@ performance win.
 
 ### Thanks
 
-Thank you [@noncombatant](https://github.com/noncombatant) for the excellent proof reading and
+Thank you [@noncombatant](https://github.com/noncombatant) for the excellent proofreading and
 suggestions for this post.
 
 [^1]: For `Vec` to convert to `SliceMut` in this way, it must hold a `SliceMut` inside for `Vec`
