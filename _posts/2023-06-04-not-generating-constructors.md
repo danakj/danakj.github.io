@@ -46,8 +46,10 @@ warning in Clang which you can enable to ban pointer arithmetic. This is very us
 project convert all their native array pointers into view types, which pair a size 
 with the pointer through the type system. See, the problem is that even if you enable bounds
 checking in `std::span` and `std::string_view`, the majority of C++ code really doesn't use those
-types, our industry's code bases are still full of pointers to arrays. So this warning gives a
-mechanism to stard migrating away from pointers, _and then prevent backsliding_.
+types. The large C++ codebases that power modern technology are still full of pointers to arrays.
+So this warning gives a mechanism to start migrating away from pointers,
+_and then prevent backsliding_, working toward banning pointer arithmetic entirely outside of a
+few exceptional types.
 
 ## Performance implications
 
