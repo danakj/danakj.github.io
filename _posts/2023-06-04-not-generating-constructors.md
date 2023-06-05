@@ -99,9 +99,11 @@ change, it can easily be amplified immensely. In this case, we discovered that a
 you get less binary size growth with that type (and we'll look at marking `base::StringPiece` with a
 `noinline` attribute).
 
-In our experience, binary size growth correlates well with performance loss, and in this case we
-see strictly more codegen which is certainly going to be visible at scale in performance testing.
-So *this also implies a performance degradation by moving from pointers to a bounded view type*.
+In Chromium, when a change impacts performance, we can often just look for where binary size grew
+to track down where the regression lies. So we've seen binary size growth correlate well with
+performance loss. In this case we see strictly more codegen at each call site, which can certainly
+become visible at scale in performance testing.
+So *this also suggests a performance degradation by moving from pointers to a bounded view type*.
 And herein lies the problem. A project may successfully flip libc++ hardening on for their
 `std::span` types without seeing much of a performance impact, because the majority of bounds
 checks are elided. But then as they convert more pointers to `std::span` to increase their
