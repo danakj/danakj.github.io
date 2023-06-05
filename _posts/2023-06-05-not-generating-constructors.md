@@ -40,9 +40,9 @@ The compiled copy of the standard library that shipped with your operating syste
 (Chrome has since Q1 2023, but I don't know about any other browser,
 [Chromium-derived or not](https://chromium.googlesource.com/chromium/src/+/master/docs/security/faq.md#how-can-i-know-which-fixes-to-include-in-my-downstream-project)).
 
-The same proposal introduces the [`-Wunsafe-buffer-usage`](
+The same proposal introduces the `-Wunsafe-buffer-usage` [warning in Clang](
 https://clang.llvm.org/docs/DiagnosticsReference.html#wunsafe-buffer-usage)
-warning in Clang which you can enable to ban pointer arithmetic. This is very useful to help a
+which you can enable to ban pointer arithmetic. This is very useful to help a
 project convert all their native array pointers into view types, which pair a size 
 with the pointer through the type system. See, the problem is that even if you enable bounds
 checking in `std::span` and `std::string_view`, the majority of C++ code really doesn't use those
@@ -428,9 +428,9 @@ also allow a `const Vec&` to be used as a `const SliceMut&`. A `SliceMut` provid
 of the array, meaning this would be a backdoor through `const Vec&` to trivially mutate the data
 inside it. So instead `Vec` and `SliceMut` provide operators to convert to references of their
 nested types which provide the library control over when the types should be allowed to convert.
-This ended up very similar in implementation to the
-[`Deref` trait](https://doc.rust-lang.org/stable/std/ops/trait.Deref.html) in Rust, which is what
-inspired me to try this at all.
+This ended up very similar in implementation to the `Deref` [trait in Rust](
+https://doc.rust-lang.org/stable/std/ops/trait.Deref.html), which is what inspired me to try this
+at all.
 
 Secondly, the splitting of `Slice` and `SliceMut` into different types. Originally I had designed
 `Slice` to specify the const-ness of its view through the template parameter, like you would with
