@@ -42,8 +42,8 @@ The compiled copy of the standard library that shipped with your operating syste
 
 The same proposal introduces the [`-Wunsafe-buffer-usage`](
 https://clang.llvm.org/docs/DiagnosticsReference.html#wunsafe-buffer-usage)
-warning in Clang which you can enable to ban pointer arithmetic and
-which has the intention of converting all those native pointers into view types, which pair a size
+warning in Clang which you can enable to ban pointer arithmetic. This is very useful to help a
+project convert all their native array pointers into view types, which pair a size 
 with the pointer through the type system. See, the problem is that even if you enable bounds
 checking in `std::span` and `std::string_view`, the majority of C++ code really doesn't use those
 types, our industry's code bases are still full of pointers to arrays. So this warning gives a
