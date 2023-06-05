@@ -56,7 +56,7 @@ few exceptional types.
 Introducing memory safety into C++ codebases always comes with some performance degradation, because
 there's little you can check at compile time. So it means checking for bad program states when the
 program is running. These performance changes are not the kind you as a user will see or
-feel, but the kind that shows up on benchmarks and that software teams then have great a many
+feel, but the kind that shows up on benchmarks and that software teams then have a great many
 [discussions about](https://groups.google.com/a/chromium.org/g/platform-architecture-dev/c/hdMBHEYZLMA).
 And these often end up blocking meaningful improvements to the safety of users and their data.
 
