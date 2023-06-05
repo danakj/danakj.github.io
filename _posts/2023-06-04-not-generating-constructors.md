@@ -219,8 +219,10 @@ if `explicit`, and [static constructor methods are better](
 https://github.com/chromium/subspace/blob/714e0cec352c77968e3caa3bf78b3b1d83ea984a/PRINCIPLES.md?plain=1#L60-L62).
 
 But anyway, what do we do? I want to stop out-of-bounds bugs in C++ code from constantly being
-exploited. I want to stop the people who want to steal all of your private data for the rest of
-your life (which almost certainly you will not know when or if it happens, unless they tell you).
+exploited. I want to stop the people who want to steal all of your private data. Silent and
+persistent compromise, which allows theft of your past, present and future data, is not as rare or
+as difficult as it should be, and that is due in part to memory unsafety bugs like out of bounds
+memory accesses.
 
 ## Making the conversion free
 
