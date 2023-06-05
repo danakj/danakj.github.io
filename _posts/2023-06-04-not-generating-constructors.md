@@ -90,8 +90,8 @@ anti-pattern in Chromium and working to fix the many places it occurs.
 So it appears at first glance to be a win to change these functions to take a string view type, in
 this case `base::StringPiece`. For callers with a `std::string`, it will copy the pointer and length
 into the `base::StringPiece`. For callers with a bounded string view type, they don't need to throw
-away the bounds or heap allocate. Yet this created a pretty large binary size regression for doing
-almost nothing, and trying to eliminate heap allocations.
+away the bounds or allocate on the heap. Yet this created a pretty large binary size regression for
+doing almost nothing, and trying to eliminate heap allocations.
 
 Chromium is an interesting test bed because it is an _enormous_ codebase. So when you make a small
 change, it can easily be amplified immensely. In this case, we discovered that all those calls to a
