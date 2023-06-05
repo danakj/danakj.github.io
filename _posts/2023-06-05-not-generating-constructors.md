@@ -9,13 +9,13 @@ tags:
 # Bounds Safety: Avoiding Death by a Thousand Constructors
 
 **tl;dr We are going to see how Subspace types allow a zero-cost transition from native pointers to
-bounded view types, which enable spatial memory safety, that can't be achieved with the
+bounded view types, which enable spatial memory safety, and that can't be achieved with the
 standard library types.**
 
 Long ago, C and C++ programmers passed around pointers to arrays, hopefully with a size to indicate
 how large the array was in order to avoid reading/writing out of bounds, though frequently not. This
 is still a common pattern, though "modern C++" has provided tools to eliminate this class of memory
-safety bug, though the use of "view" types. These are types like `std::string_view` or `std::span`
+safety bug, through the use of "view" types. These are types like `std::string_view` or `std::span`
 in the standard library. Unfortunately, these types don't actually check for using memory out of
 bounds in the C++ standard.
 
@@ -107,7 +107,7 @@ So *this also suggests a performance degradation by moving from pointers to a bo
 And herein lies the problem. A project may successfully flip libc++ hardening on for their
 `std::span` types without seeing much of a performance impact, because the majority of bounds
 checks are elided. But then as they convert more pointers to `std::span` to increase their
-bounds safety coverage, the use of `std::span` may introduce a different kind of performance
+coverage of bounds safety, the use of `std::span` may introduce a different kind of performance
 (and binary size) regression.
 
 Here's a code example ([in compiler explorer](https://godbolt.org/z/14Kq9GG3r)):
