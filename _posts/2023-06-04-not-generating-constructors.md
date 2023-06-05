@@ -392,6 +392,7 @@ type*. And that's something that we can't do with the standard library types.
 Here's all of the options in Quickbench, with the called functio doing a single indexing operation
 into each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal with
 `const sus::Vec<T>&` which aligns with what we see in the assembly code above.
+
 ![QuickBench results of GCC 12.2 with -O3](
 /resources/2023-06-04-not-generating-constructors/quickbench-slices-gcc.png)
 
