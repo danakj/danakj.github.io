@@ -184,8 +184,8 @@ call    take_span(std::span<int const, 18446744073709551615ul>)
 Oof, that's a lot more instructions than `take_vector()`. Calling this function with a vector has
 changed three instructions into ten, and that's _without_ inlining the `std::span` constructor.
 
-I guess it's easy to see why the binary size changes when we starting receiving `std::span` in
-function arguments.
+I guess it's easy to see why the binary size changes when we start to receive `std::span` in
+function arguments instead of a reference to the owning container.
 
 What if we had a pointer and length already, but we wanted to call `take_span()` instead of
 `take_pointer()`, is that any better? Something like this:
