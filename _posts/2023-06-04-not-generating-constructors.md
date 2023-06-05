@@ -102,7 +102,7 @@ you get less binary size growth with that type (and we'll look at marking `base:
 
 In our experience, binary size growth correlates well with performance loss, and in this case we
 see strictly more codegen which is certainly going to be visible at scale in performance testing.
-So *this also implies a performance degredation by moving from pointers to a bounded view type*.
+So *this also implies a performance degradation by moving from pointers to a bounded view type*.
 And herein lies the problem. Even if a codebase successfully flip libc++ hardening on for their
 `std::span` types because the majority of bounds checks are elided, following through on converting
 their pointers to `std::span` will introduce a different kind of performance (and binary size)
