@@ -388,7 +388,7 @@ type*. And that's something that we can't do with the standard library types.
 
 ## Library choices that got us here
 
-There's a couple differences in Subspace that collude to get us to this point.
+There's a couple differences in Subspace that work together to get us to this point.
 
 First, the nesting strategy of `Vec{SliceMut{Slice{T*}}}`. This is not done with inheritance as you
 might first expect. That would allow a `const Vec&` to be used as a `const Slice&`, but it would
