@@ -291,7 +291,7 @@ mov    rdi,rax
 call   403acf <take_span_ref(std::span<int const, 18446744073709551615ul> const&)>
 ```
 We have to construct a `std::span` from the `std::vector` in order to give a reference to it in the
-function call, so this comes out at 8 instructions, without the `std::span` constructor being
+function call, so this comes out at eight instructions, without the `std::span` constructor being
 inlined.
 
 Now let's look at the Subspace types.
@@ -328,7 +328,7 @@ call   404bf0 <sus::Vec<int>::operator sus::Slice<int>&() &>
 mov    rdi,rax
 call   403fd1 <take_slice_ref(sus::Slice<int> const&)>
 ```
-Now we're down to 5 instructions. We call the conversion operator to `sus::Slice&`, which returns
+Now we're down to five instructions. We call the conversion operator to `sus::Slice&`, which returns
 _a pointer_ that we store, and then call `take_slice_ref()` with it.
 
 But why is this operator returning _a pointer_, instead of a `sus::Slice` by value? The trick here
