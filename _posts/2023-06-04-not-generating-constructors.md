@@ -409,7 +409,7 @@ have a `Slice<const T>`, making the API harder to read and use and hack on. I th
 library type gets away with this by putting almost no methods on `std::span`, as it has a
 methodology of providing free functions (like `std::find()`) instead. This type-splitting means that
 it's much simpler to have a `const SliceMut<T>&` still implement a mutable view of the array.
-Whereas a `const sus::Slice<T>` would have been more deceptive.
+A `const sus::Slice<T>` would have been more deceptive.
 
 Since the standard library differs on both of these, I don't think the same strategy would work as
 well in that environment, even if standard was willing to break backward compat to get this
