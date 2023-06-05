@@ -390,12 +390,24 @@ a binary size and performance cost at every function call that moves from an own
 type*. And that's something that we can't do with the standard library types.
 
 Here's all of the options [in Quickbench, compiled with GCC](
-https://quick-bench.com/q/hmMT9RAlKTY4YhHJ9pG8_-lw9wA). The called function does a single
-indexing operation into each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal with
+). We call the function once per iteration, and the function does a single indexing operation into
+each slice. The `const sus::Slice<T>&` option comes out on top, exactly equal with
 `const sus::Vec<T>&` which aligns with what we see in the assembly code above.
 
 ![QuickBench results of GCC 12.2 with -O3](
 /resources/2023-06-04-not-generating-constructors/quickbench-slices-gcc.png)
+
+And here's the same thing [in Quickbench, but compiled with Clang 15](
+https://quick-bench.com/q/jZe_CSs6yivoWUenVtkFSYAt3AA). We call the function 21 times per iteration
+to avoid Clang mostly measuring the benchmark harness itself, and the function again does a single
+indexing operation into each slice.
+
+![QuickBench results of Clang 15 with -O3](
+/resources/2023-06-04-not-generating-constructors/quickbench-slices-clang.png)
+
+Across both compilers, we can see that receiving a `const sus::Slice&` parameter from an owning
+vector argument is as efficient as `const sus::Vec&` or `const std::vector&`, while all three are
+more efficient than as `std::span`.
 
 ## Library choices that got us here
 
