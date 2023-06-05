@@ -40,7 +40,7 @@ The compiled copy of the standard library that shipped with your operating syste
 (Chrome has since Q1 2023, but I don't know about any other browser,
 [Chromium-derived or not](https://chromium.googlesource.com/chromium/src/+/master/docs/security/faq.md#how-can-i-know-which-fixes-to-include-in-my-downstream-project)).
 
-The same proposal introduces the [-Wunsafe-buffer-usage](
+The same proposal introduces the [`-Wunsafe-buffer-usage`](
 https://clang.llvm.org/docs/DiagnosticsReference.html#wunsafe-buffer-usage)
 warning in Clang which you can enable to ban pointer arithmetic and
 which has the intention of converting all those native pointers into view types, which pair a size
