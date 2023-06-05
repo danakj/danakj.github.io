@@ -443,6 +443,11 @@ Since the standard library differs on both of these, I don't think the same stra
 well in that environment, even if standard was willing to break backward compatibility to get this
 performance win.
 
+### Thanks
+
+Thank you [@noncombatant](https://github.com/noncombatant) for the excellent proof reading and
+suggestions for this post.
+
 [^1]: For `Vec` to convert to `SliceMut` in this way, it must hold a `SliceMut` inside for `Vec`
 to return a reference to the `SliceMut`. Likewise, `SliceMut` can convert to a `Slice` since
 gaining `const` is a valid operation, though not the inverse. Thus `SliceMut` contains a `Slice`
