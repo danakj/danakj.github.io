@@ -51,7 +51,7 @@ mechanism to stard migrating away from pointers, _and then prevent backsliding_.
 
 ## Performance implications
 
-Introducing memory safety into C++ codebases always comes with some performance degredation, because
+Introducing memory safety into C++ codebases always comes with some performance degradation, because
 there's little you can check at compile time. So it means checking for bad program states when the
 programming is running. But these performance changes are not the kind you as a user will see or
 feel. But the kind that shows up on benchmarks and that software teams then have great a many
