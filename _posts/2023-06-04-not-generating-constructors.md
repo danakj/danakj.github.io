@@ -164,8 +164,8 @@ call    take_pointer(int const*, unsigned long)
 ```
 That's a lot more instructions, as there's two function calls first. Then store the two values and
 make the call. This is why we had a `const std::string&` overload for those functions. In the case
-the caller already had a decomposed pointer/len, this would result in just something like the last
-three instructions, which is as good as `take_vector()`.
+the caller already had a decomposed pointer/length, this would result in just something like the
+last three instructions, which is as good as `take_vector()`.
 
 And here's the call to `take_span()`:
 ```asm
