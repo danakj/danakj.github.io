@@ -105,7 +105,7 @@ So *this also implies a performance degradation by moving from pointers to a bou
 And herein lies the problem. A project may successfully flip libc++ hardening on for their
 `std::span` types without seeing much of a performance impact, because the majority of bounds
 checks are elided. But then as they convert more pointers to `std::span` to increase their
-bounds safety coverage, the use of `std::span` will introduce a different kind of performance
+bounds safety coverage, the use of `std::span` may introduce a different kind of performance
 (and binary size) regression.
 
 Here's a code example ([in compiler explorer](https://godbolt.org/z/14Kq9GG3r)):
