@@ -448,4 +448,4 @@ performance win.
 Thank you [@noncombatant](https://github.com/noncombatant) for the excellent proofreading and
 suggestions for this post.
 
-[^1]: For `Vec` to convert to `SliceMut` in this way, it must hold a `SliceMut` inside for `Vec` to return a reference to the `SliceMut`. Likewise, SliceMut` can convert to a `Slice` since gaining `const` is a valid operation, though not the inverse. Thus `SliceMut` contains a `Slice` and can convert to `Slice` by returning a reference to it.
+[^1]: For `Vec` to convert to `SliceMut` in this way, it must hold a `SliceMut` inside for `Vec` to return a reference to the `SliceMut`. Likewise, `SliceMut` can convert to a `Slice` since gaining `const` is a valid operation, though not the inverse. Thus `SliceMut` contains a `Slice` and can convert to `Slice` by returning a reference to it.
