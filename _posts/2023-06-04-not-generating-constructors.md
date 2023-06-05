@@ -58,8 +58,7 @@ there's little you can check at compile time. So it means checking for bad progr
 program is running. These performance changes are not the kind you as a user will see or
 feel, but the kind that shows up on benchmarks and that software teams then have great a many
 [discussions about](https://groups.google.com/a/chromium.org/g/platform-architecture-dev/c/hdMBHEYZLMA).
-And these often end up blocking meaningful improvements to the safety of users and their data (for
-better or for worse).
+And these often end up blocking meaningful improvements to the safety of users and their data.
 
 In bounds checking, the compiler can see the values involved in the comparisons, as they come from
 constants or other values related to the array. For instance when iterating through a span, stopping
