@@ -8,7 +8,7 @@ description: Comparing the implementation of a generic trait-based API in C++ an
 
 # Implementing Iterator::flatten() in C++ and in Rust
 
-You may have heard that C++ has concepts in version 20. You may have heard these compared to traits in Rust. Indeed you can do many of the same things with them. Today I found them to be a good demonstration of the complexity of writing #Cpp vs #Rust.
+You may have heard that C++ has concepts in version 20. You may have heard these compared to traits in Rust. Indeed you can do many of the same things with them. Today I found them to be a good demonstration of the complexity of writing C++ vs Rust.
 
 Here’s the Iterator::flatten() method in Rust: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flatten
 
@@ -55,8 +55,6 @@ The U is a name we assign to the return type of the into_iter() method in the In
 So now we’re going to return from the Flatten type’s Iterator implementation the inner types. This is not the most simplest of APIs but the type relationships are pretty straightforward.
 
 What does this look like in C++ Subspace?
-
-#CppSubspace
 
 ## Iterator::flatten() in C++
 
@@ -136,7 +134,7 @@ The Flatten type is a class that subclasses InteratorBase, like we mentioned bef
 
 ## Conclusion and Iterator concept
 
-And with that we have the tools to write Iterator::flatten() in #Rust or in C++ with #SubspaceCpp.
+And with that we have the tools to write Iterator::flatten() in Rust or in C++ with Subspace.
 
 For the interested, here’s the Iterator C++ concept, which has its fair share of worrying about const, references, and lvalue/rvalue-state embedded in the types:
 
