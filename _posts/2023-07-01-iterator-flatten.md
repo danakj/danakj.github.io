@@ -10,7 +10,7 @@ description: Comparing the implementation of a generic trait-based API in C++ an
 
 You may have heard that C++ has concepts in version 20. You may have heard these compared to traits in Rust. Indeed you can do many of the same things with them. Today I found them to be a good demonstration of the complexity of writing C++ vs Rust.
 
-Here’s the Iterator::flatten() method in Rust: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flatten
+Here’s the [Iterator::flatten() method](https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flatten) in Rust:
 
 ![The Rust Iterator::flatten() method](/resources/2023-07-01-iterator-flatten/flatten-1.png)
 
@@ -18,7 +18,7 @@ The Items in the Iterator need to each be convertible to an Iterator as well. Th
 
 ## IntoIterator
 
-IntoIterator is the trait that flatten() used, if it’s satisfied, the type can be converted to an Iterator via calling into_iter(): https://doc.rust-lang.org/stable/std/iter/trait.IntoIterator.html
+IntoIterator is the trait that flatten() used, if it’s satisfied, the type can be converted to an Iterator [via calling into_iter()](https://doc.rust-lang.org/stable/std/iter/trait.IntoIterator.html):
 
 ![The Rust IntoIterator trait](/resources/2023-07-01-iterator-flatten/flatten-2.png)
 
@@ -28,7 +28,7 @@ It requires that the type returned by into_iter() actually implements Iterator b
 
 ## The Iterator::flatten() implementation
 
-The actual implementation of flatten() is a single function call: https://doc.rust-lang.org/stable/src/core/iter/traits/iterator.rs.html#1587-1590
+The actual implementation of flatten() is [a single function call](https://doc.rust-lang.org/stable/src/core/iter/traits/iterator.rs.html#1587-1590):
 
 ![The Rust Iterator::flatten() implementation](/resources/2023-07-01-iterator-flatten/flatten-3.png)
 
@@ -36,7 +36,7 @@ Which creates a Flatten type that is the resulting iterator, the “IntoIter” 
 
 ## The Flatten iterator type
 
-The Flatten type is also pretty simple. The implementation relies on a FlattenCompat abstraction to share implementation with flat_map(): https://doc.rust-lang.org/stable/std/iter/struct.Flatten.html
+The [Flatten type](https://doc.rust-lang.org/stable/std/iter/struct.Flatten.html) is also pretty simple. The implementation relies on a FlattenCompat abstraction to share implementation with flat_map():
 
 ![The Rust Flatten type](/resources/2023-07-01-iterator-flatten/flatten-4.png)
 
@@ -44,7 +44,7 @@ The where clause on Flatten points out once again that the Items in the outer It
 
 ## The Flatten implementation
 
-The Flatten::next() method, which is used to implement the Iterator trait returns a U::Item type: https://doc.rust-lang.org/stable/src/core/iter/adapters/flatten.rs.html#204-212
+The Flatten::next() method, which is used to implement the Iterator trait [returns a U::Item type](https://doc.rust-lang.org/stable/src/core/iter/adapters/flatten.rs.html#204-212):
 
 ![The Rust Flatten type's implementation of the Iterator trait](/resources/2023-07-01-iterator-flatten/flatten-5.png)
 
@@ -128,7 +128,7 @@ Last, the method call to Flatten constructs the Flatten type which is the return
   return Flatten::with(make_sized_iterator(static_cast<Iter&&>(*this)));
 ```
 
-The Flatten type is a class that subclasses InteratorBase, like we mentioned before. It’s `[[nodiscard]]`, which Rust achieves by putting the same in a single place, on the Iterator trait: https://doc.rust-lang.org/stable/src/core/iter/traits/iterator.rs.html#72. The “InnerSizedIter” is like the “I” type on the Rust version of Flatten. The `[[sus_trivial_abi]]` attribute marks the class as “clang::trivial_abi” if your compiler is Clang, which generates a warning on other compilers so has to go behind a macro.
+The Flatten type is a class that subclasses InteratorBase, like we mentioned before. It’s `[[nodiscard]]`, which Rust achieves by putting the same in a single place, [on the Iterator trait](https://doc.rust-lang.org/stable/src/core/iter/traits/iterator.rs.html#72). The “InnerSizedIter” is like the “I” type on the Rust version of Flatten. The `[[sus_trivial_abi]]` attribute marks the class as “clang::trivial_abi” if your compiler is Clang, which generates a warning on other compilers so has to go behind a macro.
 
 ![The C++ Flatten class](/resources/2023-07-01-iterator-flatten/flatten-11.png)
 
