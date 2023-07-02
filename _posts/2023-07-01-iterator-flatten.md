@@ -12,7 +12,7 @@ You may have heard that C++ has concepts in version 20. You may have heard these
 
 Here’s the Iterator::flatten() method in Rust: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.flatten
 
-![The Rust Iterator::flatten() method](/resources/2023-07-01-iterator-flatten/flatten-1.png)
+![The Rust Iterator::flatten() method](../resources/2023-07-01-iterator-flatten/flatten-1.png)
 
 The Items in the Iterator need to each be convertible to an Iterator as well. Then the resulting Iterator will return all the items from those Iterators. As in “Iterator[Iterator[i32]] => Iterator[i32]”.
 
@@ -20,7 +20,7 @@ The Items in the Iterator need to each be convertible to an Iterator as well. Th
 
 IntoIterator is the trait that flatten() used, if it’s satisfied, the type can be converted to an Iterator via calling into_iter(): https://doc.rust-lang.org/stable/std/iter/trait.IntoIterator.html
 
-![The Rust IntoIterator trait](/resources/2023-07-01-iterator-flatten/flatten-2.png)
+![The Rust IntoIterator trait](../resources/2023-07-01-iterator-flatten/flatten-2.png)
 
 The trait has an associated type called Item, which is what the created Iterator will return.
 
@@ -30,7 +30,7 @@ It requires that the type returned by into_iter() actually implements Iterator b
 
 The actual implementation of flatten() is a single function call: https://doc.rust-lang.org/stable/src/core/iter/traits/iterator.rs.html#1587-1590
 
-![The Rust Iterator::flatten() implementation](/resources/2023-07-01-iterator-flatten/flatten-3.png)
+![The Rust Iterator::flatten() implementation](../resources/2023-07-01-iterator-flatten/flatten-3.png)
 
 Which creates a Flatten type that is the resulting iterator, the “IntoIter” type mentioned in the IntoIterator trait above.
 
@@ -38,7 +38,7 @@ Which creates a Flatten type that is the resulting iterator, the “IntoIter” 
 
 The Flatten type is also pretty simple. The implementation relies on a FlattenCompat abstraction to share implementation with flat_map(): https://doc.rust-lang.org/stable/std/iter/struct.Flatten.html
 
-![The Rust Flatten type](/resources/2023-07-01-iterator-flatten/flatten-4.png)
+![The Rust Flatten type](../resources/2023-07-01-iterator-flatten/flatten-4.png)
 
 The where clause on Flatten points out once again that the Items in the outer Iterator can be converted to (or are) Iterators themselves.
 
@@ -46,7 +46,7 @@ The where clause on Flatten points out once again that the Items in the outer It
 
 The Flatten::next() method, which is used to implement the Iterator trait returns a U::Item type: https://doc.rust-lang.org/stable/src/core/iter/adapters/flatten.rs.html#204-212
 
-![The Rust Flatten type's implementation of the Iterator trait](/resources/2023-07-01-iterator-flatten/flatten-5.png)
+![The Rust Flatten type's implementation of the Iterator trait](../resources/2023-07-01-iterator-flatten/flatten-5.png)
 
 The bound here requires that the Iterator we’re flattening has Items that satisfy IntoIterator, and we assign names to the associated types in IntoIterator.
 
@@ -62,7 +62,7 @@ What does this look like in C++ Subspace?
 
 Here’s the C++ version of Iterator::flatten(). It’s in the IteratorBase class, not the Iterator concept. In Rust this goes directly in the trait, but you can’t add default methods to a C++ concept as they only provide boolean yes/no matching against types. So instead this lives on IteratorBase, which all Iterator types are required to inherit from (as final) in order to satisfy the Iterator concept.
 
-![The C++ version of Iterator::flatten()](/resources/2023-07-01-iterator-flatten/flatten-6.png)
+![The C++ version of Iterator::flatten()](../resources/2023-07-01-iterator-flatten/flatten-6.png)
 
 The method has a concept requirement, much like the Rust trait bound on IntoIterator. But it’s called IntoIteratorAny. Why the “Any” part?
 
@@ -70,7 +70,7 @@ The method has a concept requirement, much like the Rust trait bound on IntoIter
 
 We have an IntoIterator concept in C++ too. It has a type T which is the type that can be converted to an Iterator, and something like Rust’s associated type, Item, as a second template parameter.
 
-![The C++ IntoIterator concept](/resources/2023-07-01-iterator-flatten/flatten-7.png)
+![The C++ IntoIterator concept](../resources/2023-07-01-iterator-flatten/flatten-7.png)
 
 If a type satisfies IntoIterator, then we know it can convert to an Iterator that returns Items through the into_iter() method. And the return type of into_iter() is constrained to be satisfy the Iterator concept, like the Rust trait.
 
@@ -88,7 +88,7 @@ typename std::decay_t<decltype(std::declval<std::remove_cvref_t<Item>&&>().into_
 
 Lol. Since that’s not decipherable, here it is as a picture.
 
-![The type traits to get the IntoIterator Item](/resources/2023-07-01-iterator-flatten/flatten-8.png)
+![The type traits to get the IntoIterator Item](../resources/2023-07-01-iterator-flatten/flatten-8.png)
 
 But putting that in random code is horrifying.
 
@@ -96,7 +96,7 @@ But putting that in random code is horrifying.
 
 So to avoid writing inscrutable type traits on our flatten() method, we shove it behind another concept, IntoIteratorAny. It’s a concept that is satisfied for a type that can convert to an Iterator through the into_iter() method, without placing a bound on the Item type of the returned Iterator:
 
-![The C++ IntoIteratorAny concept](/resources/2023-07-01-iterator-flatten/flatten-9.png)
+![The C++ IntoIteratorAny concept](../resources/2023-07-01-iterator-flatten/flatten-9.png)
 
 We don’t need two traits to express this same thing in Rust, but I have not found a way to avoid it and keep the flatten() method concise in C++.
 
@@ -118,7 +118,7 @@ The sus::iter::IntoIteratorOutputType type alias is a helper used to figure out 
 
 Here’s the implementation of IntoIteratorOutputType:
 
-![The IntoIteratorOutputType type alias](/resources/2023-07-01-iterator-flatten/flatten-10.png)
+![The IntoIteratorOutputType type alias](../resources/2023-07-01-iterator-flatten/flatten-10.png)
 
 Note that the IntoIteratorAny concept and the IntoIteratorOutputType alias were handled entirely by the generic bounds of the IntoIterator trait in Rust in a concise and simple way. C++ required a lot more typing, a lot more complexity, a lot more room for mistakes. You can express more too, but at what cost.
 
@@ -132,7 +132,7 @@ Last, the method call to Flatten constructs the Flatten type which is the return
 
 The Flatten type is a class that subclasses InteratorBase, like we mentioned before. It’s `[[nodiscard]]`, which Rust achieves by putting the same in a single place, on the Iterator trait: https://doc.rust-lang.org/stable/src/core/iter/traits/iterator.rs.html#72. The “InnerSizedIter” is like the “I” type on the Rust version of Flatten. The `[[sus_trivial_abi]]` attribute marks the class as “clang::trivial_abi” if your compiler is Clang, which generates a warning on other compilers so has to go behind a macro.
 
-![The C++ Flatten class](/resources/2023-07-01-iterator-flatten/flatten-11.png)
+![The C++ Flatten class](../resources/2023-07-01-iterator-flatten/flatten-11.png)
 
 ## Conclusion and Iterator concept
 
@@ -140,4 +140,4 @@ And with that we have the tools to write Iterator::flatten() in #Rust or in C++ 
 
 For the interested, here’s the Iterator C++ concept, which has its fair share of worrying about const, references, and lvalue/rvalue-state embedded in the types:
 
-![The C++ Iterator concept](/resources/2023-07-01-iterator-flatten/flatten-11.png)
+![The C++ Iterator concept](../resources/2023-07-01-iterator-flatten/flatten-11.png)
