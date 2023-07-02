@@ -70,7 +70,7 @@ We have an IntoIterator concept in C++ too. It has a type T which is the type th
 
 ![The C++ IntoIterator concept](/resources/2023-07-01-iterator-flatten/flatten-7.png)
 
-If a type satisfies IntoIterator, then we know it can convert to an Iterator that returns Items through the into_iter() method. And the return type of into_iter() is constrained to be satisfy the Iterator concept, like the Rust trait.
+If a type satisfies IntoIterator, then we know it can convert to an Iterator that returns Items through the into_iter() method. And the return type of into_iter() is constrained to satisfy the Iterator concept, like the Rust trait.
 
 The C++ complexity cracks start to show here. In the Rust generics and type system when you have a type you.. Well you have a type. But in C++ you have to worry about whether that type is const, or volatile, or an lvalue reference, or a const reference, or an rvalue reference! You do some 6D chess in your head to figure out just what type of thing you want in all of those situations, which you want to accept or reject.
 
