@@ -138,4 +138,4 @@ And with that we have the tools to write Iterator::flatten() in Rust or in C++ w
 
 For the interested, here’s the Iterator C++ concept, which has its fair share of worrying about const, references, and lvalue/rvalue-state embedded in the types:
 
-![The C++ Iterator concept](/resources/2023-07-01-iterator-flatten/flatten-11.png)
+![The C++ Iterator concept](/resources/2023-07-01-iterator-flatten/flatten-12.png)
