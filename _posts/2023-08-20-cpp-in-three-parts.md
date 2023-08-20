@@ -58,7 +58,9 @@ the OOB bugs so far.
 
 md4c is written in C not in C++. But the reason I am using it is because
 *I am working in C++*. Otherwise I would be looking at the
-[markdown](https://docs.rs/markdown/1.0.0-alpha.12/markdown/index.html) crate library.
+[markdown](https://docs.rs/markdown/1.0.0-alpha.12/markdown/index.html) crate library. Even though
+it is in an alpha state, it would still be more trustworthy for security than this well-used C
+library.
 
 # The bugs
 
@@ -72,4 +74,4 @@ I would need to turn it into C++ and apply
 [Subspace numerics](https://danakj.github.io/subspace-docs/sus-num.html) which would properly catch
 bad values at runtime from malicious inputs.
 
-This is how C++ is going right now.
+But no other users of md4c will get these asserts so... This is how C++ is going right now.
