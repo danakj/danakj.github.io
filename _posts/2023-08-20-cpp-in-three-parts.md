@@ -49,14 +49,27 @@ I look a little more in the issue tracker, and I find:
 * [Valgrind error: "Conditional jump or move depends on uninitialised value(s)](https://github.com/mity/md4c/issues/176)
 
 And a pull request titled ["Update md4c.c"](https://github.com/mity/md4c/pull/185) which is fixing
-memory safety bugs.
+at least three more memory safety bugs.
 
 So there's at least 4 memory safety bugs in this piece of software. It's kinda widely used. And
-now malicious markdown could compromise machines through Subdoc if those bugs can be triggered with
-the flags it uses.
+now malicious markdown could compromise machines through Subdoc or other consumers of this library,
+if those bugs can be triggered with the flags they use. I was able to reproduce a timeout but not
+the OOB bugs so far.
 
-Great.
-
-Sure, md4c is written in C not in C++. But the reason I am using it is because
+md4c is written in C not in C++. But the reason I am using it is because
 *I am working in C++*. Otherwise I would be looking at the
 [markdown](https://docs.rs/markdown/1.0.0-alpha.12/markdown/index.html) crate library.
+
+# The bugs
+
+What kinds of bugs are they?
+* One is using an error code as an index into an array. Oops.
+* The rest appear to be many occurances of integer overflow when subtracting two signed values and
+  then using them as an unsigned value. Classic stuff.
+
+So I have added a whole lot of asserts into the library to try prevent this. To actually feel safe
+I would need to turn it into C++ and apply
+[Subspace numerics](https://danakj.github.io/subspace-docs/sus-num.html) which would properly catch
+bad values at runtime from malicious inputs.
+
+This is how C++ is going right now.
