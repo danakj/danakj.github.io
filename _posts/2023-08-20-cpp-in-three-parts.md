@@ -41,7 +41,7 @@ dead in the water, abandonware. You get what you get.
 
 So I fork and add some extensions to the project for my needs, and it's working great.
 
-# Part Three: The C/C++ Securty Wow Factor
+# Part Three: The C/C++ Security Wow Factor
 
 I look a little more in the issue tracker, and I find:
 * [Array out-of-bounds access leads to segmentation fault in md_build_attribute function](https://github.com/mity/md4c/issues/196)
