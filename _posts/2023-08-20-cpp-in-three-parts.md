@@ -26,7 +26,7 @@ So I integrate md4c into Subdoc, and yes it's quite easy to do so and it works g
 
 # Part Two: Trouble
 
-I want to add some extensions to m4dc for Subdoc, so that I can generate headers as links to
+I want to add some extensions to md4c for Subdoc, so that I can generate headers as links to
 themselves, like you'd see on GitHub. To do that, md4c needs to provide additional signal to
 md4c-html, and md4c-html needs some additional callbacks.
 
