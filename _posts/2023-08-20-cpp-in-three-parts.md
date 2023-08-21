@@ -6,7 +6,7 @@ description: What it's like trying to be security conscious while working in C++
 # A tale of C/C++ development in three parts
 
 Here's what it's like doing C++ development. I am writing a C++ application called
-[Subdoc](https://github.com/chromium/subspace/tree/main/subdoc). It has
+[Subdoc](https://github.com/chromium/subspace/#subdoc). It has
 to be in C++ because it has an important C++ dependency: [Clang](https://clang.llvm.org/).
 
 I would write it in Rust if it were easy to use Clang from Rust, but alas interop is not at that
