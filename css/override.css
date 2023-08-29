@@ -22,3 +22,7 @@ section #title .credits {
     margin-bottom: 10px;
     line-height: inherit;
 }
+
+body > .wrapper, body> .wrapper > section {
+    max-width: 1024px;
+}
