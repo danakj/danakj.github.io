@@ -109,7 +109,8 @@ over again. So I added some internal methods to break apart checks and implement
 up methods for better inlining. Then I used local variables to avoid indirections through
 `this`-pointers.
 
-The PR containing the changes and the benchmarks is https://github.com/chromium/subspace/pull/337.
+The PR containing the changes and the benchmarks is [https://github.com/chromium/subspace/pull/337](
+https://github.com/chromium/subspace/pull/337).
 
 Here's [the results](https://github.com/chromium/subspace/pull/337#issuecomment-1696793264) of
 building `sus::Vec` via `FromIterator` compared to building a `std::vector`,
