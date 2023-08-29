@@ -4,6 +4,10 @@ code {
     font-family: monospace;
 }
 
+a > code {
+    color: #b6b6f9;
+}
+
 #title {
     /* The theme defaults to 50x but it's a lot - especially with my email etc buttons on the right
        side which are a bit taller than just text. */
