@@ -1,7 +1,9 @@
 ---
 tags:
 - C++
-description: What it's like trying to be security conscious while working in C++.
+- Subspace
+- Undefined Behaviour
+description: Encapsulating Undefined Behaviour in the C++ Standard Library for Performance with Safety
 ---
 # On push_back_unchecked: Performance with FromIterator and Collect
 
