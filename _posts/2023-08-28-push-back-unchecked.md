@@ -19,7 +19,7 @@ allocated. This exposes Undefined Behaviour if you do it wrong, of course, and t
 that this is both necessary and good. And I agree.
 
 This blog, and my efforts in the C++ language space, are all around reducing the negative impact of
-Undefined Behaviour and eliminating memory-safety bugs. So the above may seem counter-intuitive at
+Undefined Behaviour and eliminating memory-safety bugs. So the above may seem counterintuitive at
 first glance.
 
 I recently argued that the nature of the C++ standard library is basically [to expose Undefined
@@ -78,7 +78,7 @@ yet retain memory safety for themselves,
 this creates the opportunity to build a safer security-critical C++ application without sacrificing
 performance. In fact, **as we'll see, we can gain performance**.
 
-## Performace Optimizing FromIterator and Collect
+## Performance Optimizing FromIterator and Collect
 
 The benchmarks provided in the aforementioned "Missing Performance in std::vector" article showed
 on Clang 15:
@@ -89,7 +89,7 @@ on Clang 15:
 - A 1.1x improvement when building a large vector of the same.
 
 I was curious how `FromIterator` would compare with `sus::Vec`. 
-If `push_back_unchecked` existed, the implemetation of `FromIterator` for `std::vector`
+If `push_back_unchecked` existed, the implementation of `FromIterator` for `std::vector`
 could absolutely make use of
 the method, with no risk of introducing Undefined Behaviour and memory safety bugs into the
 application as a result. For `sus::Vec` we have full access to the underlying data structure so we
@@ -119,7 +119,7 @@ on my M1 Mac with Clang 18:
   that unwraps a struct.
 - A 1.03x improvement when building a large vector of the same.
 
-Comparing `FromIterator` on `std::vector` is done to verify the iterator appoach isn't changing the
+Comparing `FromIterator` on `std::vector` is done to verify the iterator approach isn't changing the
 nature of the operation, and indeed we see that putting the `push_back` loop into the `collect()`
 operation has no visible impact. But the structure enables something more.
 
