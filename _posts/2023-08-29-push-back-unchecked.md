@@ -53,7 +53,7 @@ encapsulate the inherent unsafety of its own API that leaks Undefined Behaviour 
 ## FromIterator and Collect
 
 Subspace provides the
-[`FromIterator`](https://danakj.github.io/subspace-docs/sus-iter-FromIterator.html) concept
+[`FromIterator`](https://github.com/chromium/subspace/blob/36d965c504a570731a0e6f377fc994a0ad1daf05/sus/iter/from_iterator.h#L28-L43) concept
 and then implements this concept for `sus::Vec` and `std::vector` as well as all the types in the
 [standard containers library](https://en.cppreference.com/w/cpp/container).
 
@@ -63,7 +63,8 @@ trait and its many uses, the key points for us here are:
 - You can construct a container from another container, or an iterator.
 - The construction happens in a single atomic step, from the perspective of application logic,
     which is typically the iterator [`collect`](
-    https://danakj.github.io/subspace-docs/sus-iter-IteratorBase.html#method.collect) method.
+    https://github.com/chromium/subspace/blob/36d965c504a570731a0e6f377fc994a0ad1daf05/sus/iter/iterator_defn.h#L1097-L1120)
+    method.
     - See also the Rust
      [`collect`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect)
      for more code examples that will look similar in C++ but aren't in the Subspace docs (yet).
