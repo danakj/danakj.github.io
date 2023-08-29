@@ -32,7 +32,7 @@ Behaviour](https://sunny.garden/@blinkygal/110871585437820584):
 And in that same vein, adding `std::vector::push_back_unchecked` would expose the nature of the
 conceptual C++ machine, and allow authors to control that machine more effectively.
 
-**<div style="text-align: left; font-size: 110%">Undefined Behaviour is Good.</div>**
+**Undefined Behaviour is Good.**
 
 Chandler Carruth argues for Undefined Behaviour from a slightly different perspective in his CppCon
 2016 talk, [Garbage In, Garbage Out: Arguing about Undefined Behavior With Nasal Demons](
@@ -42,7 +42,7 @@ see clearly from the `push_back_unchecked` proposal.
 But that sentence above is not complete without a qualification which usually gets missed in the
 C++ world. Completed, it reads:
 
-**<div style="text-align: left; font-size: 110%">Undefined Behaviour is Good when it is Encapsulated.</div>**
+**Undefined Behaviour is Good when it is Encapsulated.**
 
 I believe `std::vector` should expose that Undefined Behaviour along with, and because it exposes,
 many
