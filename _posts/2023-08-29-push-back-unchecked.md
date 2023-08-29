@@ -7,7 +7,7 @@ description: Encapsulating Undefined Behaviour in the C++ Standard Library for P
 ---
 # On push_back_unchecked: Performance with FromIterator and Collect
 
-A very nice blog post went by today titled
+A very nice blog post went by yesterday titled
 "[The Little Things: The Missing Performance in std::vector](https://codingnest.com/the-little-things-the-missing-performance-in-std-vector/)".
 
 You should read it, but in case you don't, the premise is that [`std::vector::push_back`](
