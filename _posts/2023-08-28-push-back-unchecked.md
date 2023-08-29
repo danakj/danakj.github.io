@@ -32,7 +32,7 @@ Behaviour](https://sunny.garden/@blinkygal/110871585437820584):
 And in that same vein, adding `std::vector::push_back_unchecked` would expose the nature of the
 conceptual C++ machine, and allow authors to control that machine more effectively.
 
-<span style="text-align: center">**Undefined Behaviour is Good**.</span>
+**<div style="text-align: left; font-size: 110%">Undefined Behaviour is Good.</div>**
 
 Chandler Carruth argues for Undefined Behaviour from a slightly different perspective in his CppCon
 2016 talk, [Garbage In, Garbage Out: Arguing about Undefined Behavior With Nasal Demons](
@@ -42,35 +42,36 @@ see clearly from the `push_back_unchecked` proposal.
 But that sentence above is not complete without a qualification which usually gets missed in the
 C++ world. Completed, it reads:
 
-<span style="text-align: center">**Undefined Behaviour is Good when it is Encapsulated**.</span>
+**<div style="text-align: left; font-size: 110%">Undefined Behaviour is Good when it is Encapsulated.</div>**
 
 I believe `std::vector` should expose that Undefined Behaviour along with, and because it exposes,
 many
 other Undefined Behaviours. **However that also implies that `std::vector` is not suitable for use in
 most application code**. It is a building block on which performant APIs can be built which
-encapsulate the inherent unsafety of an API that leaks Undefined Behaviour all throughout.
+encapsulate the inherent unsafety of its own API that leaks Undefined Behaviour all throughout.
 
 ## FromIterator and Collect
 
 Subspace provides the
 [`FromIterator`](https://danakj.github.io/subspace-docs/sus-iter-FromIterator.html) concept
 and then implements this concept for `sus::Vec` and `std::vector` as well as all the types in the
-[stdlib containers library](https://en.cppreference.com/w/cpp/container).
+[standard containers library](https://en.cppreference.com/w/cpp/container).
 
-Like most of the library, this is a direct reimplementation of the Rust [`FromIterator`](
-https://doc.rust-lang.org/std/iter/trait.FromIterator.html) trait, if you
-are already familiar with that, and its many uses. If not, the key points are:
+Like most of the Subspace library, this is a reimplementation of the Rust [`FromIterator`](
+https://doc.rust-lang.org/std/iter/trait.FromIterator.html) trait. If not already familiar with the
+trait and its many uses, the key points for us here are:
 - You can construct a container from another container, or an iterator.
-- The construction happens in a single atomic step, which is typically the iterator [`collect`](
+- The construction happens in a single atomic step, from the perspective of application logic,
+    which is typically the iterator [`collect`](
     https://danakj.github.io/subspace-docs/sus-iter-IteratorBase.html#method.collect) method.
     - See also the Rust
      [`collect`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect)
-     for more examples that will look similar in C++ but aren't implemented in the docs yet.
+     for more code examples that will look similar in C++ but aren't in the Subspace docs (yet).
 
 By providing the ability to construct a container like a vector in an atomic operation from an
 arbitrary set of inputs, we provide the ability for the library to give a safe and simple API
 abstraction around a powerful operation which can be implemented entirely on top of APIs that
-expose Undefined Behaviour. Because of the atomic nature, the use of those APIs is fully
+expose Undefined Behaviour. Because of the atomic nature, the use of those unsafe APIs is fully
 encapsulated from the application layer, allowing the use of them in a controlled manner. Much
 like in how "safe Rust" applications are built on top of a stdlib full of unsafe Rust,
 yet retain memory safety for themselves,
@@ -79,7 +80,7 @@ performance. In fact, **as we'll see, we can gain performance**.
 
 ## Performace Optimizing FromIterator and Collect
 
-The benchmarks provided in the aforemention "Missing Performance in std::vector" article showed
+The benchmarks provided in the aforementioned "Missing Performance in std::vector" article showed
 on Clang 15:
 - A 5x improvement when building a small to medium vector from a simple integer mapping.
 - A 1.3x improvement when building a large vector of the same.
@@ -87,10 +88,7 @@ on Clang 15:
   that unwraps a struct.
 - A 1.1x improvement when building a large vector of the same.
 
-The cost of each push comes to dominate more as the vector's size grows, and an improvement of
-1.1x - 1.3x (that's 110-130% improved) is very nice!
-
-I was curious how `FromIterator` would compare in `sus::Vec`. 
+I was curious how `FromIterator` would compare with `sus::Vec`. 
 If `push_back_unchecked` existed, the implemetation of `FromIterator` for `std::vector`
 could absolutely make use of
 the method, with no risk of introducing Undefined Behaviour and memory safety bugs into the
