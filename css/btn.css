@@ -25,6 +25,13 @@
     background-color: #69490c;
 }
 
+.btn.btn-fedi {
+    background-color: #129ba1;
+}
+.btn.btn-fedi:hover {
+    background-color: #186265;
+}
+
 .btn.btn-rss {
     background-color: #1f8134;
 }
