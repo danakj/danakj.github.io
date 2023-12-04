@@ -28,6 +28,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-remote-theme
+  - jekyll-webmentions
 
 titles_from_headings:
   strip_title: true
