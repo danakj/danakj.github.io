@@ -31,10 +31,10 @@ div.webmentions li {
 div.webmentions li .head {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    align-items: flex-start;
 }
 
 div.webmentions li .avatar {
     width: 1.7em;
+    margin-right: 0.5em;
 }
-
