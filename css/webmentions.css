@@ -1,5 +1,10 @@
+div.webmentions {
+    margin-top: 20px;
+}
+
 .webmentions-header {
-    font-size: 130%
+    font-size: 130%;
+    margin: 0 0 0.5em 0;
 }
 
 .webmentions-container {
@@ -8,11 +13,19 @@
 
 .webmentions-container li {
     list-style: none;
+    margin-top: 0.2em;
+    border: 1px solid #3d3d3d;
+    padding: 0.2em
 }
 
 .webmentions-container ul {
     flex-direction: column;
     padding-left: 0;
+}
+
+.webmentions-container .head {
+    flex-direction: row;
+    justify-content: center;
 }
 
 .webmentions-container .avatar {
