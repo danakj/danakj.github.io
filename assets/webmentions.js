@@ -24,7 +24,7 @@ async function renderWebmentions(container) {
 }
 
 function getWebmentions(target) {
-  return fetch(`https://webmention.io/api/mentions.jf2?target=${target}`)
+  return fetch(`https://webmention.io/api/mentions.jf2?target=${target}&per-page=999`)
     .then(response => response.json())
     .then(data => data.children);
 }
@@ -62,7 +62,8 @@ function renderWebmention(webmention) {
     set(
       ".webmention-content",
       "innerHTML",
-      webmention.content.html || webmention.content.text
+      // Emojis come through as "????" which makes for some very rude replies lmao.
+      (webmention.content.html || webmention.content.text | "").replace("????", "")
     );
   }
 
