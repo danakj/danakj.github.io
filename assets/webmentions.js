@@ -49,7 +49,8 @@ function renderWebmention(webmention) {
   set(".webmention-author", "href", webmention.author.url || webmention.url);
   set(".webmention-author-avatar", "src", webmention.author.photo);
   set(".webmention-author-avatar", "alt", `Photo of ${webmention.author.name}`);
-  set(".webmention-author-name", "textContent", webmention.author.name);
+  // Emojis come through as "????".
+  set(".webmention-author-name", "textContent", webmention.author.name.replace(" ????", ""));
   set(".webmention-action", "href", webmention.url);
 
   set(
@@ -63,7 +64,7 @@ function renderWebmention(webmention) {
       ".webmention-content",
       "innerHTML",
       // Emojis come through as "????" which makes for some very rude replies lmao.
-      (webmention.content.html || webmention.content.text | "").replace("????", "")
+      (webmention.content.html || webmention.content.text | "").replace(" ????", "")
     );
   }
 
