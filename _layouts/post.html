@@ -38,18 +38,22 @@ layout: default
 <!-- Allow collection of webmentions about the post. -->
 <link rel="webmention" href="https://webmention.io/orodu.net/webmention" />
 
-<!-- The webmentions query must be to the http:// url in order to get a response. -->
-<div class="webmentions-container" style="display:none" data-webmentions="http://orodu.net{{ page.url | relative_url }}"></div>
-<template id="webmention-template">
-  <li>
-    <div class="head">
-      <span class="author">
-        <img class="avatar webmention-author-avatar"></img>
-        <a class="webmention-author"><span class="webmention-author-name"></span></a>
-      </span>
-      <span class="action"><span class="webmention-action"></span></span>
-    </div>
-    <div class="content"><span class="webmention-content"></span></div>
-  </li>
-</template>
-<script src="/assets/webmentions.js"></script>
+<div class="webmentions">
+  <hr>
+  <div class="webmentions-header">Interactions:</div>
+  <!-- The webmentions query must be to the http:// url in order to get a response. -->
+  <div class="webmentions-container" style="display:none" data-webmentions="http://orodu.net{{ page.url | relative_url }}"></div>
+  <template id="webmention-template">
+    <li>
+      <div class="head">
+        <span class="author">
+          <img class="avatar webmention-author-avatar"></img>
+          <a class="webmention-author"><span class="webmention-author-name"></span></a>
+        </span>
+        <span class="action"><span class="webmention-action"></span></span>
+      </div>
+      <div class="content"><span class="webmention-content"></span></div>
+    </li>
+  </template>
+  <script src="/assets/webmentions.js"></script>
+</div>

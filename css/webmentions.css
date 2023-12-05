@@ -1,5 +1,9 @@
+.webmentions-header {
+    font-size: 130%
+}
+
 .webmentions-container {
-    display: flex;
+    display: flex;    
 }
 
 .webmentions-container li {
@@ -8,16 +12,10 @@
 
 .webmentions-container ul {
     flex-direction: column;
+    padding-left: 0;
 }
 
-.webmentions-container li {
-    flex-direction: row;
-}
-
-.webmentions-container li .item {
-    display: inline;
-}
-
-.webmentions-container .author img {
+.webmentions-container .avatar {
     width: 1.7em;
 }
+
