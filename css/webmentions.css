@@ -10,15 +10,17 @@ div.webmentions .webmentions-header {
     font-size: 130%;
     margin: 0 0 0.5em 0;
     width: 80%;
+    margin-left: 10%;
 }
 
 .webmentions-container {
+    margin-left: 10%;
+    width: 80%;
 }
 
 div.webmentions ul {
     flex-direction: column;
     padding-left: 0;
-    width: 80%;
 }
 
 div.webmentions li {
@@ -38,3 +40,4 @@ div.webmentions li .avatar {
     width: 1.7em;
     margin-right: 0.5em;
 }
+
