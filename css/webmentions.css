@@ -1,7 +1,23 @@
 .webmentions-container {
     display: flex;
 }
+
+.webmentions-container li {
+    list-style: none;
+}
+
 .webmentions-container ul {
-    display: flex;
     flex-direction: column;
+}
+
+.webmentions-container li {
+    flex-direction: row;
+}
+
+.webmentions-container li .item {
+    display: inline;
+}
+
+.webmentions-container .author img {
+    width: 1.7em;
 }

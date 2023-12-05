@@ -42,12 +42,14 @@ layout: default
 <div class="webmentions-container" style="display:none" data-webmentions="http://orodu.net{{ page.url | relative_url }}"></div>
 <template id="webmention-template">
   <li>
-    <div class="item author">
-      <img class="item webmention-author-avatar"></img>
-      <a class="webmention-author"><span class="webmention-author-name"></span></a>
+    <div class="head">
+      <span class="author">
+        <img class="avatar webmention-author-avatar"></img>
+        <a class="webmention-author"><span class="webmention-author-name"></span></a>
+      </span>
+      <span class="action"><span class="webmention-action"></span></span>
     </div>
-    <div class="item action webmention-action"></div>
-    <div class="item content webmention-content"></div>
+    <div class="content"><span class="webmention-content"></span></div>
   </li>
 </template>
 <script src="/assets/webmentions.js"></script>
