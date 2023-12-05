@@ -12,14 +12,16 @@ layout: default
       </time>
       {% assign author = page.author | default: site.author %}
       {%- if author -%}
-        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ author }}</span></span>
-      {%- endif -%}</p>
+      • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card"
+          itemprop="name">{{ author }}</span></span>
+      {%- endif -%}
+    </p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>
-  
+
   <!-- No thanks?
   <div class="share-links">
     {-% include sharelinks.html %-}
@@ -30,13 +32,20 @@ layout: default
     {% include navlinks.html %}
   </div>
 
-  <div class="webmentions">
-    <!-- {-% webmentions page.url %} -->
-  </div>
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 
 <!-- Allow collection of webmentions about the post. -->
 <link rel="webmention" href="https://webmention.io/orodu.net/webmention" />
 
-<!-- {-% webmentions_js %} -->
+<!-- The webmentions query must be to the http:// url in order to get a response. -->
+<div class="webmentions-container" style="display:none" data-webmentions="http://orodu.net/{{ page.url | relative_url }}"></div>
+<template id="webmention-template">
+  <li>
+    <div class="item" class="webmention-author-avatar"></div>
+    <a class="item" class="webmention-author"><div class="webmention-author-name"></div></a>
+    <div class="item" class="webmention-action"></div>
+    <div class="item" class="webmention-content"></div>
+  </li>
+</template>
+<script src="assets/webmentions.js"></script>

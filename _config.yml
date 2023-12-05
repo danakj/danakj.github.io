@@ -28,7 +28,6 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-remote-theme
-  - jekyll-webmentions
 
 titles_from_headings:
   strip_title: true
@@ -40,38 +39,3 @@ defaults:
       type: posts
     values:
       tags: [ Other ]
-
-webmentions:
-  username: https://orodu.net
-  cache_folder: .cache
-  legacy_domains:
-    - http://danakj.github.io
-  templates:
-    count: _includes/webmentions/count.html
-    likes: _includes/webmentions/likes.html
-    links: _includes/webmentions/links.html
-    posts: _includes/webmentions/posts.html
-    replies: _includes/webmentions/replies.html
-    reposts: _includes/webmentions/reposts.html
-    webmentions: _includes/webmentions/webmentions.html
-  max_attempts: 5
-  bad_uri_policy:
-    unsupported:
-      policy: ban
-    error:
-      policy: ignore
-    failure:
-      policy: retry
-      retry_delay: [ 1, 12, 48, 120 ]
-      max_retries: 5
-    whitelist:
-      - "^https://brid.gy/publish/"
-    blacklist:
-      - "^https://foo.bar/"
-  syndication:
-    mastodon: 
-      endpoint: https://brid.gy/publish/mastodon
-      response_mapping:
-        syndication: $.url
-    github: 
-      endpoint: https://brid.gy/publish/github
