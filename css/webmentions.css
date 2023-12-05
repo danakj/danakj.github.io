@@ -1,0 +1,7 @@
+.webmentions-container {
+    display: flex;
+}
+.webmentions-container ul {
+    display: flex;
+    flex-direction: column;
+}
