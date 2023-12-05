@@ -41,3 +41,6 @@ div.webmentions li .avatar {
     margin-right: 0.5em;
 }
 
+div.webmentions .content img {
+    height: 1.1em;
+}
