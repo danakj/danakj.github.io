@@ -39,7 +39,7 @@ layout: default
 <link rel="webmention" href="https://webmention.io/orodu.net/webmention" />
 
 <!-- The webmentions query must be to the http:// url in order to get a response. -->
-<div class="webmentions-container" style="display:none" data-webmentions="http://orodu.net/{{ page.url | relative_url }}"></div>
+<div class="webmentions-container" style="display:none" data-webmentions="http://orodu.net{{ page.url | relative_url }}"></div>
 <template id="webmention-template">
   <li>
     <div class="item" class="webmention-author-avatar"></div>
