@@ -5,7 +5,7 @@ description: Building abstractions in Rust apps is very different from C++ and J
 ---
 # How to Build Abstractions in Rust Applications: The Missing Rung on the Rust Education Ladder
 
-I read yet another reddit post where an OO developer struggles with building abstractions in Rust. These things feel familiar to me, I have had the same struggles moving from being a C++ developer to building a non-trivial Rust application and trying to put abstractions throughout to reduce coupling. And I see colleagues at work ask the same things as they start to pick up Rust.
+I read yet another reddit post where an OO developer struggles with building abstractions in Rust. These things feel familiar to me, I have had the same struggles moving from being a C++ developer to building a non-trivial Rust application and trying to use abstractions throughout to reduce coupling. And I see colleagues at work ask the same things as they start to pick up Rust.
 
 [https://www.reddit.com/r/rust/comments/18rme0v/interface_abstractions_in_rust/](
 https://www.reddit.com/r/rust/comments/18rme0v/interface_abstractions_in_rust/)
